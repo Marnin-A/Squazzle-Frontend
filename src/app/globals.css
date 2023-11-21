@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.auth-bg {
+	background-image: url(../../public/Auth-Background.png);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 50% 50%;
+}
+
+@media (width < 640px) {
+	.auth-bg {
+		background: none;
+	}
+}
