@@ -12,8 +12,8 @@ export default function signUpLeft() {
 				className="sm:visible max-sm:hidden"
 			/>
 			<Image
-				src="/Mobile logo.svg"
-				alt="Squazzle Logo"
+				src="/Mobile-logo.svg"
+				alt="Mobile Squazzle Logo"
 				width={177}
 				height={57}
 				className="max-sm:visible sm:hidden"
