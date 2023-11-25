@@ -195,8 +195,8 @@ export default function UserCreateProfileForm() {
 								{...register("phoneNumber", {
 									required: "Phone number is required",
 									maxLength: {
-										value: 15,
-										message: "Phone number can't be more than 15 chars",
+										value: 10,
+										message: "Phone number can't be more than 10 chars",
 									},
 								})}
 							/>

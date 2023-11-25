@@ -11,12 +11,22 @@ import * as yup from "yup";
 import Link from "next/link";
 import { resetProfileData } from "@/app/store/slices/signUpSlice";
 import AlertPopup from "../notification/Alert";
-import { PopupSeverity, Passwords } from "@/types";
+import axios from "axios";
+import {
+	PopupSeverity,
+	Passwords,
+	PopupType,
+	SuccessfulResponseType,
+	FailedResponseType,
+} from "@/types";
 
 export default function UserCreatePasswordForm() {
 	const dispatch = useDispatch();
 	const user = useSelector((state: RootState) => state.CreateProfile);
-	const [openPopup, setOpenPopup] = React.useState<boolean>(false);
+	const [openPopup, setOpenPopup] = React.useState<PopupType>({
+		state: false,
+		message: "",
+	});
 	const [popup, setPopup] = React.useState<PopupSeverity>("success");
 	const label = { inputProps: { "aria-label": "Squazzle privacy policy" } };
 	const containerRef = React.useRef<HTMLDivElement>(null);
@@ -50,26 +60,36 @@ export default function UserCreatePasswordForm() {
 		mode: "onChange",
 	});
 	// Handle Form Submission
-	const onSubmit: SubmitHandler<Passwords> = async (data: Passwords) => {
-		const url = process.env.NEXT_PUBLIC_SERVER_URL as RequestInfo;
+	const onSubmit: SubmitHandler<Passwords> = async (passwords: Passwords) => {
+		const url =
+			(process.env.NEXT_PUBLIC_SERVER_URL as RequestInfo) +
+			"/api/v1/auth/signup";
+
 		try {
-			const result = await fetch(url + "/api/v1/auth/signup", {
-				method: "POST",
-				body: JSON.stringify({ ...user, password: data.password }),
+			const { data }: SuccessfulResponseType = await axios.post(url, {
+				...user,
+				password: passwords.password,
 			});
-			const response = await result.json();
-			if (response.success) {
+
+			if (data.status === "success") {
 				setPopup("success");
 			} else {
 				setPopup("error");
 			}
-			setOpenPopup(true);
+			setOpenPopup({ ...openPopup, state: true, message: data.message });
+			setTimeout(() => setOpenPopup({ ...openPopup, state: false }), 4000);
 
-			setTimeout(() => setOpenPopup(false), 4000);
-			console.log(response);
-			console.log({ ...user, password: data.password });
+			dispatch(resetProfileData());
+			console.log(data);
+			console.log({ ...user, password: passwords.password });
 		} catch (error) {
-			throw error;
+			const e = error as FailedResponseType;
+
+			console.log(e);
+			setPopup("error");
+			setOpenPopup({ ...openPopup, state: true, message: e.message });
+			setTimeout(() => setOpenPopup({ ...openPopup, state: false }), 4000);
+			throw e;
 		}
 	};
 	const handleCancel = () => {
@@ -81,8 +101,14 @@ export default function UserCreatePasswordForm() {
 			ref={containerRef}
 			className="bg-off-white flex flex-col items-center justify-start py-8 max-xs:px-8 px-16 h-screen max-md:mt-8 max-md:w-full md:overflow-y-scroll"
 		>
-			<Slide in={openPopup} container={containerRef.current}>
-				<div className={openPopup ? "block absolute" : "hidden"}>
+			<Slide
+				direction="down"
+				in={openPopup.state}
+				container={containerRef.current}
+				mountOnEnter
+				unmountOnExit
+			>
+				<div className={openPopup.state ? "block absolute" : "hidden"}>
 					<AlertPopup
 						severity={popup}
 						title={popup == "success" ? "Success" : "Error"}
