@@ -41,7 +41,7 @@ export default function UserCreateProfileForm() {
 	};
 
 	return (
-		<div className="bg-off-white flex flex-col items-center justify-start py-8 max-xs:px-8 px-16 h-screen max-md:mt-8 max-md:w-full md:overflow-y-scroll">
+		<div className="bg-off-white flex flex-col items-center justify-start py-8 px-16 max-md:mb-10 max-xs:px-8 h-screen max-md:mt-8 max-md:w-full md:overflow-y-scroll">
 			{/* Header */}
 			<div className="flex flex-col items-start w-full">
 				<h1 className=" text-2xl leading-8 font-bold">
