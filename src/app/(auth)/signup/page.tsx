@@ -1,11 +1,16 @@
 import React from "react";
 import SignUpLeft from "@/components/signup/signUpLeft";
-import SignupRight from "@/components/signup/signupRight";
-export default function page() {
+import SignUp from "@/components/signup/signUp";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store/store";
+
+export default function Page() {
+	// const user = useSelector((state: RootState) => state.CreateProfile);
+	// console.log(user);
 	return (
-		<section className="bg-off-white max-sm:pb-12 grid grid-cols-2 max-sm:grid-cols-1">
+		<section className="bg-off-white max-md:pb-12 flex max-md:flex-col w-[100vw] overflow-hidden">
 			<SignUpLeft />
-			<SignupRight />
+			<SignUp />
 		</section>
 	);
 }

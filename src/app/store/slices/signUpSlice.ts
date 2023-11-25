@@ -1,36 +1,35 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface CreateProfile {
+export interface CreateProfileType {
 	firstName: string;
 	lastName: string;
 	email: string;
-	password?: string;
-	phoneNumber: number | null;
+	phoneNumber: number | undefined;
 }
 
-const initialState: CreateProfile = {
+const initialState: CreateProfileType = {
 	firstName: "",
 	lastName: "",
 	email: "",
-	password: "",
-	phoneNumber: null,
+	phoneNumber: undefined,
 };
 
 const CreateProfileSlice = createSlice({
 	name: "createProfile",
 	initialState,
 	reducers: {
-		setProfileData: (state, action: PayloadAction<CreateProfile>) => {
-			const { firstName, lastName, email, password, phoneNumber } =
-				action.payload;
+		setProfileData: (state, action: PayloadAction<CreateProfileType>) => {
+			const { firstName, lastName, email, phoneNumber } = action.payload;
 			state.email = email;
 			state.firstName = firstName;
 			state.lastName = lastName;
-			state.password = password;
 			state.phoneNumber = phoneNumber;
 		},
 		resetProfileData: (state) => {
-			state = initialState;
+			state.email = "";
+			state.firstName = "";
+			state.lastName = "";
+			state.phoneNumber = undefined;
 		},
 	},
 });

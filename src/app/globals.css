@@ -9,7 +9,7 @@
 	background-position: 50% 50%;
 }
 
-@media (width < 640px) {
+@media (width < 768px) {
 	.auth-bg {
 		background: none;
 	}

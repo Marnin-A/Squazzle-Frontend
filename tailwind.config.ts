@@ -11,17 +11,36 @@ const config: Config = {
 			colors: {
 				"off-white": "#F5F5F5",
 				"primary-grey": "#353535",
-				"primary-green": "#002C2D",
+				"primary-green": "#016D71",
 				"primary-lightgreen": "#CCE6E7",
-				"error-red": "#91332D",
+				success: "#3D7D50",
+				error: "#91332D",
 			},
 			backgroundImage: {
 				"gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
 				"gradient-conic":
 					"conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
 			},
+			screens: {
+				xs: "480px",
+			},
 		},
 	},
-	plugins: [],
+	plugins: [
+		function ({ matchVariant }: any) {
+			matchVariant(
+				"has",
+				(value: string) => {
+					return `&:has(${value})`;
+				},
+				{
+					values: {
+						checked: "input:checked",
+						focus: "input:focus",
+					},
+				}
+			);
+		},
+	],
 };
 export default config;

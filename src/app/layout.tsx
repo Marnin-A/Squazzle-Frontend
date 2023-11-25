@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
-import { StoreProvider } from "./store/storeProvider";
 import "./globals.css";
+import { StoreProvider } from "./store/storeProvider";
 
 const openSans = Open_Sans({
 	weight: ["400", "500", "700"],
