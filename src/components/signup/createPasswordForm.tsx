@@ -16,8 +16,8 @@ import {
 	PopupSeverity,
 	Passwords,
 	PopupType,
-	SuccessfulResponseType,
-	FailedResponseType,
+	SuccessfulSignupResponse,
+	FailedSignupResponse,
 } from "@/types";
 
 export default function UserCreatePasswordForm() {
@@ -61,29 +61,35 @@ export default function UserCreatePasswordForm() {
 	});
 	// Handle Form Submission
 	const onSubmit: SubmitHandler<Passwords> = async (passwords: Passwords) => {
+		// Get url
 		const url =
 			(process.env.NEXT_PUBLIC_SERVER_URL as RequestInfo) +
 			"/api/v1/auth/signup";
 
 		try {
-			const { data }: SuccessfulResponseType = await axios.post(url, {
+			// Upload user data
+			const { data }: SuccessfulSignupResponse = await axios.post(url, {
 				...user,
 				password: passwords.password,
 			});
 
+			// Set popup type
 			if (data.status === "success") {
 				setPopup("success");
 			} else {
 				setPopup("error");
 			}
+			// Display popup
 			setOpenPopup({ ...openPopup, state: true, message: data.message });
+			// Remove popup
 			setTimeout(() => setOpenPopup({ ...openPopup, state: false }), 4000);
-
+			// Clear form data
 			dispatch(resetProfileData());
+
 			console.log(data);
 			console.log({ ...user, password: passwords.password });
 		} catch (error) {
-			const e = error as FailedResponseType;
+			const e = error as FailedSignupResponse;
 
 			console.log(e);
 			setPopup("error");

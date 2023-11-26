@@ -11,7 +11,8 @@ export type AlertType = {
 	message: string;
 };
 export type PopupType = { state: boolean; message: string };
-export type SuccessfulResponseType = {
+export type ApiResponse = SuccessfulSignupResponse | FailedSignupResponse;
+export type SuccessfulSignupResponse = {
 	data: {
 		user: {
 			OTP: number;
@@ -35,7 +36,7 @@ export type SuccessfulResponseType = {
 	};
 };
 
-export type FailedResponseType = {
+export type FailedSignupResponse = {
 	success: false;
 	error: string;
 	message: string;
