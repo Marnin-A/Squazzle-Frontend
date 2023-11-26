@@ -1,33 +1,35 @@
 "use client";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ErrorMessage } from "@hookform/error-message";
-import Slide from "@mui/material/Slide";
 import { RootState } from "@/app/store/store";
 import Checkbox from "@mui/material/Checkbox";
 import * as yup from "yup";
 import Link from "next/link";
 import { resetProfileData } from "@/app/store/slices/signUpSlice";
 import AlertPopup from "../notification/Alert";
-import axios from "axios";
+// import { PostData } from "@/utils/dataHandlers";
 import {
 	PopupSeverity,
 	Passwords,
-	PopupType,
-	SuccessfulSignupResponse,
+	Popup,
+	// SuccessfulSignupResponse,
 	FailedSignupResponse,
 } from "@/types";
+import { simulateApiResponse } from "@/tests/signupTest";
 
 export default function UserCreatePasswordForm() {
+	const router = useRouter();
 	const dispatch = useDispatch();
 	const user = useSelector((state: RootState) => state.CreateProfile);
-	const [openPopup, setOpenPopup] = React.useState<PopupType>({
+	const [openPopup, setOpenPopup] = React.useState<Popup>({
 		state: false,
 		message: "",
 	});
-	const [popup, setPopup] = React.useState<PopupSeverity>("success");
+	const [popupType, setPopupType] = React.useState<PopupSeverity>("success");
 	const label = { inputProps: { "aria-label": "Squazzle privacy policy" } };
 	const containerRef = React.useRef<HTMLDivElement>(null);
 	const passwordSchema = yup.object().shape({
@@ -48,7 +50,7 @@ export default function UserCreatePasswordForm() {
 			.oneOf([yup.ref("password")], "*Passwords do not match"),
 		acceptedPolicy: yup.boolean().required("Checkbox must be checked"),
 	});
-	// React hook form validation
+	// React Hook Form Validation
 	const {
 		register,
 		handleSubmit,
@@ -59,40 +61,42 @@ export default function UserCreatePasswordForm() {
 		reValidateMode: "onChange",
 		mode: "onChange",
 	});
+
 	// Handle Form Submission
 	const onSubmit: SubmitHandler<Passwords> = async (passwords: Passwords) => {
 		// Get url
-		const url =
-			(process.env.NEXT_PUBLIC_SERVER_URL as RequestInfo) +
-			"/api/v1/auth/signup";
+		// const url =
+		// 	(process.env.NEXT_PUBLIC_SERVER_URL as RequestInfo) +
+		// 	"/api/v1/auth/signup";
 
 		try {
 			// Upload user data
-			const { data }: SuccessfulSignupResponse = await axios.post(url, {
-				...user,
-				password: passwords.password,
-			});
+			// const { data } = PostData(url, {
+			// 	...user,
+			// 	password: passwords.password,
+			// }) as unknown as SuccessfulSignupResponse;
+
+			const { data } = await simulateApiResponse();
+			console.log(data);
 
 			// Set popup type
 			if (data.status === "success") {
-				setPopup("success");
+				setPopupType("success");
 			} else {
-				setPopup("error");
+				setPopupType("error");
 			}
 			// Display popup
 			setOpenPopup({ ...openPopup, state: true, message: data.message });
 			// Remove popup
 			setTimeout(() => setOpenPopup({ ...openPopup, state: false }), 4000);
-			// Clear form data
-			dispatch(resetProfileData());
-
-			console.log(data);
+			// console.log(data);
 			console.log({ ...user, password: passwords.password });
+			router.push("/emailVerification");
 		} catch (error) {
 			const e = error as FailedSignupResponse;
 
 			console.log(e);
-			setPopup("error");
+			setPopupType("error");
 			setOpenPopup({ ...openPopup, state: true, message: e.message });
 			setTimeout(() => setOpenPopup({ ...openPopup, state: false }), 4000);
 			throw e;
@@ -107,25 +111,18 @@ export default function UserCreatePasswordForm() {
 			ref={containerRef}
 			className="bg-off-white flex flex-col items-center justify-start py-8 max-xs:px-8 px-16 h-screen max-md:mt-8 max-md:w-full md:overflow-y-scroll"
 		>
-			<Slide
-				direction="down"
-				in={openPopup.state}
+			<AlertPopup
 				container={containerRef.current}
-				mountOnEnter
-				unmountOnExit
-			>
-				<div className={openPopup.state ? "block absolute" : "hidden"}>
-					<AlertPopup
-						severity={popup}
-						title={popup == "success" ? "Success" : "Error"}
-						message={
-							popup == "success"
-								? "Account created successfully."
-								: "Sorry an error occurred, try again."
-						}
-					/>
-				</div>
-			</Slide>
+				open={openPopup.state}
+				severity={popupType}
+				title={popupType == "success" ? "Success" : "Error"}
+				message={
+					popupType == "success"
+						? "Account created successfully."
+						: "Sorry an error occurred, try again."
+				}
+			/>
+
 			{/* Header */}
 			<div className="flex flex-col items-start w-full">
 				<h1 className=" text-2xl leading-8 font-bold">Create a Password</h1>

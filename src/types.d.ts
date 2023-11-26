@@ -5,13 +5,19 @@ export type Passwords = {
 	confirmPassword: string;
 	acceptedPolicy: boolean;
 };
+
 export type AlertType = {
 	severity: PopupSeverity;
 	title: string;
 	message: string;
+	open: boolean;
+	container?: Element | ((element: Element) => Element) | null | undefined;
 };
-export type PopupType = { state: boolean; message: string };
+
+export type Popup = { state: boolean; message: string };
+
 export type ApiResponse = SuccessfulSignupResponse | FailedSignupResponse;
+
 export type SuccessfulSignupResponse = {
 	data: {
 		user: {
@@ -35,12 +41,33 @@ export type SuccessfulSignupResponse = {
 		status: "success";
 	};
 };
+export type SimulatedResponse = {
+	data: {
+		message: string;
+		status: "success";
+	};
+};
+export type SimulatedOTPResponse = {
+	data: {
+		message: string;
+	};
+	status: "success" | "error" | "idle" | "pending";
+	isError: boolean;
+	isSuccess: boolean;
+};
 
 export type FailedSignupResponse = {
 	success: false;
 	error: string;
 	message: string;
 };
+export type Endpoint =
+	| "/api/v1/auth/signup"
+	| "/api/v1/auth/activateAccount"
+	| "/api/v1/auth/signIn"
+	| "/api/v1/auth/resetPassword"
+	| "/api/v1/auth/resendOTP"
+	| "/api/v1/auth/refreshToken";
 
 // {
 // 	data: {
@@ -65,3 +92,4 @@ export type FailedSignupResponse = {
 // 		status: "success";
 // 	}
 // }
+$2b$12$Kbp0cT;

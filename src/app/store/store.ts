@@ -1,8 +1,10 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import CreateProfileReducer from "./slices/signUpSlice";
+import EmailVerificationReducer from "./slices/emailVerificationSlice";
 
 const reducers = combineReducers({
 	CreateProfile: CreateProfileReducer,
+	EmailContinueBtnClicked: EmailVerificationReducer,
 });
 export const store = configureStore({
 	reducer: reducers,

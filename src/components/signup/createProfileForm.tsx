@@ -1,20 +1,16 @@
 "use client";
 import React from "react";
 import { Phone } from "react-telephone";
-import { useRouter } from "next/navigation";
-import { useSelector, useDispatch } from "react-redux";
-import { useForm, Form, SubmitHandler } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import {
 	CreateProfileType,
 	setProfileData,
 } from "@/app/store/slices/signUpSlice";
-import { RootState } from "@/app/store/store";
 
 export default function UserCreateProfileForm() {
-	const router = useRouter();
 	const dispatch = useDispatch();
-	const user = useSelector((state: RootState) => state.CreateProfile);
 	const {
 		register,
 		formState: { errors },
@@ -27,6 +23,7 @@ export default function UserCreateProfileForm() {
 	const onSubmit: SubmitHandler<CreateProfileType> = async (
 		data: CreateProfileType
 	) => {
+		// Set user data in redux
 		dispatch(
 			setProfileData({
 				firstName: data.firstName,
@@ -36,8 +33,6 @@ export default function UserCreateProfileForm() {
 			})
 		);
 		// console.log(user);
-
-		// router.push("/about");
 	};
 
 	return (

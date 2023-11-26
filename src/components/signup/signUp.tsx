@@ -14,19 +14,17 @@ export default function SignUp() {
 	);
 
 	return (
-		<React.Suspense fallback={<CircularProgress />}>
-			<div className=" flex">
-				<Zoom in={createdProfile}>
-					<div className={createdProfile ? "block" : "hidden"}>
-						<UserCreatePasswordForm />
-					</div>
-				</Zoom>
-				<Zoom in={!createdProfile}>
-					<div className={createdProfile ? "hidden" : "block"}>
-						<UserCreateProfileForm />
-					</div>
-				</Zoom>
-			</div>
-		</React.Suspense>
+		<div className=" flex">
+			<Zoom in={createdProfile}>
+				<div className={createdProfile ? "block" : "hidden"}>
+					<UserCreatePasswordForm />
+				</div>
+			</Zoom>
+			<Zoom in={!createdProfile}>
+				<div className={createdProfile ? "hidden" : "block"}>
+					<UserCreateProfileForm />
+				</div>
+			</Zoom>
+		</div>
 	);
 }
