@@ -20,16 +20,22 @@ export async function simulateApiResponse(): Promise<SimulatedResponse> {
 }
 
 // Simulate OTP Response
-export async function simulateOTPResponse(): Promise<SimulatedOTPResponse> {
+export async function simulateOTPResponse(
+	type: boolean
+): Promise<SimulatedOTPResponse> {
+	console.log("sim", type ?? true);
+
 	return new Promise((resolve) => {
 		setTimeout(() => {
 			resolve({
 				data: {
-					message: "Account verified successfully",
+					message: type
+						? "Email verified successfully"
+						: "Email verification failed",
 				},
 				status: "pending",
-				isError: false,
-				isSuccess: true,
+				isError: !type,
+				isSuccess: type,
 			});
 		}, 2000);
 	});

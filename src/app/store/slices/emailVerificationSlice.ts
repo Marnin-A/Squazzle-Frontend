@@ -1,13 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface EmailVerificationType {
-	continueBtnClicked: boolean;
-	emailVerification: boolean;
+	continueBtnClicked?: boolean;
+	emailVerified?: boolean;
+	emailVerificationFailed?: boolean;
 }
 
 const initialState: EmailVerificationType = {
 	continueBtnClicked: false,
-	emailVerification: false,
+	emailVerified: false,
+	emailVerificationFailed: false,
 };
 
 const EmailVerificationSlice = createSlice({
@@ -17,13 +19,26 @@ const EmailVerificationSlice = createSlice({
 		setContinueBtnClicked: (state) => {
 			state.continueBtnClicked = true;
 		},
-		setEmailVerification: (state) => {
-			state.emailVerification = true;
+		setEmailVerified: (state, action: PayloadAction<EmailVerificationType>) => {
+			state.emailVerified = action.payload.emailVerified;
+		},
+		setEmailVerificationFailed: (
+			state,
+			action: PayloadAction<EmailVerificationType>
+		) => {
+			state.emailVerificationFailed = action.payload.emailVerificationFailed;
+		},
+		resetEmailVerification: (state) => {
+			state = initialState;
 		},
 	},
 });
 
-export const { setContinueBtnClicked, setEmailVerification } =
-	EmailVerificationSlice.actions;
+export const {
+	setContinueBtnClicked,
+	setEmailVerified,
+	setEmailVerificationFailed,
+	resetEmailVerification,
+} = EmailVerificationSlice.actions;
 
 export default EmailVerificationSlice.reducer;

@@ -11,15 +11,15 @@ import * as yup from "yup";
 import Link from "next/link";
 import { resetProfileData } from "@/app/store/slices/signUpSlice";
 import AlertPopup from "../notification/Alert";
-// import { PostData } from "@/utils/dataHandlers";
 import {
-	PopupSeverity,
 	Passwords,
 	Popup,
-	// SuccessfulSignupResponse,
 	FailedSignupResponse,
+	SuccessfulSignupResponse,
 } from "@/types";
-import { simulateApiResponse } from "@/tests/signupTest";
+// import { simulateApiResponse } from "@/tests/signupTest";
+import { usePostData } from "@/utils/dataHandlers";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function UserCreatePasswordForm() {
 	const router = useRouter();
@@ -28,8 +28,8 @@ export default function UserCreatePasswordForm() {
 	const [openPopup, setOpenPopup] = React.useState<Popup>({
 		state: false,
 		message: "",
+		type: undefined,
 	});
-	const [popupType, setPopupType] = React.useState<PopupSeverity>("success");
 	const label = { inputProps: { "aria-label": "Squazzle privacy policy" } };
 	const containerRef = React.useRef<HTMLDivElement>(null);
 	const passwordSchema = yup.object().shape({
@@ -48,7 +48,7 @@ export default function UserCreatePasswordForm() {
 			.string()
 			.required("*Confirm password is required")
 			.oneOf([yup.ref("password")], "*Passwords do not match"),
-		acceptedPolicy: yup.boolean().required("Checkbox must be checked"),
+		acceptPolicy: yup.boolean().required("Checkbox must be checked"),
 	});
 	// React Hook Form Validation
 	const {
@@ -61,47 +61,62 @@ export default function UserCreatePasswordForm() {
 		reValidateMode: "onChange",
 		mode: "onChange",
 	});
+	const {
+		error,
+		isError,
+		isPending,
+		isSuccess,
+		data: response,
+		mutateAsync: submitData,
+	} = usePostData();
+	console.log(response);
+	// Apply correct type to successfully retrieved data
+	const data = response?.data;
+	console.log(data);
+	console.log("error", isError, "success", isSuccess);
 
 	// Handle Form Submission
 	const onSubmit: SubmitHandler<Passwords> = async (passwords: Passwords) => {
-		// Get url
-		// const url =
-		// 	(process.env.NEXT_PUBLIC_SERVER_URL as RequestInfo) +
-		// 	"/api/v1/auth/signup";
+		// Upload user data
+		const res = await submitData({
+			endpoint: "/api/v1/auth/signup",
+			postData: {
+				...user,
+				password: passwords.password,
+			},
+		});
+		console.log("RES", res);
 
-		try {
-			// Upload user data
-			// const { data } = PostData(url, {
-			// 	...user,
-			// 	password: passwords.password,
-			// }) as unknown as SuccessfulSignupResponse;
-
-			const { data } = await simulateApiResponse();
-			console.log(data);
-
-			// Set popup type
-			if (data.status === "success") {
-				setPopupType("success");
-			} else {
-				setPopupType("error");
-			}
+		if (isSuccess) {
 			// Display popup
-			setOpenPopup({ ...openPopup, state: true, message: data.message });
+			setOpenPopup({
+				...openPopup,
+				state: true,
+				message: data.message,
+				type: "success",
+			});
 			// Remove popup
 			setTimeout(() => setOpenPopup({ ...openPopup, state: false }), 4000);
 			// console.log(data);
 			console.log({ ...user, password: passwords.password });
 			router.push("/emailVerification");
-		} catch (error) {
-			const e = error as FailedSignupResponse;
-
-			console.log(e);
-			setPopupType("error");
-			setOpenPopup({ ...openPopup, state: true, message: e.message });
+		}
+		if (isError) {
+			const e = error as unknown as FailedSignupResponse;
+			// Display error popup
+			setOpenPopup({
+				...openPopup,
+				state: true,
+				message: e.message,
+				type: "error",
+			});
+			// Hide error popup
 			setTimeout(() => setOpenPopup({ ...openPopup, state: false }), 4000);
+			console.log(e);
 			throw e;
 		}
 	};
+	// Cancel sign up
 	const handleCancel = () => {
 		dispatch(resetProfileData());
 	};
@@ -114,10 +129,10 @@ export default function UserCreatePasswordForm() {
 			<AlertPopup
 				container={containerRef.current}
 				open={openPopup.state}
-				severity={popupType}
-				title={popupType == "success" ? "Success" : "Error"}
+				severity={openPopup.type}
+				title={openPopup.type == "success" ? "Success" : "Error"}
 				message={
-					popupType == "success"
+					openPopup.type == "success"
 						? "Account created successfully."
 						: "Sorry an error occurred, try again."
 				}
@@ -199,7 +214,7 @@ export default function UserCreatePasswordForm() {
 				<div className="text-primary-grey text-base flex flex-col items-center">
 					<div className="flex">
 						<span>
-							<Checkbox {...register("acceptedPolicy")} {...label} />
+							<Checkbox {...register("acceptPolicy")} {...label} />
 						</span>
 						<p className="">
 							I confirm that I have read & agree to Squazzle{" "}
@@ -209,7 +224,7 @@ export default function UserCreatePasswordForm() {
 					</div>
 					<ErrorMessage
 						errors={errors}
-						name="acceptedPolicy"
+						name="acceptPolicy"
 						render={({ message }) => (
 							<p className="text-xs text-error bottom-[-22%]">{message}</p>
 						)}
@@ -222,7 +237,7 @@ export default function UserCreatePasswordForm() {
 						type="submit"
 						formTarget="password-form"
 					>
-						Create Account
+						{isPending ? <CircularProgress /> : <span> Create Account</span>}
 					</button>
 					<button
 						className="w-full hover:bg-primary-lightgreen hover:text-primary-green bg-white text-primary-green outline outline-primary-green font-bold py-2 px-4 rounded"
@@ -235,7 +250,7 @@ export default function UserCreatePasswordForm() {
 				<div className="flex justify-center items-center">
 					<p>
 						Already have an account?{" "}
-						<Link className="text-primary-green" href={"signin"}>
+						<Link className="text-primary-green" href={"/signin"}>
 							Sign in
 						</Link>
 					</p>

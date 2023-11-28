@@ -4,7 +4,7 @@ import EmailVerificationReducer from "./slices/emailVerificationSlice";
 
 const reducers = combineReducers({
 	CreateProfile: CreateProfileReducer,
-	EmailContinueBtnClicked: EmailVerificationReducer,
+	EmailVerification: EmailVerificationReducer,
 });
 export const store = configureStore({
 	reducer: reducers,

@@ -13,7 +13,7 @@ export default function EmailVerifiedCard() {
 		<div className="bg-white flex flex-col items-center justify-center w-1/3 aspect-square p-10 gap-8 text-center max-sm:justify-start max-sm:w-full max-sm:h-full max-sm:aspect-auto  max-lg:w-1/2">
 			<Image
 				src="/success-tick.svg"
-				alt="email icon"
+				alt="Success icon"
 				height={73.33}
 				width={73.33}
 				priority={false}

@@ -1,9 +1,14 @@
-export type PopupSeverity = "success" | "info" | "warning" | "error";
+export type PopupSeverity =
+	| "success"
+	| "info"
+	| "warning"
+	| "error"
+	| undefined;
 
 export type Passwords = {
 	password: string;
 	confirmPassword: string;
-	acceptedPolicy: boolean;
+	acceptPolicy: boolean;
 };
 
 export type AlertType = {
@@ -14,7 +19,7 @@ export type AlertType = {
 	container?: Element | ((element: Element) => Element) | null | undefined;
 };
 
-export type Popup = { state: boolean; message: string };
+export type Popup = { state: boolean; message: string; type: PopupSeverity };
 
 export type ApiResponse = SuccessfulSignupResponse | FailedSignupResponse;
 
