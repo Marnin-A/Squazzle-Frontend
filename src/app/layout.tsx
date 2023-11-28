@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
-import { StoreProvider } from "./store/storeProvider";
-import QueryProvider from "@/utils/QueryProvider";
+import { StoreProvider } from "./redux/storeProvider";
 
 const openSans = Open_Sans({
 	weight: ["400", "500", "700"],
@@ -23,12 +22,10 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<QueryProvider>
-			<StoreProvider>
-				<html lang="en">
-					<body className={openSans.className}>{children}</body>
-				</html>
-			</StoreProvider>
-		</QueryProvider>
+		<StoreProvider>
+			<html lang="en">
+				<body className={openSans.className}>{children}</body>
+			</html>
+		</StoreProvider>
 	);
 }

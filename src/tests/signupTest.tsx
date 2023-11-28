@@ -3,7 +3,7 @@ import {
 	SimulatedOTPResponse,
 	SimulatedResponse,
 	SuccessfulSignupResponse,
-} from "@/types";
+} from "@/types/types";
 
 // Simulate Post Request
 export async function simulateApiResponse(): Promise<SimulatedResponse> {

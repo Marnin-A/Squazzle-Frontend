@@ -1,13 +1,13 @@
 "use client";
-import React from "react";
-import { Phone } from "react-telephone";
+import React, { useRef } from "react";
+import { Phone, getCountryByIso } from "react-telephone";
 import { useDispatch } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import {
 	CreateProfileType,
 	setProfileData,
-} from "@/app/store/slices/signUpSlice";
+} from "@/app/redux/slices/signUpSlice";
 
 export default function UserCreateProfileForm() {
 	const dispatch = useDispatch();
@@ -18,6 +18,16 @@ export default function UserCreateProfileForm() {
 	} = useForm<CreateProfileType>({
 		criteriaMode: "all",
 	});
+	const [countryCode, setCountryCode] = React.useState<string>("");
+	const countryCodeInput = React.useRef<HTMLSelectElement>(null);
+
+	function addCountryCode(
+		countryCodeInput: React.RefObject<HTMLSelectElement>
+	) {
+		setCountryCode(
+			`+${getCountryByIso(countryCodeInput.current?.value as any)[3]}`
+		);
+	}
 
 	// Update user data in redux
 	const onSubmit: SubmitHandler<CreateProfileType> = async (
@@ -29,10 +39,9 @@ export default function UserCreateProfileForm() {
 				firstName: data.firstName,
 				lastName: data.lastName,
 				email: data.email,
-				phoneNumber: data.phoneNumber,
+				phoneNumber: countryCode + data.phoneNumber,
 			})
 		);
-		// console.log(user);
 	};
 
 	return (
@@ -48,7 +57,6 @@ export default function UserCreateProfileForm() {
 			<form
 				className=" bg-transparent w-full pt-6 flex flex-col gap-6"
 				onSubmit={handleSubmit(onSubmit)}
-				id="signup"
 			>
 				{/* First Name Input */}
 				<div className="relative">
@@ -181,7 +189,11 @@ export default function UserCreateProfileForm() {
 						}
 					>
 						<Phone defaultCountry="ng">
-							<Phone.Country className="w-[35%] md:w-[28%] ml-[2%] mr-[2%] outline-none text-base border-r border-neutral-600" />
+							<Phone.Country
+								value={countryCode}
+								ref={countryCodeInput}
+								className="w-[35%] md:w-[28%] ml-[2%] mr-[2%] outline-none text-base border-r border-neutral-600"
+							/>
 							<Phone.Number
 								placeholder="Number"
 								type="number"
@@ -192,6 +204,9 @@ export default function UserCreateProfileForm() {
 									maxLength: {
 										value: 10,
 										message: "Phone number can't be more than 10 chars",
+									},
+									onBlur() {
+										addCountryCode(countryCodeInput);
 									},
 								})}
 							/>
@@ -211,8 +226,7 @@ export default function UserCreateProfileForm() {
 				<div className="flex items-center justify-center">
 					<button
 						className="w-full bg-primary-lightgreen text-primary-green hover:bg-primary-green hover:text-white font-bold py-2 px-4 rounded"
-						type="submit"
-						formTarget="signup"
+						type="button"
 					>
 						Continue
 					</button>

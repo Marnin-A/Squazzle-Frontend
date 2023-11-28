@@ -9,7 +9,7 @@ export default function EmailVerificationNavBar() {
 				alt="Mobile Squazzle Logo"
 				width={177}
 				height={57}
-				priority={false}
+				priority={true}
 				className="w-min h-auto"
 			/>
 		</nav>

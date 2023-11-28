@@ -4,14 +4,14 @@ export interface CreateProfileType {
 	firstName: string;
 	lastName: string;
 	email: string;
-	phoneNumber: number | undefined;
+	phoneNumber: string;
 }
 
 const initialState: CreateProfileType = {
 	firstName: "",
 	lastName: "",
 	email: "",
-	phoneNumber: undefined,
+	phoneNumber: "",
 };
 
 const CreateProfileSlice = createSlice({
@@ -29,7 +29,7 @@ const CreateProfileSlice = createSlice({
 			state.email = "";
 			state.firstName = "";
 			state.lastName = "";
-			state.phoneNumber = undefined;
+			state.phoneNumber = "";
 		},
 	},
 });

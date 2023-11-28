@@ -5,21 +5,20 @@ import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ErrorMessage } from "@hookform/error-message";
-import { RootState } from "@/app/store/store";
+import { RootState } from "@/app/redux/store";
 import Checkbox from "@mui/material/Checkbox";
 import * as yup from "yup";
 import Link from "next/link";
-import { resetProfileData } from "@/app/store/slices/signUpSlice";
+import { resetProfileData } from "@/app/redux/slices/signUpSlice";
 import AlertPopup from "../notification/Alert";
+import { Passwords, Popup } from "@/types/types";
+// import { simulateApiResponse } from "@/tests/signupTest";
+import CircularProgress from "@mui/material/CircularProgress";
+import { useSignUpMutation } from "@/app/redux/services/authSlice";
 import {
-	Passwords,
-	Popup,
 	FailedSignupResponse,
 	SuccessfulSignupResponse,
-} from "@/types";
-// import { simulateApiResponse } from "@/tests/signupTest";
-import { usePostData } from "@/utils/dataHandlers";
-import CircularProgress from "@mui/material/CircularProgress";
+} from "@/types/authTypes";
 
 export default function UserCreatePasswordForm() {
 	const router = useRouter();
@@ -61,31 +60,21 @@ export default function UserCreatePasswordForm() {
 		reValidateMode: "onChange",
 		mode: "onChange",
 	});
-	const {
-		error,
-		isError,
-		isPending,
-		isSuccess,
-		data: response,
-		mutateAsync: submitData,
-	} = usePostData();
-	console.log(response);
+	const [submitData, { error, isError, isLoading, isSuccess, data: response }] =
+		useSignUpMutation();
+	console.log("##### Create Password Form Logs #####");
 	// Apply correct type to successfully retrieved data
-	const data = response?.data;
-	console.log(data);
+	const data = response as SuccessfulSignupResponse;
+	console.log("Data:", data);
 	console.log("error", isError, "success", isSuccess);
 
 	// Handle Form Submission
 	const onSubmit: SubmitHandler<Passwords> = async (passwords: Passwords) => {
+		// Log User data
+		console.log({ ...user, password: passwords.password });
+
 		// Upload user data
-		const res = await submitData({
-			endpoint: "/api/v1/auth/signup",
-			postData: {
-				...user,
-				password: passwords.password,
-			},
-		});
-		console.log("RES", res);
+		const res = await submitData({ ...user, password: passwords.password });
 
 		if (isSuccess) {
 			// Display popup
@@ -96,10 +85,13 @@ export default function UserCreatePasswordForm() {
 				type: "success",
 			});
 			// Remove popup
-			setTimeout(() => setOpenPopup({ ...openPopup, state: false }), 4000);
+			setTimeout(() => {
+				setOpenPopup({ ...openPopup, state: false });
+			}, 4000);
 			// console.log(data);
-			console.log({ ...user, password: passwords.password });
-			router.push("/emailVerification");
+			setTimeout(() => {
+				router.push("/emailVerification");
+			});
 		}
 		if (isError) {
 			const e = error as unknown as FailedSignupResponse;
@@ -113,9 +105,12 @@ export default function UserCreatePasswordForm() {
 			// Hide error popup
 			setTimeout(() => setOpenPopup({ ...openPopup, state: false }), 4000);
 			console.log(e);
-			throw e;
 		}
+
+		// Log server response
+		console.log("RESPONSE:", res);
 	};
+
 	// Cancel sign up
 	const handleCancel = () => {
 		dispatch(resetProfileData());
@@ -237,7 +232,11 @@ export default function UserCreatePasswordForm() {
 						type="submit"
 						formTarget="password-form"
 					>
-						{isPending ? <CircularProgress /> : <span> Create Account</span>}
+						{isLoading ? (
+							<CircularProgress color="inherit" />
+						) : (
+							<span> Create Account</span>
+						)}
 					</button>
 					<button
 						className="w-full hover:bg-primary-lightgreen hover:text-primary-green bg-white text-primary-green outline outline-primary-green font-bold py-2 px-4 rounded"

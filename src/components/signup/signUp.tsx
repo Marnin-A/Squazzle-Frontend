@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import UserCreatePasswordForm from "./createPasswordForm";
-import { RootState } from "@/app/store/store";
+import { RootState } from "@/app/redux/store";
 import { useSelector } from "react-redux";
 import Zoom from "@mui/material/Zoom";
 import UserCreateProfileForm from "./createProfileForm";

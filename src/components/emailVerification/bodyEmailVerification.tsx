@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "@/app/store/store";
+import { RootState } from "@/app/redux/store";
 import EmailNotificationCard from "./emailNotificationCard";
 import EnterOtpCard from "./enterOtpCard";
 import EmailVerifiedCard from "./emailVerifiedCard";
@@ -24,7 +24,8 @@ export default function EmailVerificationBody() {
 	const localStorageEmail = localStorage.getItem("email") as string;
 	const renterComponentsConditionally = (): React.JSX.Element => {
 		// Render when continue btn is clicked and email is verified
-		if (continueBtnClicked && emailVerified) return <EmailVerifiedCard />;
+		if (continueBtnClicked && emailVerified && !emailVerificationFailed)
+			return <EmailVerifiedCard />;
 
 		// Render when continue btn is clicked email is not verified and email verification failed
 		if (continueBtnClicked && !emailVerified && emailVerificationFailed)

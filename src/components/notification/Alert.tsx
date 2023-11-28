@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
-import { AlertType } from "@/types";
+import { AlertType } from "@/types/types";
 import Slide from "@mui/material/Slide";
 
 export default function AlertPopup({
@@ -10,13 +10,23 @@ export default function AlertPopup({
 	message,
 	open,
 }: AlertType) {
+	const [isOpen, setIsOpen] = React.useState<boolean>(false);
+
+	React.useEffect(() => {
+		// Open popup
+		if (open) setIsOpen(true);
+
+		// Close popup
+		setTimeout(() => setIsOpen(false), 5000);
+	}, [open]);
+
 	return (
 		<Slide
 			direction="down"
-			in={open}
+			in={isOpen}
 			mountOnEnter
 			unmountOnExit
-			className={open ? "block absolute top-14" : "hidden"}
+			className={isOpen ? "block absolute top-14" : "hidden"}
 		>
 			<div>
 				<Alert className="text-xl" severity={severity}>

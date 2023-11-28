@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
-import { setContinueBtnClicked } from "@/app/store/slices/emailVerificationSlice";
+import { setContinueBtnClicked } from "@/app/redux/slices/emailVerificationSlice";
 
 export default function EmailNotificationCard({
 	userEmail,
