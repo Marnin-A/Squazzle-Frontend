@@ -5,7 +5,6 @@ import { RootState } from "@/app/redux/store";
 import { useSelector } from "react-redux";
 import Zoom from "@mui/material/Zoom";
 import UserCreateProfileForm from "./createProfileForm";
-import { CircularProgress } from "@mui/material";
 
 export default function SignUp() {
 	const user = useSelector((state: RootState) => state.CreateProfile);

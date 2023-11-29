@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import * as Types from "@/types/authTypes";
 
+// Define an abort controller to stop requests if the user chooses
+export const SignInAbortController = new AbortController();
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
 	reducerPath: "services",
@@ -35,15 +37,9 @@ export const authApi = createApi({
 				url: "/api/v1/auth/signIn",
 				method: "POST",
 				body: data,
+				signal: SignInAbortController.signal,
 			}),
 		}),
-		// SignIn: builder.mutation<Types.SignInResponse, Types.SignInRequest>({
-		// 	query: (data) => ({
-		// 		url: "/api/v1/auth/signIn",
-		// 		method: "POST",
-		// 		body: data,
-		// 	}),
-		// }),
 	}),
 });
 

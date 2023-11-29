@@ -226,7 +226,7 @@ export default function UserCreateProfileForm() {
 				<div className="flex items-center justify-center">
 					<button
 						className="w-full bg-primary-lightgreen text-primary-green hover:bg-primary-green hover:text-white font-bold py-2 px-4 rounded"
-						type="button"
+						type="submit"
 					>
 						Continue
 					</button>

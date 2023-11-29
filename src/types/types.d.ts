@@ -38,9 +38,9 @@ export type SimulatedOTPResponse = {
 export type Endpoint =
 	| "/api/v1/auth/signup"
 	| "/api/v1/auth/activateAccount"
+	| "/api/v1/auth/resendOTP"
 	| "/api/v1/auth/signIn"
 	| "/api/v1/auth/resetPassword"
-	| "/api/v1/auth/resendOTP"
 	| "/api/v1/auth/refreshToken";
 
 // email:auduweb@gmail.com, password:WeuI#u3u

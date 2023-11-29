@@ -8,9 +8,22 @@
 	background-size: cover;
 	background-position: 50% 50%;
 }
-
+.signIn-bg {
+	background: linear-gradient(
+			0deg,
+			rgba(250, 230, 199, 0) 37%,
+			rgba(1, 109, 113, 1) 100%
+		),
+		url(../../public/SignIn-Background.png);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: 50%;
+}
 @media (width < 768px) {
 	.auth-bg {
+		background: none;
+	}
+	.signIn-bg {
 		background: none;
 	}
 }

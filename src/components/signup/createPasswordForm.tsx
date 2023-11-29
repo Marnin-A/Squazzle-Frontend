@@ -7,7 +7,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ErrorMessage } from "@hookform/error-message";
 import { RootState } from "@/app/redux/store";
 import Checkbox from "@mui/material/Checkbox";
-import * as yup from "yup";
 import Link from "next/link";
 import { resetProfileData } from "@/app/redux/slices/signUpSlice";
 import AlertPopup from "../notification/Alert";
@@ -19,6 +18,8 @@ import {
 	FailedSignupResponse,
 	SuccessfulSignupResponse,
 } from "@/types/authTypes";
+import { passwordSchema } from "@/utils/schemas";
+import ShowPassword from "../sigin/showPassword";
 
 export default function UserCreatePasswordForm() {
 	const router = useRouter();
@@ -29,37 +30,27 @@ export default function UserCreatePasswordForm() {
 		message: "",
 		type: undefined,
 	});
+	const [showPassword, setShowPassword] = React.useState(false);
+	const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+
+	// Checkbox aria-label
 	const label = { inputProps: { "aria-label": "Squazzle privacy policy" } };
+	// Popup container ref
 	const containerRef = React.useRef<HTMLDivElement>(null);
-	const passwordSchema = yup.object().shape({
-		password: yup
-			.string()
-			.required("*Password is required")
-			.min(8, "*Password must have at least 8 charaters")
-			.matches(RegExp("(.*[a-z].*)"), "*Must contain at least one lowercase")
-			.matches(RegExp("(.*[A-Z].*)"), "*Must contain at least one uppercase")
-			.matches(RegExp("(.*\\d.*)"), "*Must contain at least one number")
-			.matches(
-				RegExp('[!@#$%^&*(),.?":{}|<>]'),
-				"*Must contain at least one special"
-			),
-		confirmPassword: yup
-			.string()
-			.required("*Confirm password is required")
-			.oneOf([yup.ref("password")], "*Passwords do not match"),
-		acceptPolicy: yup.boolean().required("Checkbox must be checked"),
-	});
+
 	// React Hook Form Validation
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: { errors, isSubmitting },
+		reset,
 	} = useForm<Passwords>({
 		resolver: yupResolver(passwordSchema),
 		criteriaMode: "all",
 		reValidateMode: "onChange",
 		mode: "onChange",
 	});
+	// Data mutation and req/res states from RTK Query
 	const [submitData, { error, isError, isLoading, isSuccess, data: response }] =
 		useSignUpMutation();
 	console.log("##### Create Password Form Logs #####");
@@ -84,10 +75,6 @@ export default function UserCreatePasswordForm() {
 				message: data.message,
 				type: "success",
 			});
-			// Remove popup
-			setTimeout(() => {
-				setOpenPopup({ ...openPopup, state: false });
-			}, 4000);
 			// console.log(data);
 			setTimeout(() => {
 				router.push("/emailVerification");
@@ -102,13 +89,13 @@ export default function UserCreatePasswordForm() {
 				message: e.message,
 				type: "error",
 			});
-			// Hide error popup
-			setTimeout(() => setOpenPopup({ ...openPopup, state: false }), 4000);
 			console.log(e);
 		}
 
 		// Log server response
 		console.log("RESPONSE:", res);
+		// Reset input fields
+		reset();
 	};
 
 	// Cancel sign up
@@ -148,7 +135,7 @@ export default function UserCreatePasswordForm() {
 				id="password-form"
 			>
 				{/* Password Input */}
-				<div className="">
+				<div className="relative">
 					<label
 						className="block text-gray-700 text-md mb-2"
 						htmlFor="password"
@@ -163,10 +150,14 @@ export default function UserCreatePasswordForm() {
 								: " focus:outline-success focus:shadow-outline")
 						}
 						id="password"
-						type="password"
+						type={showPassword ? "text	" : "password"}
 						placeholder="**************"
 						autoComplete="on"
 						{...register("password")}
+					/>
+					<ShowPassword
+						onClick={() => setShowPassword((prev) => !prev)}
+						showPassword={showPassword}
 					/>
 					<ErrorMessage
 						errors={errors}
@@ -177,7 +168,7 @@ export default function UserCreatePasswordForm() {
 					/>
 				</div>
 				{/* Confirm Password Input */}
-				<div className="">
+				<div className="relative">
 					<label
 						className="block text-gray-700 text-md mb-2"
 						htmlFor="confirmPassword"
@@ -192,10 +183,14 @@ export default function UserCreatePasswordForm() {
 								: " focus:outline-success focus:shadow-outline")
 						}
 						id="confirmPassword"
-						type="password"
+						type={showConfirmPassword ? "text	" : "password"}
 						placeholder="**************"
 						autoComplete="current-password"
 						{...register("confirmPassword")}
+					/>
+					<ShowPassword
+						onClick={() => setShowConfirmPassword((prev) => !prev)}
+						showPassword={showConfirmPassword}
 					/>
 					<ErrorMessage
 						errors={errors}
@@ -231,6 +226,7 @@ export default function UserCreatePasswordForm() {
 						className="w-full hover:bg-primary-lightgreen hover:text-primary-green bg-primary-green text-white font-bold py-2 px-4 rounded"
 						type="submit"
 						formTarget="password-form"
+						disabled={isSubmitting}
 					>
 						{isLoading ? (
 							<CircularProgress color="inherit" />
