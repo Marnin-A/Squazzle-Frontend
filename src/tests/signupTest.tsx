@@ -1,9 +1,4 @@
-import {
-	ApiResponse,
-	SimulatedOTPResponse,
-	SimulatedResponse,
-	SuccessfulSignupResponse,
-} from "@/types/types";
+import { SimulatedOTPResponse, SimulatedResponse } from "@/types/types";
 
 // Simulate Post Request
 export async function simulateApiResponse(): Promise<SimulatedResponse> {
