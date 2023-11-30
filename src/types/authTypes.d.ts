@@ -1,4 +1,6 @@
-export type ValidateOtpResponse = { success: boolean; message: string };
+export type ValidateOtpResponse =
+	| { success: true; message: string }
+	| { success: false; message: string; error: string };
 export type ValidateOtpRequest = { otp: number; email: string };
 export type ApiResponse = SuccessfulSignupResponse | FailedSignupResponse;
 export type SuccessfulSignupResponse = {
@@ -26,7 +28,7 @@ export type SuccessfulSignupResponse = {
 		status: "success";
 	};
 };
-export type FailedSignupResponse = {
+export type FailedResponse = {
 	success: false;
 	error: string;
 	message: string;
@@ -71,6 +73,7 @@ export type SignInSuccessful = {
 	};
 };
 export type SignInFailed = { success: false };
+
 // {
 //   "status": "success",
 //   "message": "Account successfully created, Check your mail for activation code",

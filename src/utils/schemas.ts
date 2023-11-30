@@ -18,3 +18,6 @@ export const passwordSchema = yup.object().shape({
 		.oneOf([yup.ref("password")], "*Passwords do not match"),
 	acceptPolicy: yup.boolean().required("Checkbox must be checked"),
 });
+export const emailSchema = yup.object().shape({
+	email: yup.string().email("*Invalid email").required("*Email is required"),
+});

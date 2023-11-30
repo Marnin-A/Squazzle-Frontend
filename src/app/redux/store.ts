@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import CreateProfileReducer from "./slices/signUpSlice";
 import EmailVerificationReducer from "./slices/emailVerificationSlice";
-import { authApi } from "./services/authSlice";
+import { authApi } from "./services/authServices";
 
 const reducers = combineReducers({
 	CreateProfile: CreateProfileReducer,

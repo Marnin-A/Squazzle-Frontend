@@ -13,11 +13,8 @@ import AlertPopup from "../notification/Alert";
 import { Passwords, Popup } from "@/types/types";
 // import { simulateApiResponse } from "@/tests/signupTest";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useSignUpMutation } from "@/app/redux/services/authSlice";
-import {
-	FailedSignupResponse,
-	SuccessfulSignupResponse,
-} from "@/types/authTypes";
+import { useSignUpMutation } from "@/app/redux/services/authServices";
+import { FailedResponse, SuccessfulSignupResponse } from "@/types/authTypes";
 import { passwordSchema } from "@/utils/schemas";
 import ShowPassword from "../sigin/showPassword";
 
@@ -43,7 +40,6 @@ export default function UserCreatePasswordForm() {
 		register,
 		handleSubmit,
 		formState: { errors, isSubmitting },
-		reset,
 	} = useForm<Passwords>({
 		resolver: yupResolver(passwordSchema),
 		criteriaMode: "all",
@@ -75,13 +71,12 @@ export default function UserCreatePasswordForm() {
 				message: data.message,
 				type: "success",
 			});
-			// console.log(data);
-			setTimeout(() => {
-				router.push("/emailVerification");
-			});
+			console.log(res);
+
+			router.push("/emailVerification");
 		}
 		if (isError) {
-			const e = error as unknown as FailedSignupResponse;
+			const e = error as unknown as FailedResponse;
 			// Display error popup
 			setOpenPopup({
 				...openPopup,
@@ -95,7 +90,7 @@ export default function UserCreatePasswordForm() {
 		// Log server response
 		console.log("RESPONSE:", res);
 		// Reset input fields
-		reset();
+		router.push("/emailVerification");
 	};
 
 	// Cancel sign up
@@ -134,6 +129,22 @@ export default function UserCreatePasswordForm() {
 				onSubmit={handleSubmit(onSubmit)}
 				id="password-form"
 			>
+				<div className="hidden">
+					<label
+						className="block text-gray-700 text-md mb-2"
+						htmlFor="password"
+					>
+						Username
+					</label>
+					<input
+						className={
+							"h-12 text-xl shadow-md appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline focus:shadow-outline placeholder:pl-4 "
+						}
+						type="text"
+						placeholder="username"
+						autoComplete="username"
+					/>
+				</div>
 				{/* Password Input */}
 				<div className="relative">
 					<label
@@ -152,7 +163,7 @@ export default function UserCreatePasswordForm() {
 						id="password"
 						type={showPassword ? "text	" : "password"}
 						placeholder="**************"
-						autoComplete="on"
+						autoComplete="new-password"
 						{...register("password")}
 					/>
 					<ShowPassword
@@ -184,8 +195,8 @@ export default function UserCreatePasswordForm() {
 						}
 						id="confirmPassword"
 						type={showConfirmPassword ? "text	" : "password"}
-						placeholder="**************"
 						autoComplete="current-password"
+						placeholder="**************"
 						{...register("confirmPassword")}
 					/>
 					<ShowPassword

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "next/link";
@@ -9,10 +9,10 @@ import CircularProgress from "@mui/material/CircularProgress";
 import {
 	useSignInMutation,
 	SignInAbortController,
-} from "@/app/redux/services/authSlice";
+} from "@/app/redux/services/authServices";
 import AlertPopup from "../notification/Alert";
 import { useRouter } from "next/navigation";
-import { FailedSignupResponse } from "@/types/authTypes";
+import { FailedResponse } from "@/types/authTypes";
 import ShowPassword from "./showPassword";
 
 export default function SignInRight() {
@@ -61,7 +61,7 @@ export default function SignInRight() {
 			router.push("/home");
 		}
 		if (isError) {
-			const e = error as unknown as FailedSignupResponse;
+			const e = error as unknown as FailedResponse;
 			// Display error popup
 			setOpenPopup((prev) => ({
 				...prev,
@@ -84,7 +84,9 @@ export default function SignInRight() {
 			{/* Header */}
 			<div className="flex flex-col items-start w-full">
 				<h1 className=" text-2xl leading-8 font-bold">Welcome back!</h1>
-				<h3 className="text-md">We are thrilled to see you</h3>
+				<h3 className="text-md text-primary-grey">
+					We are thrilled to see you
+				</h3>
 			</div>
 			{/* Form */}
 			<form
@@ -166,7 +168,7 @@ export default function SignInRight() {
 						<span>
 							<Checkbox {...register("rememberMe")} {...label} />
 						</span>
-						<p>Remember me</p>
+						<p className="text-gray-500">Remember me</p>
 					</div>
 					<Link className="text-primary-green" href="/forgotPassword">
 						Forgot Password?

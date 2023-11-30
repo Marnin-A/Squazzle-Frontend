@@ -16,6 +16,7 @@ export default function EmailVerifiedCard() {
 				alt="Success icon"
 				height={73.33}
 				width={73.33}
+				placeholder="empty"
 				priority={false}
 				className="w-min h-auto"
 			/>

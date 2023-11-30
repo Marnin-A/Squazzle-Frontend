@@ -41,7 +41,8 @@ export type Endpoint =
 	| "/api/v1/auth/resendOTP"
 	| "/api/v1/auth/signIn"
 	| "/api/v1/auth/resetPassword"
-	| "/api/v1/auth/refreshToken";
+	| "/api/v1/auth/refreshToken"
+	| "/api/v1/auth/forgotPassword";
 
 // email:auduweb@gmail.com, password:WeuI#u3u
 // $2b$12$Kbp0cT;

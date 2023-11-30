@@ -1,14 +1,14 @@
 import React from "react";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
+import AlertPopup from "../notification/Alert";
+import { CircularProgress } from "@mui/material";
 import {
 	resetEmailVerification,
 	setEmailVerified,
 } from "@/app/redux/slices/emailVerificationSlice";
-import AlertPopup from "../notification/Alert";
-import { useResendOTPMutation } from "@/app/redux/services/authSlice";
-import { CircularProgress } from "@mui/material";
 // import { simulateOTPResponse } from "@/tests/signupTest";
+import { useResendOTPMutation } from "@/app/redux/services/authServices";
 
 export default function FailedEmailVerifiedCard() {
 	const dispatch = useDispatch();
@@ -34,7 +34,7 @@ export default function FailedEmailVerifiedCard() {
 			dispatch(setEmailVerified({ emailVerified: false }));
 		}
 	}, [dispatch, isError, isSuccess]);
-
+	data && console.log(data);
 	return (
 		<div className="bg-white flex flex-col items-center justify-center w-1/3 aspect-square p-10 gap-8 text-center max-sm:justify-start max-sm:w-full max-sm:h-full max-sm:aspect-auto  max-lg:w-1/2">
 			<AlertPopup
@@ -48,6 +48,7 @@ export default function FailedEmailVerifiedCard() {
 				alt="Failed Icon"
 				height={73.33}
 				width={73.33}
+				placeholder="empty"
 				priority={false}
 				className="w-min h-auto"
 			/>

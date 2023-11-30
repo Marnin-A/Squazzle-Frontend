@@ -19,6 +19,7 @@ export default function EmailNotificationCard({
 				alt="email icon"
 				height={88}
 				width={88}
+				placeholder="empty"
 				priority={false}
 				className="w-min h-auto"
 			/>

@@ -1,12 +1,12 @@
 export default function useLocalStorage() {
-	const setItem = (key: string, value: unknown) => {
+	const setLocalStorage = (key: string, value: unknown) => {
 		try {
 			window.localStorage.setItem(key, JSON.stringify(value));
 		} catch (error) {
 			console.log(error);
 		}
 	};
-	const getItem = (key: string) => {
+	const getLocalStorage = (key: string) => {
 		try {
 			const item = window.localStorage.getItem(key);
 			return item ? JSON.parse(item as string) : `${key} is ${undefined}`;
@@ -14,7 +14,7 @@ export default function useLocalStorage() {
 			console.log(error);
 		}
 	};
-	const removeItem = (key: string) => {
+	const removeLocalStorage = (key: string) => {
 		try {
 			window.localStorage.removeItem(key);
 		} catch (error) {
@@ -22,6 +22,12 @@ export default function useLocalStorage() {
 		}
 		return;
 	};
+	const clearLocalStorage = () => localStorage.clear();
 
-	return { setItem, getItem, removeItem };
+	return {
+		setLocalStorage,
+		getLocalStorage,
+		removeLocalStorage,
+		clearLocalStorage,
+	};
 }

@@ -7,18 +7,18 @@ import React from "react";
 export default function Page() {
 	// Lazy load email notification body component with ssr:false
 	// to avoid "ReferenceError: localStorage is not defined"
-	const DynamicEmailNotificationBody = dynamic(
+	const DynamicEmailVerificationBody = dynamic(
 		() => import("@/components/emailVerification/bodyEmailVerification"),
 		{
 			ssr: false,
-			loading: () => <CircularProgress color="success" className="my-auto" />,
+			loading: () => <CircularProgress color="success" className="m-auto" />,
 		}
 	);
 
 	return (
-		<div className="h-screen flex flex-col justify-start items-center bg-off-white">
+		<main className="h-screen flex flex-col justify-start items-center bg-off-white">
 			<EmailVerificationNavBar />
-			<DynamicEmailNotificationBody />
-		</div>
+			<DynamicEmailVerificationBody />
+		</main>
 	);
 }

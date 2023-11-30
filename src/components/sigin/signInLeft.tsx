@@ -9,6 +9,7 @@ export default function SignInLeft() {
 				alt="Squazzle Logo"
 				width={177}
 				height={57}
+				placeholder="empty"
 				priority={false}
 				className="w-min h-auto md:visible max-md:hidden"
 			/>
@@ -17,6 +18,7 @@ export default function SignInLeft() {
 				alt="Mobile Squazzle Logo"
 				width={177}
 				height={57}
+				placeholder="empty"
 				priority={false}
 				className="w-min h-auto max-md:visible md:hidden"
 			/>

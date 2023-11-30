@@ -9,7 +9,7 @@ import {
 import {
 	useResendOTPMutation,
 	useValidateOTPMutation,
-} from "@/app/redux/services/authSlice";
+} from "@/app/redux/services/authServices";
 // import { simulateOTPResponse } from "@/tests/signupTest";
 
 export default function EnterOtpCard({ userEmail }: { userEmail: string }) {
@@ -22,6 +22,7 @@ export default function EnterOtpCard({ userEmail }: { userEmail: string }) {
 			isSuccess: isOtpSuccess,
 			isLoading: isOtpPending,
 			data: validateResponseData,
+			error,
 		},
 	] = useValidateOTPMutation();
 
@@ -55,6 +56,8 @@ export default function EnterOtpCard({ userEmail }: { userEmail: string }) {
 		}
 
 		if (isOtpError || isResendError) {
+			console.log(error);
+
 			// Set email verification and email verified state to false
 			dispatch(setEmailVerified({ emailVerified: false }));
 			dispatch(setEmailVerificationFailed({ emailVerificationFailed: true }));
@@ -62,7 +65,14 @@ export default function EnterOtpCard({ userEmail }: { userEmail: string }) {
 
 		console.log("##### EnterOtpCard Logs #####");
 		console.log("error", isOtpError, "success", isOtpSuccess);
-	}, [dispatch, isOtpError, isOtpSuccess, isResendError, isResendSuccess]);
+	}, [
+		dispatch,
+		isOtpError,
+		isOtpSuccess,
+		isResendError,
+		isResendSuccess,
+		error,
+	]);
 
 	return (
 		<div className="bg-white flex flex-col items-center justify-center w-1/2 aspect-square p-10 gap-8 text-center max-sm:justify-start max-sm:h-full max-sm:w-full max-lg:h-3/4 max-lg:w-3/4 max-sm:aspect-auto ">
@@ -89,12 +99,14 @@ export default function EnterOtpCard({ userEmail }: { userEmail: string }) {
 				className="w-full bg-primary-lightgreen text-primary-green hover:bg-primary-green hover:text-white font-bold py-2 px-4 rounded"
 				type="button"
 				// Verify OTP
-				onClick={() =>
+				onClick={() => {
+					console.log(localStorageEmail, Number(otp));
+
 					validateOTP({
 						email: localStorageEmail,
 						otp: Number(otp),
-					})
-				}
+					});
+				}}
 			>
 				{isOtpPending || isResendPending ? (
 					<div

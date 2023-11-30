@@ -8,6 +8,7 @@ export default function EmailVerificationNavBar() {
 				src="/Mobile-logo.svg"
 				alt="Mobile Squazzle Logo"
 				width={177}
+				placeholder="empty"
 				height={57}
 				priority={true}
 				className="w-min h-auto"

@@ -1,8 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import * as Types from "@/types/authTypes";
+import { ValidateOtpResponse } from "@/types/authTypes";
 
 // Define an abort controller to stop requests if the user chooses
 export const SignInAbortController = new AbortController();
+export const SignUpAbortController = new AbortController();
+export const ForgotPasswordAbortController = new AbortController();
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
 	reducerPath: "services",
@@ -13,6 +16,7 @@ export const authApi = createApi({
 				url: "/api/v1/auth/signup",
 				method: "POST",
 				body: userData,
+				signal: SignUpAbortController.signal,
 			}),
 		}),
 		validateOTP: builder.mutation<
@@ -40,6 +44,14 @@ export const authApi = createApi({
 				signal: SignInAbortController.signal,
 			}),
 		}),
+		handleForgotPassword: builder.mutation<ValidateOtpResponse, string>({
+			query: (data) => ({
+				url: "/api/v1/auth/forgotPassword",
+				method: "POST",
+				body: data,
+				signal: ForgotPasswordAbortController.signal,
+			}),
+		}),
 	}),
 });
 
@@ -50,4 +62,5 @@ export const {
 	useValidateOTPMutation,
 	useResendOTPMutation,
 	useSignInMutation,
+	useHandleForgotPasswordMutation,
 } = authApi;

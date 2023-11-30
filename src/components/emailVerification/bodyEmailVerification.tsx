@@ -1,13 +1,15 @@
 "use client";
 import React from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "@/app/redux/store";
-import EmailNotificationCard from "./emailNotificationCard";
 import EnterOtpCard from "./enterOtpCard";
+import { RootState } from "@/app/redux/store";
 import EmailVerifiedCard from "./emailVerifiedCard";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import EmailNotificationCard from "./emailNotificationCard";
 import FailedEmailVerifiedCard from "./failedEmailVerificationCard";
 
 export default function EmailVerificationBody() {
+	const { setLocalStorage, getLocalStorage } = useLocalStorage();
 	const { email } = useSelector((state: RootState) => state.CreateProfile);
 	const { continueBtnClicked } = useSelector(
 		(state: RootState) => state.EmailVerification
@@ -20,8 +22,8 @@ export default function EmailVerificationBody() {
 	);
 	console.log("failed", emailVerificationFailed);
 
-	email && localStorage.setItem("email", email);
-	const localStorageEmail = localStorage.getItem("email") as string;
+	email && setLocalStorage("email", email);
+	const localStorageEmail = getLocalStorage("email") as string;
 	const renterComponentsConditionally = (): React.JSX.Element => {
 		// Render when continue btn is clicked and email is verified
 		if (continueBtnClicked && emailVerified && !emailVerificationFailed)
@@ -40,8 +42,8 @@ export default function EmailVerificationBody() {
 	};
 
 	return (
-		<main className="flex-1 flex flex-col items-center justify-center w-full overflow-y-scroll max-sm:items-start">
+		<div className="flex-1 flex flex-col items-center justify-center w-full overflow-y-scroll max-sm:items-start">
 			{renterComponentsConditionally()}
-		</main>
+		</div>
 	);
 }
