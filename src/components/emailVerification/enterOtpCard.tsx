@@ -13,6 +13,7 @@ import {
 // import { simulateOTPResponse } from "@/tests/signupTest";
 
 export default function EnterOtpCard({ userEmail }: { userEmail: string }) {
+	const alertId = React.useId();
 	const dispatch = useDispatch();
 	const [otp, setOtp] = React.useState<string>("");
 	const [
@@ -77,6 +78,7 @@ export default function EnterOtpCard({ userEmail }: { userEmail: string }) {
 	return (
 		<div className="bg-white flex flex-col items-center justify-center w-1/2 aspect-square p-10 gap-8 text-center max-sm:justify-start max-sm:h-full max-sm:w-full max-lg:h-3/4 max-lg:w-3/4 max-sm:aspect-auto ">
 			<AlertPopup
+				alertId={alertId}
 				open={popupOpenState}
 				severity={popupSeverity}
 				title={isOtpSuccess || isResendSuccess ? "Success" : "Error"}
