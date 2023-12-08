@@ -5,6 +5,7 @@ import ForgotPasswordSuccess from "./forgotPasswordSuccess";
 import PasswordOtpCard from "./passwordOtpCard";
 import ManageSearchParams from "@/hooks/updateSearchParams";
 import NewPasswordCard from "./newPasswordCard";
+import ResetPasswordSuccess from "./resetPasswordSuccess";
 
 export default function BodyForgotPassword() {
 	const { getURLParam } = ManageSearchParams();
@@ -22,6 +23,9 @@ export default function BodyForgotPassword() {
 
 			case "newPassword":
 				return <NewPasswordCard />;
+
+			case "resetPasswordSuccess":
+				return <ResetPasswordSuccess />;
 
 			default:
 				return <ForgotPasswordCard />;

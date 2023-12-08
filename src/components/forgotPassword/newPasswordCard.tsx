@@ -69,7 +69,7 @@ export default function NewPasswordCard() {
 	console.log(
 		"Data:",
 		data,
-		"\nState:",
+		"\nStatus:",
 		status,
 		"\nError:",
 		error,
@@ -116,6 +116,7 @@ export default function NewPasswordCard() {
 			<form
 				className=" bg-transparent w-full gap-4 flex flex-col"
 				onSubmit={handleSubmit(onSubmit)}
+				id="reset-password-form"
 			>
 				{/* Hidden username field for web accessibility */}
 				<div className="hidden">
@@ -205,7 +206,7 @@ export default function NewPasswordCard() {
 					<button
 						className="w-full hover:bg-primary-lightgreen hover:text-primary-green bg-primary-green text-white font-bold py-2 px-4 rounded-lg"
 						type="submit"
-						formTarget="password-form"
+						formTarget="reset-password-form"
 						disabled={isSubmitting}
 					>
 						{isLoading ? (
