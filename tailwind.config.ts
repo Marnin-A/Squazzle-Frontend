@@ -13,6 +13,8 @@ const config: Config = {
 				"primary-grey": "#353535",
 				"primary-green": "#016D71",
 				"primary-lightgreen": "#CCE6E7",
+				"body-text": "#353535",
+				text: "#232323",
 				success: "#3D7D50",
 				error: "#91332D",
 			},

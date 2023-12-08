@@ -9,6 +9,7 @@ export default function AlertPopup({
 	title,
 	message,
 	open,
+	alertId,
 }: AlertType) {
 	const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
@@ -22,6 +23,7 @@ export default function AlertPopup({
 
 	return (
 		<Slide
+			id={alertId}
 			direction="down"
 			in={isOpen}
 			mountOnEnter

@@ -12,6 +12,7 @@ export type Passwords = {
 };
 
 export type AlertType = {
+	alertId: string;
 	severity: PopupSeverity;
 	title: string;
 	message: string;

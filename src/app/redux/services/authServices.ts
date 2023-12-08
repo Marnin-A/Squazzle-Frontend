@@ -2,10 +2,6 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import * as Types from "@/types/authTypes";
 import { ValidateOtpResponse } from "@/types/authTypes";
 
-// Define an abort controller to stop requests if the user chooses
-export const SignInAbortController = new AbortController();
-export const SignUpAbortController = new AbortController();
-export const ForgotPasswordAbortController = new AbortController();
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
 	reducerPath: "services",
@@ -16,7 +12,7 @@ export const authApi = createApi({
 				url: "/api/v1/auth/signup",
 				method: "POST",
 				body: userData,
-				signal: SignUpAbortController.signal,
+				signal: SignUp_Abort_Controller.signal,
 			}),
 		}),
 		validateOTP: builder.mutation<
@@ -41,15 +37,52 @@ export const authApi = createApi({
 				url: "/api/v1/auth/signIn",
 				method: "POST",
 				body: data,
-				signal: SignInAbortController.signal,
+				signal: SignIn_Abort_Controller.signal,
 			}),
 		}),
-		handleForgotPassword: builder.mutation<ValidateOtpResponse, string>({
+		forgotPassword: builder.mutation<ValidateOtpResponse, string>({
 			query: (data) => ({
 				url: "/api/v1/auth/forgotPassword",
 				method: "POST",
 				body: data,
-				signal: ForgotPasswordAbortController.signal,
+				signal: Forgot_Password_Abort_Controller.signal,
+				cache: "no-cache",
+			}),
+		}),
+		forgotPasswordOTP: builder.mutation<
+			Types.ValidateOtpResponse,
+			Types.ValidateOtpRequest
+		>({
+			query: (data) => ({
+				// Endpoint not yet resolved
+				url: "/api/v1/auth/forgotPasswordOTP",
+				method: "POST",
+				body: data,
+				signal: FP_OTP_Abort_Controller.signal,
+				cache: "no-cache",
+			}),
+		}),
+		resendPasswordOTP: builder.mutation<
+			Types.ValidateOtpResponse,
+			{ email: string }
+		>({
+			query: (data) => ({
+				// Endpoint not yet resolved
+				url: "/api/v1/auth/resendOTP",
+				method: "POST",
+				body: data,
+			}),
+		}),
+		changePassword: builder.mutation<
+			Types.ValidateOtpResponse,
+			{ password: string; confirmPassword: string }
+		>({
+			query: (data) => ({
+				// Endpoint not yet resolved
+				url: "/api/v1/auth/resetPassword",
+				method: "POST",
+				body: data,
+				signal: Change_Password_Abort_Controller.signal,
 			}),
 		}),
 	}),
@@ -62,5 +95,15 @@ export const {
 	useValidateOTPMutation,
 	useResendOTPMutation,
 	useSignInMutation,
-	useHandleForgotPasswordMutation,
+	useForgotPasswordMutation,
+	useForgotPasswordOTPMutation,
+	useResendPasswordOTPMutation,
+	useChangePasswordMutation,
 } = authApi;
+
+// Define abort controller to cancel requests
+export const SignIn_Abort_Controller = new AbortController();
+export const SignUp_Abort_Controller = new AbortController();
+export const Forgot_Password_Abort_Controller = new AbortController();
+export const FP_OTP_Abort_Controller = new AbortController();
+export const Change_Password_Abort_Controller = new AbortController();

@@ -19,6 +19,7 @@ import { passwordSchema } from "@/utils/schemas";
 import ShowPassword from "../sigin/showPassword";
 
 export default function UserCreatePasswordForm() {
+	const alertId = React.useId();
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const user = useSelector((state: RootState) => state.CreateProfile);
@@ -104,6 +105,7 @@ export default function UserCreatePasswordForm() {
 			className="bg-off-white flex flex-col items-center justify-start py-8 max-xs:px-8 px-16 h-screen max-md:mt-8 max-md:w-full md:overflow-y-scroll"
 		>
 			<AlertPopup
+				alertId={alertId}
 				container={containerRef.current}
 				open={openPopup.state}
 				severity={openPopup.type}
@@ -129,6 +131,7 @@ export default function UserCreatePasswordForm() {
 				onSubmit={handleSubmit(onSubmit)}
 				id="password-form"
 			>
+				{/* Hidden username field for web accessibility */}
 				<div className="hidden">
 					<label
 						className="block text-gray-700 text-md mb-2"

@@ -8,7 +8,7 @@ import { PopupSeverity } from "@/types/types";
 import CircularProgress from "@mui/material/CircularProgress";
 import {
 	useSignInMutation,
-	SignInAbortController,
+	SignIn_Abort_Controller,
 } from "@/app/redux/services/authServices";
 import AlertPopup from "../notification/Alert";
 import { useRouter } from "next/navigation";
@@ -39,7 +39,7 @@ export default function SignInRight() {
 
 	// Cancel a sign in request after it has been made
 	const handleCancel = () => {
-		SignInAbortController.abort();
+		SignIn_Abort_Controller.abort();
 		setOpenPopup({
 			...openPopup,
 			state: true,

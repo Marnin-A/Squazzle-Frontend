@@ -1,24 +1,24 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { PopupSeverity } from "@/types/types";
 import AlertPopup from "../notification/Alert";
 import { ErrorMessage } from "@hookform/error-message";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import CircularProgress from "@mui/material/CircularProgress";
 import {
-	ForgotPasswordAbortController,
-	useHandleForgotPasswordMutation,
+	Forgot_Password_Abort_Controller,
+	useForgotPasswordMutation,
 } from "@/app/redux/services/authServices";
-import { FailedResponse } from "@/types/authTypes";
+import ManageSearchParams from "@/hooks/updateSearchParams";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export default function ForgotPasswordCard() {
+	const alertId = React.useId();
 	const [openPopup, setOpenPopup] = React.useState({
 		state: false,
 		message: "",
 		type: "success",
 	});
-	const [, updateState] = React.useState<{}>();
 	// Form validation from React Hook Form
 	const {
 		register,
@@ -27,13 +27,26 @@ export default function ForgotPasswordCard() {
 	} = useForm<{ email: string }>({
 		criteriaMode: "all",
 	});
+
+	const { setLocalStorage } = useLocalStorage();
+
+	const { setURLParam } = ManageSearchParams();
+	// Memoized setURLParams to prevent it from causing infinite rerenders
+	const memoizedSetURLParam = React.useCallback(
+		(name: string, value: string) => setURLParam(name, value),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[]
+	);
+
 	// Data mutation and req/res states from RTK Query
-	const [handleForgotPassword, { isSuccess, isLoading, data }] =
-		useHandleForgotPasswordMutation();
+	const [
+		handleForgotPassword,
+		{ isSuccess, isLoading, status, isError, data, error },
+	] = useForgotPasswordMutation();
 
 	// Cancel a forgot password request after it has been made
 	const handleCancel = () => {
-		ForgotPasswordAbortController.abort();
+		Forgot_Password_Abort_Controller.abort();
 		setOpenPopup({
 			...openPopup,
 			state: true,
@@ -41,27 +54,57 @@ export default function ForgotPasswordCard() {
 			type: "error",
 		});
 	};
+	console.log("Error:", error, "Status:", status);
+
 	React.useEffect(() => {
-		if (data?.success)
+		if (isSuccess) {
 			setOpenPopup((prev) => ({
 				...prev,
 				state: true,
 				message: data?.message,
 				type: "success",
 			}));
+			// Update url
+		}
 
-		if (data?.success === false)
+		if (isError) {
 			setOpenPopup((prev) => ({
 				...prev,
 				state: true,
-				message: data?.message,
+				message: data?.message ?? "Sorry an error occurred, please try again",
 				type: "error",
 			}));
-	}, [data]);
+			setTimeout(
+				() => memoizedSetURLParam("view", "forgotPasswordSuccess"),
+				500
+			);
+		}
+		// Clean up function makes sure state is reset to ensure
+		// useEffect can run again
+		if (
+			(error as { error: string; status: string })?.status === "FETCH_ERROR"
+		) {
+			setOpenPopup((prev) => ({
+				...prev,
+				state: false,
+				message: "",
+				type: "success",
+			}));
+		}
+		return () => {
+			setOpenPopup((prev) => ({
+				...prev,
+				state: false,
+				message: "",
+				type: "success",
+			}));
+		};
+	}, [error, data, isError, isSuccess, status, memoizedSetURLParam]);
 
 	return (
 		<div className="bg-white flex flex-col items-center justify-center w-1/3 aspect-square p-10 gap-4 text-center max-sm:justify-start max-sm:w-full max-sm:h-full max-sm:aspect-auto  max-lg:w-1/2">
 			<AlertPopup
+				alertId={alertId}
 				open={openPopup.state}
 				severity={isSuccess ? "success" : "error"}
 				title={isSuccess ? "Success" : "Error"}
@@ -84,7 +127,10 @@ export default function ForgotPasswordCard() {
 			{/* Email Input */}
 			<form
 				className=" bg-transparent w-full gap-4 flex flex-col"
-				onSubmit={handleSubmit(({ email }) => handleForgotPassword(email))}
+				onSubmit={handleSubmit(({ email }) => {
+					setLocalStorage("email", email);
+					handleForgotPassword(email);
+				})}
 			>
 				<div className="relative w-full">
 					<label
@@ -129,7 +175,7 @@ export default function ForgotPasswordCard() {
 					formTarget="signup"
 				>
 					{isLoading ? (
-						<CircularProgress color="inherit" />
+						<CircularProgress size={25} color="inherit" />
 					) : (
 						<span>Get a reset code</span>
 					)}
