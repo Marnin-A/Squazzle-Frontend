@@ -11,6 +11,8 @@ import {
 import { useResendOTPMutation } from "@/app/redux/services/authServices";
 
 export default function FailedEmailVerifiedCard() {
+	const alertId = React.useId();
+
 	const dispatch = useDispatch();
 
 	// Get the email from local storage
@@ -38,6 +40,7 @@ export default function FailedEmailVerifiedCard() {
 	return (
 		<div className="bg-white flex flex-col items-center justify-center w-1/3 aspect-square p-10 gap-8 text-center max-sm:justify-start max-sm:w-full max-sm:h-full max-sm:aspect-auto  max-lg:w-1/2">
 			<AlertPopup
+				alertId={alertId}
 				open={data ? true : false}
 				severity={isSuccess ? "success" : "error"}
 				title={isSuccess ? "Success" : "Error"}
