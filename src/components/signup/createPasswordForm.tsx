@@ -2,7 +2,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ErrorMessage } from "@hookform/error-message";
 import { RootState } from "@/app/redux/store";
@@ -57,7 +57,7 @@ export default function UserCreatePasswordForm() {
 	console.log("error", isError, "success", isSuccess);
 
 	// Handle Form Submission
-	const onSubmit: SubmitHandler<Passwords> = async (passwords: Passwords) => {
+	const onSubmit: SubmitHandler<FieldValues> = async (passwords) => {
 		// Log User data
 		console.log({ ...user, password: passwords.password });
 

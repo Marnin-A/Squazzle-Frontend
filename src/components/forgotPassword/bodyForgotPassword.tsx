@@ -10,8 +10,6 @@ export default function BodyForgotPassword() {
 	const { getURLParam } = ManageSearchParams();
 
 	const RenderComponents = () => {
-		const otpSent = getURLParam("otpSent");
-		const enterOtp = getURLParam("enterOtp");
 		const view = getURLParam("view");
 		console.log(view);
 

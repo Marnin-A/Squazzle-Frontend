@@ -11,7 +11,7 @@ import ShowPassword from "../sigin/showPassword";
 import { passwordSchema } from "@/utils/schemas";
 import { Passwords } from "@/types/types";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { Field, FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 export default function NewPasswordCard() {
 	const alertId = React.useId();
@@ -77,6 +77,17 @@ export default function NewPasswordCard() {
 		isSubmitting
 	);
 
+	// Handle Form Submission
+	const onSubmit: SubmitHandler<FieldValues> = ({
+		password,
+		confirmPassword,
+	}) => {
+		changePassword({
+			password: password,
+			confirmPassword: confirmPassword,
+		});
+	};
+
 	// Cancel a sign in request after it has been made
 	const handleCancel = () => {
 		Change_Password_Abort_Controller.abort();
@@ -104,12 +115,7 @@ export default function NewPasswordCard() {
 			</p>
 			<form
 				className=" bg-transparent w-full gap-4 flex flex-col"
-				onSubmit={handleSubmit(({ password, confirmPassword }) => {
-					changePassword({
-						password: password,
-						confirmPassword: confirmPassword,
-					});
-				})}
+				onSubmit={handleSubmit(onSubmit)}
 			>
 				{/* Hidden username field for web accessibility */}
 				<div className="hidden">
@@ -194,7 +200,7 @@ export default function NewPasswordCard() {
 						)}
 					/>
 				</div>
-				{/* Buttons */}
+				{/* Submit and Cancel Buttons */}
 				<div className="flex flex-col items-center justify-center gap-6">
 					<button
 						className="w-full hover:bg-primary-lightgreen hover:text-primary-green bg-primary-green text-white font-bold py-2 px-4 rounded-lg"
