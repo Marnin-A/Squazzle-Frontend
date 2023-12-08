@@ -60,7 +60,7 @@ export default function ForgotPasswordCard() {
 		if (isSuccess) {
 			setOpenPopup({
 				state: true,
-				message: data?.message,
+				message: data?.message as string,
 				type: "success",
 			});
 			// Update url
@@ -69,7 +69,9 @@ export default function ForgotPasswordCard() {
 		if (isError) {
 			setOpenPopup({
 				state: true,
-				message: data?.message ?? "Sorry an error occurred, please try again",
+				message:
+					(data?.message as string) ??
+					"Sorry an error occurred, please try again",
 				type: "error",
 			});
 			setTimeout(
