@@ -58,22 +58,20 @@ export default function ForgotPasswordCard() {
 
 	React.useEffect(() => {
 		if (isSuccess) {
-			setOpenPopup((prev) => ({
-				...prev,
+			setOpenPopup({
 				state: true,
 				message: data?.message,
 				type: "success",
-			}));
+			});
 			// Update url
 		}
 
 		if (isError) {
-			setOpenPopup((prev) => ({
-				...prev,
+			setOpenPopup({
 				state: true,
 				message: data?.message ?? "Sorry an error occurred, please try again",
 				type: "error",
-			}));
+			});
 			setTimeout(
 				() => memoizedSetURLParam("view", "forgotPasswordSuccess"),
 				500
@@ -84,12 +82,11 @@ export default function ForgotPasswordCard() {
 		if (
 			(error as { error: string; status: string })?.status === "FETCH_ERROR"
 		) {
-			setOpenPopup((prev) => ({
-				...prev,
+			setOpenPopup({
 				state: false,
 				message: "",
 				type: "success",
-			}));
+			});
 		}
 		return () => {
 			setOpenPopup((prev) => ({
