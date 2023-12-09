@@ -17,6 +17,7 @@ import ShowPassword from "./showPassword";
 
 export default function SignInRight() {
 	const router = useRouter();
+	const alertId = React.useId();
 	const [openPopup, setOpenPopup] = React.useState({
 		state: false,
 		message: "",
@@ -76,6 +77,7 @@ export default function SignInRight() {
 	return (
 		<div className="bg-off-white flex flex-col items-center justify-center h-screen w-1/2 py-8 px-16 max-xs:px-8 max-md:mt-8 max-md:w-full md:overflow-y-scroll">
 			<AlertPopup
+				alertId={alertId}
 				open={openPopup.state}
 				severity={openPopup.type as PopupSeverity}
 				title={openPopup.type === "success" ? "Success" : "Error"}
