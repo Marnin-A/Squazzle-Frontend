@@ -170,7 +170,7 @@ export default function SignInRight() {
 						<span>
 							<Checkbox {...register("rememberMe")} {...label} />
 						</span>
-						<p className="text-gray-500">Remember me</p>
+						<span className="text-gray-500">Remember me</span>
 					</div>
 					<Link className="text-primary-green" href="/forgotPassword">
 						Forgot Password?

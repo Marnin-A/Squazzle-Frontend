@@ -25,8 +25,10 @@ export default function RootLayout({
 	return (
 		<StoreProvider>
 			<html lang="en">
-				<body className={openSans.className}>{children}</body>
-				<SpeedInsights />
+				<body className={openSans.className}>
+					{children}
+					<SpeedInsights />
+				</body>
 			</html>
 		</StoreProvider>
 	);
