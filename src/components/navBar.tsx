@@ -27,7 +27,7 @@ export default function NavBar() {
 					<NotificationsNoneIcon color="inherit" />
 					<AccountCircleIcon color="inherit" className="w-10 h-10" />
 				</div>
-				<button className="w-6 flex flex-col gap-1">
+				<button className="w-6 flex flex-col gap-1 mlg:hidden">
 					<div className="bg-primary-green h-[3px] w-full"></div>
 					<div className="bg-primary-green h-[3px] w-full"></div>
 					<div className="bg-primary-green h-[3px] w-full"></div>

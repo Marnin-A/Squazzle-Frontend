@@ -85,6 +85,18 @@ export const authApi = createApi({
 				signal: Change_Password_Abort_Controller.signal,
 			}),
 		}),
+		newsletterSignup: builder.mutation<
+			Types.ValidateOtpResponse,
+			{ email: string }
+		>({
+			query: (data) => ({
+				// Endpoint not yet resolved
+				url: "/api/v1/auth/newsletterSignup",
+				method: "POST",
+				body: data,
+				signal: Change_Password_Abort_Controller.signal,
+			}),
+		}),
 	}),
 });
 
@@ -99,6 +111,7 @@ export const {
 	useForgotPasswordOTPMutation,
 	useResendPasswordOTPMutation,
 	useChangePasswordMutation,
+	useNewsletterSignupMutation,
 } = authApi;
 
 // Define abort controller to cancel requests
@@ -107,3 +120,4 @@ export const SignUp_Abort_Controller = new AbortController();
 export const Forgot_Password_Abort_Controller = new AbortController();
 export const FP_OTP_Abort_Controller = new AbortController();
 export const Change_Password_Abort_Controller = new AbortController();
+export const Newsletter_Signup_Abort_Controller = new AbortController();
