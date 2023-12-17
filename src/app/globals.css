@@ -89,6 +89,11 @@
 	background-size: cover;
 	background-position: 50% 50%;
 }
+.sellingPoints-bg {
+	background-image: url(../../public/orange-and-green-stripes.svg);
+	background-repeat: no-repeat;
+	background-position: 0% 50%;
+}
 @media (width < 768px) {
 	.auth-bg {
 		background: none;
