@@ -22,7 +22,6 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@vercel/speed-insights": "^1.0.1",
     "axios": "^1.6.2",
-    "better-react-carousel": "^1.1.2",
     "class-variance-authority": "^0.7.0",
     "date-fns": "^2.30.0",
     "lucide-react": "^0.298.0",

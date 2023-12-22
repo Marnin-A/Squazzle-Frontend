@@ -4,6 +4,7 @@ import NavBar from "@/components/navBar";
 import SellingPoints from "@/components/landing_page/sellingPoints";
 import FeaturedProperty from "@/components/landing_page/featuredProperty";
 import ExploreNow from "@/components/landing_page/exploreNow";
+import ListPropertyCard from "@/components/landing_page/listPropertyCard";
 
 export default function Home() {
 	return (
@@ -14,6 +15,7 @@ export default function Home() {
 				<SellingPoints />
 				<FeaturedProperty />
 				<ExploreNow />
+				<ListPropertyCard />
 			</main>
 			<Footer />
 		</>
