@@ -20,7 +20,7 @@ export default function Footer() {
 		criteriaMode: "all",
 	});
 	return (
-		<footer className="mt-auto px-12 py-12">
+		<footer className="mt-auto px-12 py-12 border-t border-t-slate-200">
 			<div className="flex items-start justify-between flex-wrap max-md:gap-8 max-sm:justify-center text-sm px-20 pb-12 text-primary-grey border-b-2 border-b-slate-300">
 				<div className="flex flex-col gap-4 min-w-[150px]">
 					<h3 className="font-semibold">Company</h3>
