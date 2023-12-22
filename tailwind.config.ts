@@ -20,6 +20,7 @@ const config: Config = {
 				"off-white": "#F5F5F5",
 				"primary-grey": "#353535",
 				"primary-green": "#016D71",
+				"primary-mid-green": "#018388",
 				"primary-lightgreen": "#CCE6E7",
 				"body-text": "#353535",
 				text: "#232323",

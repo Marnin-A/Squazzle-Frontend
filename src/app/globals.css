@@ -94,6 +94,10 @@
 	background-repeat: no-repeat;
 	background-position: 0% 50%;
 }
+.carousel-dots {
+	padding-top: 100px;
+	margin-top: 100px;
+}
 @media (width < 768px) {
 	.auth-bg {
 		background: none;

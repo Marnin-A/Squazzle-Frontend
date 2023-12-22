@@ -1,0 +1,31 @@
+import React from "react";
+import Image from "next/image";
+
+export type featureDetails = {
+	imageUrl: string;
+	title: string;
+	location: string;
+	price: string;
+};
+export default function FeaturedCard(props: featureDetails) {
+	return (
+		<div className="p-4 flex flex-col items-center shadow rounded-md max-w-[287px]">
+			<Image
+				src={props.imageUrl}
+				alt={props.title}
+				width={255}
+				height={277}
+				placeholder="empty"
+				priority={false}
+				className="max-w-[255px] h-auto"
+			/>
+			<div className="w-full text-left">
+				<h3 className="text-primary-mid-green border border-b-slate-200 border-b border-t-0 border-l-0 border-r-0 p-2 font-bold">
+					{props.title}
+				</h3>
+				<p className="p-3">{props.location}</p>
+				<p className="text-primary-mid-green font-light">{props.price}</p>
+			</div>
+		</div>
+	);
+}

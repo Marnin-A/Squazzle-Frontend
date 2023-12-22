@@ -8,7 +8,7 @@ type BasicTabsProps = {
 export default function BasicTabs({ content, className }: BasicTabsProps) {
 	return (
 		<Tabs defaultValue={content[0].label} className={className}>
-			<TabsList className="gap-10">
+			<TabsList className="gap-10 text-[#018388]">
 				{content.map((item) => (
 					<TabsTrigger key={item.label} value={item.label}>
 						{item.label}
