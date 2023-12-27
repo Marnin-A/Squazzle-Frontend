@@ -6,6 +6,7 @@ import FeaturedProperty from "@/components/landing_page/featuredProperty";
 import ExploreNow from "@/components/landing_page/exploreNow";
 import ListPropertyCard from "@/components/landing_page/listPropertyCard";
 import Testimonials from "@/components/landing_page/testimonials";
+import Faq from "@/components/landing_page/faq";
 
 export default function Home() {
 	return (
@@ -18,6 +19,7 @@ export default function Home() {
 				<ExploreNow />
 				<ListPropertyCard />
 				<Testimonials />
+				<Faq />
 			</main>
 			<Footer />
 		</>

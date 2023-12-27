@@ -3,7 +3,7 @@ import TestimonialCard, { TestimonialProps } from "./testimonialCard";
 
 export default function Testimonials() {
 	return (
-		<section className="flex flex-col items-center py-8">
+		<section className="flex flex-col items-center py-8 mb-8">
 			<h1 className="text-4xl font-bold mb-4">Word from our customers</h1>
 			<p className="text-primary-mid-green mb-14">
 				Our users have plenty to say about their success with Squazzle!
