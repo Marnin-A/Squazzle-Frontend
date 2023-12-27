@@ -19,9 +19,24 @@ export default function Home() {
 				<ExploreNow />
 				<ListPropertyCard />
 				<Testimonials />
-				<Faq />
+				<Faq data={FAQdata} />
 			</main>
 			<Footer />
 		</>
 	);
 }
+const FAQdata = [
+	{
+		title: "How can i list my property?",
+		content:
+			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni soluta at cumque delectus nobis dolores sit natus autem, quisquam enim nostrum dolorum, ab ullam quo distinctio quas? Odio, quia excepturi",
+	},
+	{
+		title: "How can I find landlords who accept housing benefit?",
+		content: "Yes. It adheres to the WAI-ARIA design pattern.",
+	},
+	{
+		title: "How can I find landlords who accept housing benefit?",
+		content: "Yes. It adheres to the WAI-ARIA design pattern.",
+	},
+];
