@@ -5,7 +5,8 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
-export type FAQprops = {
+
+type FAQprops = {
 	data: Array<{ title: string; content: string }>;
 };
 
