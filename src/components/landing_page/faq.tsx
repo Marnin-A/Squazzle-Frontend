@@ -12,12 +12,12 @@ type FAQprops = {
 
 export default function Faq(props: FAQprops) {
 	return (
-		<section className="border-t border-t-slate-200 pt-24 flex flex-col items-center">
+		<section className="border-t border-t-slate-200 pt-24 px-5 text-center flex flex-col items-center mb-20">
 			<h2 className="text-4xl font-bold mb-4">Frequently asked questions</h2>
 			<p className="text-primary-mid-green mb-14">
 				If you have further questions , please contact us.
 			</p>
-			<div className="w-[798px]">
+			<div className="max-w-[798px]">
 				<Accordion
 					type="single"
 					className="max-w-full flex flex-col gap-8"
@@ -27,9 +27,9 @@ export default function Faq(props: FAQprops) {
 						<AccordionItem
 							key={item.title}
 							value={item.title}
-							className="border-2 border-[#D7D7D766] px-8"
+							className="border-2 border-[#D7D7D766] px-8  max-md:rounded-2xl  max-md:shadow-md"
 						>
-							<AccordionTrigger className="flex flex-row-reverse items-center gap-4 text-primary-mid-green">
+							<AccordionTrigger className="flex items-center gap-4 text-primary-mid-green md:flex-row-reverse">
 								{item.title}
 							</AccordionTrigger>
 							<AccordionContent>{item.content}</AccordionContent>

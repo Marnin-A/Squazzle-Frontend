@@ -44,6 +44,6 @@ const tabContent = [
 		label: "Popular",
 		panel: <Carousel details={cardDetails} />,
 	},
-	{ label: "All categories", panel: <>Helloo All Cats</> },
+	{ label: "All categories", panel: <>Categories</> },
 	{ label: "Modern", panel: <>Helloo Modern</> },
 ];

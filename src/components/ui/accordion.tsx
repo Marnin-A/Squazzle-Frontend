@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { PlusIcon } from "lucide-react";
-
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { cn } from "@/lib/utils";
 
 const Accordion = AccordionPrimitive.Root;
@@ -23,24 +23,28 @@ AccordionItem.displayName = "AccordionItem";
 const AccordionTrigger = React.forwardRef<
 	React.ElementRef<typeof AccordionPrimitive.Trigger>,
 	React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-	<AccordionPrimitive.Header className="flex">
-		<AccordionPrimitive.Trigger
-			ref={ref}
-			className={cn(
-				"flex flex-1 items-center justify-center py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
-				className
-			)}
-			{...props}
-		>
-			{children}
-			<PlusIcon
-				className="h-4 w-4 shrink-0 transition-transform duration-200"
-				color="#018388"
-			/>
-		</AccordionPrimitive.Trigger>
-	</AccordionPrimitive.Header>
-));
+>(({ className, children, ...props }, ref) => {
+	const matches = useMediaQuery("(min-width:768px)");
+	return (
+		<AccordionPrimitive.Header className="flex">
+			<AccordionPrimitive.Trigger
+				ref={ref}
+				className={cn(
+					"flex flex-1 items-center justify-center py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
+					className
+				)}
+				{...props}
+			>
+				{children}
+				<PlusIcon
+					className="h-8 w-8 shrink-0 transition-transform duration-200"
+					strokeWidth={matches ? 3 : 2}
+					color="#018388"
+				/>
+			</AccordionPrimitive.Trigger>
+		</AccordionPrimitive.Header>
+	);
+});
 AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
 
 const AccordionContent = React.forwardRef<

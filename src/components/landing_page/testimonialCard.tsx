@@ -49,8 +49,9 @@ export default function TestimonialCard(props: TestimonialProps) {
 					</span>
 				</div>
 				<Rating
+					key={props.name}
 					className="justify-self-end"
-					name="read-only"
+					name="Testimonial Rating"
 					value={props.rating}
 					precision={0.5}
 					readOnly

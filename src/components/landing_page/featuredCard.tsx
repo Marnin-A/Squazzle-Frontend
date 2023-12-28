@@ -17,7 +17,7 @@ export default function FeaturedCard(props: featureDetails) {
 				height={277}
 				placeholder="empty"
 				priority={false}
-				className="max-w-[255px] h-auto"
+				className="md:max-w-[255px] max-w-[351px] h-auto"
 			/>
 			<div className="w-full text-left">
 				<h3 className="text-primary-mid-green border border-b-slate-200 border-b border-t-0 border-l-0 border-r-0 p-2 font-bold">

@@ -1,8 +1,6 @@
 "use client";
-import Image from "next/image";
-import { cn as classNames } from "@/lib/utils";
+
 import * as React from "react";
-import { DotProps } from "react-multi-carousel/lib/types";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import FeaturedCard, { featureDetails } from "../landing_page/featuredCard";
@@ -39,7 +37,9 @@ export default function CarouselComponent({
 				arrows={false}
 				swipeable={true}
 				responsive={responsive}
-				className="flex gap-5 mx-20 p-2 pt-8 pb-16 outline-none"
+				centerMode
+				// partialVisbile={false}
+				className="flex gap-5 mx-20 p-2 pt-8 pb-16 outline-none md:flex-col"
 			>
 				{details.map((details) => (
 					<FeaturedCard

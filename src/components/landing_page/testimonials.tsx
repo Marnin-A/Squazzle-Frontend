@@ -3,12 +3,14 @@ import TestimonialCard, { TestimonialProps } from "./testimonialCard";
 
 export default function Testimonials() {
 	return (
-		<section className="flex flex-col items-center py-8 mb-8">
-			<h1 className="text-4xl font-bold mb-4">Word from our customers</h1>
-			<p className="text-primary-mid-green mb-14">
+		<section className="flex flex-col items-center py-8 mb-8  max-sm:px-8">
+			<h1 className="text-4xl font-bold mb-4 text-center">
+				Word from our customers
+			</h1>
+			<p className="text-primary-mid-green mb-14 text-center">
 				Our users have plenty to say about their success with Squazzle!
 			</p>
-			<div className="flex items-center justify-center gap-4">
+			<div className="flex items-center justify-center gap-4 max-md:flex-col">
 				{testimonialData.map((testimonial) => (
 					<TestimonialCard
 						name={testimonial.name}

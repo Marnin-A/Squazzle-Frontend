@@ -100,11 +100,19 @@
 	background-position: 50% 50%;
 	background-size: cover;
 }
+@media (width < 900px) {
+	.landing-page-bg {
+		background: none;
+	}
+}
 @media (width < 768px) {
 	.auth-bg {
 		background: none;
 	}
 	.signIn-bg {
 		background: none;
+	}
+	.sellingPoints-bg {
+		background-image: none;
 	}
 }

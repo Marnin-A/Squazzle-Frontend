@@ -16,7 +16,7 @@ export default function BasicTabs({ content, className }: BasicTabsProps) {
 				))}
 			</TabsList>
 			{content.map((item) => (
-				<TabsContent key={item.label} value={item.label}>
+				<TabsContent key={item.label + "content"} value={item.label}>
 					{item.panel}
 				</TabsContent>
 			))}
