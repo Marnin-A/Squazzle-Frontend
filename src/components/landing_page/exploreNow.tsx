@@ -37,7 +37,7 @@ export default function ExploreNow() {
 				height={571}
 				placeholder="empty"
 				priority={false}
-				className="max-w-1/2nw-auto h-auto md:aspect-square"
+				className="max-w-1/2 w-auto h-auto md:aspect-square"
 			/>
 			<button className="w-full p-4 rounded-xl bg-primary-green text-off-white font-semibold block md:hidden">
 				Explore Now
