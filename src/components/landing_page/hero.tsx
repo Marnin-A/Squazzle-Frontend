@@ -65,8 +65,8 @@ export default function Hero() {
 					alt="A house with a swimming pool in front of it, surrounded by palm trees"
 					width={351}
 					height={336}
+					blurDataURL="<svg>iVBORw0KGgoAAAANSUhEUgAAAAQAAAAHCAYAAAAvZezQAAAACXBIWXMAAAGJAAABiQGeLhE1AAAAAXNSR0IArs4c6QAAAIJJREFUGFcBdwCI/wH+/v//AQH/APb5+gDh7vYAAf39/P8CAQIA+Pv9AODr8AAB+Pr8/////QDV2tcAvcjMAAGrr6D/KS08AMrY1wDv7+8AAV5mVv83MSMA0+UCAP/38wABrOTm/wADAgCu2twABdfYAAHY7On/8gkLAJvp7AAwBAMAFM0/GG95m+oAAAAASUVORK5CYII=</svg>"
 					placeholder="blur"
-					blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAQAAAAHCAYAAAAvZezQAAAACXBIWXMAAAGJAAABiQGeLhE1AAAAAXNSR0IArs4c6QAAAIJJREFUGFcBdwCI/wH+/v//AQH/APb5+gDh7vYAAf39/P8CAQIA+Pv9AODr8AAB+Pr8/////QDV2tcAvcjMAAGrr6D/KS08AMrY1wDv7+8AAV5mVv83MSMA0+UCAP/38wABrOTm/wADAgCu2twABdfYAAHY7On/8gkLAJvp7AAwBAMAFM0/GG95m+oAAAAASUVORK5CYII="
 					priority={false}
 					className="md:w-3/5 w-full h-auto aspect-square mx-auto mb-6 shadow-md hidden min-w-max max-mlg:block"
 				/>
