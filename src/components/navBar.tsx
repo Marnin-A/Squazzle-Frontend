@@ -35,12 +35,12 @@ export default function NavBar() {
 				{
 					<div className="mlg:flex hidden items-center gap-4 text-primary-green">
 						<NotificationsNoneIcon color="inherit" />
-						{isLoggedIn ? (
+						{!isLoggedIn ? (
 							<AccountCircleIcon color="inherit" className="w-10 h-10" />
 						) : (
 							<Link
 								className="py-2 px-4 rounded-md text-off-white bg-primary-dark-green"
-								href="/login"
+								href="/signin"
 							>
 								Sign in
 							</Link>
