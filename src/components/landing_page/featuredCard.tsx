@@ -9,7 +9,7 @@ export type featureDetails = {
 };
 export default function FeaturedCard(props: featureDetails) {
 	return (
-		<div className="p-4 ml-auto flex flex-col items-center shadow rounded-md w-[255px]">
+		<div className="p-4 ml-auto max-xs:mr-auto flex flex-col items-center shadow rounded-md w-[255px]">
 			<Image
 				src={props.imageUrl}
 				alt={props.title}

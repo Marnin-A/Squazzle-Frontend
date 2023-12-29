@@ -32,7 +32,7 @@ export default function CarouselComponent({
 				arrows={false}
 				partialVisbile={false}
 				responsive={responsive}
-				className="flex mx-20 p-2 pt-8 pb-16 outline-none md:flex-col md:pl-[400px] lg:pl-52"
+				className="flex mx-20 p-2 pt-8 pb-16 outline-none md:flex-col md:pl-[400px] max-md:mx-0 lg:pl-52"
 			>
 				{details.map((details) => (
 					<FeaturedCard
