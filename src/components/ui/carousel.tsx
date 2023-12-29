@@ -11,10 +11,6 @@ export default function CarouselComponent({
 	details: Array<featureDetails>;
 }) {
 	const responsive = {
-		superLargeDesktop: {
-			breakpoint: { max: 4000, min: 3000 },
-			items: 5,
-		},
 		desktop: {
 			breakpoint: { max: 3000, min: 1024 },
 			items: 3,
@@ -31,15 +27,12 @@ export default function CarouselComponent({
 	return (
 		<div className="pb-5">
 			<Carousel
-				showDots
 				ssr
-				minimumTouchDrag={10}
+				showDots
 				arrows={false}
-				swipeable={true}
+				partialVisbile={false}
 				responsive={responsive}
-				centerMode
-				// partialVisbile={false}
-				className="flex gap-5 mx-20 p-2 pt-8 pb-16 outline-none md:flex-col"
+				className="flex mx-20 p-2 pt-8 pb-16 outline-none md:flex-col md:pl-[400px] lg:pl-52"
 			>
 				{details.map((details) => (
 					<FeaturedCard

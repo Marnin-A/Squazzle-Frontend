@@ -8,7 +8,7 @@ export default function ExploreNow() {
 
 	return (
 		<section className="flex items-center justify-center gap-12 p-5 sm:p-16  max-lg:flex-col">
-			<div className="flex flex-col gap-9 w-full md:w-1/2">
+			<div className="flex flex-col gap-9 w-full lg:w-1/2">
 				<h2 className="text-4xl font-bold">
 					The most trusted Real Estate website
 				</h2>
@@ -37,7 +37,7 @@ export default function ExploreNow() {
 				height={571}
 				placeholder="empty"
 				priority={false}
-				className="max-w-1/2 h-auto md:aspect-square"
+				className="max-w-1/2nw-auto h-auto md:aspect-square"
 			/>
 			<button className="w-full p-4 rounded-xl bg-primary-green text-off-white font-semibold block md:hidden">
 				Explore Now

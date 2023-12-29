@@ -28,7 +28,7 @@ function selectPlatform(platform: platform) {
 }
 export default function TestimonialCard(props: TestimonialProps) {
 	return (
-		<div className="shadow-md rounded-xl max-w-[286px] min-h-[358px] p-4 flex flex-col justify-between">
+		<div className="shadow-md rounded-xl max-w-[286px] min-h-[358px] p-4 flex flex-col justify-between max-sm:w-full">
 			<p className="text-primary-mid-green">{props.quote}</p>
 			<div>
 				<div className="flex justify-between items-center ">

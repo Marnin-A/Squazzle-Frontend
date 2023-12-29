@@ -151,7 +151,7 @@ export default function Footer() {
 					</button>
 				</form>
 			</div>
-			<div className="self-start flex max-sm:flex-col max-sm:gap-6 justify-between items-center w-full py-5 mlg:px-20 px-8">
+			<div className="self-start flex max-sm:gap-6 justify-between  items-center w-full py-5 px-8 mlg:px-20 max-md:gap-y-8 max-md:flex-col max-md:items-start">
 				<Image
 					src="/Mobile-logo.svg"
 					alt="Mobile Squazzle Logo"
@@ -161,7 +161,7 @@ export default function Footer() {
 					priority={false}
 					className="w-min h-auto"
 				/>
-				<div className="flex max-sm:flex-col gap-6">
+				<div className="flex max-md:flex-col gap-6">
 					<Link href="/privacy-policy">Privacy Policy</Link>
 					<Link href="/terms-and-conditions">Terms and Conditions</Link>
 				</div>

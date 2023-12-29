@@ -10,7 +10,7 @@ export default function Testimonials() {
 			<p className="text-primary-mid-green mb-14 text-center">
 				Our users have plenty to say about their success with Squazzle!
 			</p>
-			<div className="flex items-center justify-center gap-4 max-md:flex-col">
+			<div className="flex items-center justify-center gap-4 flex-wrap">
 				{testimonialData.map((testimonial) => (
 					<TestimonialCard
 						name={testimonial.name}
