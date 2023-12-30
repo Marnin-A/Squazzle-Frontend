@@ -1,14 +1,23 @@
 "use client";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import useLocalStorage from "@/hooks/useLocalStorage";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import useLocalStorage from "@/hooks/useLocalStorage";
+import { MobileSideMenu } from "./mobileMenu";
+import { SheetTrigger } from "./ui/sheet";
+import { Button } from "./ui/button";
 
 export default function NavBar() {
+	const triggerRef = React.useRef(null);
 	const { getLocalStorage } = useLocalStorage();
 	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+	const toggleMenu = () => {
+		setIsMenuOpen(true);
+	};
 
 	React.useEffect(() => {
 		setIsLoggedIn(Boolean(getLocalStorage("accessToken")));
@@ -35,7 +44,7 @@ export default function NavBar() {
 				{
 					<div className="mlg:flex hidden items-center gap-4 text-primary-green">
 						<NotificationsNoneIcon color="inherit" />
-						{!isLoggedIn ? (
+						{isLoggedIn ? (
 							<AccountCircleIcon color="inherit" className="w-10 h-10" />
 						) : (
 							<Link
@@ -47,11 +56,7 @@ export default function NavBar() {
 						)}
 					</div>
 				}
-				<button className="w-6 flex flex-col gap-1 mlg:hidden">
-					<div className="bg-primary-green h-[3px] w-full"></div>
-					<div className="bg-primary-green h-[3px] w-full"></div>
-					<div className="bg-primary-green h-[3px] w-full"></div>
-				</button>
+				<MobileSideMenu />
 			</>
 		</nav>
 	);

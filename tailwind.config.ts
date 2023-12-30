@@ -24,6 +24,7 @@ const config: Config = {
 				"primary-mid-green": "#018388",
 				"primary-lightgreen": "#CCE6E7",
 				"primary-dark-green": "#001A1B",
+				"secondary-red": "#8D173A",
 				"body-text": "#353535",
 				text: "#232323",
 				success: "#3D7D50",
