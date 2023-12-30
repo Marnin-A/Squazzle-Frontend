@@ -40,9 +40,9 @@ export default function NavBar() {
 				<Link href="/about-us">About us</Link>
 				<Link href="/faq">FAQ</Link>
 			</div>
-			<>
+			<div className="self-end">
 				{
-					<div className="mlg:flex hidden items-center gap-4 text-primary-green">
+					<div className="hidden items-center gap-4 text-primary-green mlg:flex">
 						<NotificationsNoneIcon color="inherit" />
 						{isLoggedIn ? (
 							<AccountCircleIcon color="inherit" className="w-10 h-10" />
@@ -57,7 +57,7 @@ export default function NavBar() {
 					</div>
 				}
 				<MobileSideMenu />
-			</>
+			</div>
 		</nav>
 	);
 }
