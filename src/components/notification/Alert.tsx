@@ -1,39 +1,38 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
-import { AlertType } from "@/types/types";
 import Slide from "@mui/material/Slide";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/app/redux/store";
+import { resetAlert } from "@/app/redux/slices/notificationSlice";
 
-export default function AlertPopup({
-	severity,
-	title,
-	message,
-	open,
-	alertId,
-}: AlertType) {
-	const [isOpen, setIsOpen] = React.useState<boolean>(false);
+export default function AlertPopup() {
+	const alertState = useSelector((state: RootState) => state.Notification);
+	const dispatch = useDispatch();
 
 	React.useEffect(() => {
-		// Open popup
-		if (open) setIsOpen(true);
-
-		// Close popup
-		setTimeout(() => setIsOpen(false), 5000);
-	}, [open]);
+		setTimeout(() => {
+			dispatch(resetAlert());
+		}, 5000);
+	}, [alertState.open, dispatch]);
 
 	return (
 		<Slide
-			id={alertId}
+			id={alertState.alertId}
 			direction="down"
-			in={isOpen}
+			in={alertState.open}
 			mountOnEnter
 			unmountOnExit
-			className={isOpen ? "block absolute top-14" : "hidden"}
+			className={
+				alertState.open
+					? "flex absolute top-24 w-full justify-center items-center transform -translate-y-1/2 -translate-x-1/2"
+					: "hidden"
+			}
 		>
-			<div>
-				<Alert className="text-xl" severity={severity}>
-					<AlertTitle className="text-xl">{title}</AlertTitle>
-					{message}
+			<div className="m-auto max-w-md">
+				<Alert className="text-xl" severity={alertState.severity}>
+					<AlertTitle className="text-xl">{alertState.title}</AlertTitle>
+					<div className="text-base">{alertState.message}</div>
 				</Alert>
 			</div>
 		</Slide>

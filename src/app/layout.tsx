@@ -3,6 +3,7 @@ import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import { StoreProvider } from "./redux/storeProvider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import NotificationContainer from "@/components/notification/NotificationContainer";
 
 const openSans = Open_Sans({
 	weight: ["400", "500", "700"],
@@ -26,7 +27,7 @@ export default function RootLayout({
 		<StoreProvider>
 			<html lang="en">
 				<body className={openSans.className}>
-					{children}
+					<NotificationContainer>{children}</NotificationContainer>
 					<SpeedInsights />
 				</body>
 			</html>

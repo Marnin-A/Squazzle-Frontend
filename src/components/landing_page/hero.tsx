@@ -1,3 +1,5 @@
+"use client";
+import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
 import DatePickerWithRange from "@/components/landing_page/DateRangeCalender";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import SearchIcon from "@mui/icons-material/Search";
@@ -5,8 +7,24 @@ import InputBase from "@mui/material/InputBase";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { useDispatch } from "react-redux";
 
 export default function Hero() {
+	const dispatch = useDispatch();
+	const userId = React.useId();
+	function handleSearch() {
+		console.log("Start");
+		dispatch(
+			setAlertOpen({
+				alertId: userId,
+				severity: "info",
+				title: "Message",
+				message: "My Message",
+				open: true,
+			})
+		);
+		console.log("end");
+	}
 	return (
 		<section className="flex items-start w-full max-mlg:flex-col">
 			<div className="flex flex-col p-[10%] gap-9 flex-grow">
@@ -32,7 +50,10 @@ export default function Hero() {
 						{/* Date Input */}
 						<DatePickerWithRange className="min-w-[200px] max-[980px]:min-w-[100px] max-sm:w-full" />
 						{/* Search Button */}
-						<button className="flex items-center justify-center py-4 px-12 text-primary-lightgreen text-center font-semibold bg-primary-green rounded-lg max-sm:w-full">
+						<button
+							onClick={handleSearch}
+							className="flex items-center justify-center py-4 px-12 text-primary-lightgreen text-center font-semibold bg-primary-green rounded-lg max-sm:w-full"
+						>
 							Search
 						</button>
 					</div>

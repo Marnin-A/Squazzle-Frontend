@@ -2,7 +2,12 @@ export type ValidateOtpResponse =
 	| { success: true; message: string }
 	| { success: false; message: string; error: string };
 export type ValidateOtpRequest = { otp: number; email: string };
-export type ApiResponse = SuccessfulSignupResponse | FailedSignupResponse;
+export type FailedResponse = {
+	success: false;
+	error: string;
+	message: string;
+};
+export type ApiResponse = SuccessfulSignupResponse | FailedResponse;
 export type SuccessfulSignupResponse = {
 	status: "success";
 	message: "Account successfully created, Check your mail for activation code";
@@ -27,11 +32,6 @@ export type SuccessfulSignupResponse = {
 		message: string;
 		status: "success";
 	};
-};
-export type FailedResponse = {
-	success: false;
-	error: string;
-	message: string;
 };
 export type CreateProfileFormData = {
 	firstName: string;

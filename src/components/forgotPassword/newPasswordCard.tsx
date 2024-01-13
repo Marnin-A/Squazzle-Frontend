@@ -1,5 +1,4 @@
 import React from "react";
-import AlertPopup from "../notification/Alert";
 import {
 	Change_Password_Abort_Controller,
 	useChangePasswordMutation,
@@ -11,18 +10,16 @@ import ShowPassword from "../sigin/showPassword";
 import { passwordSchema } from "@/utils/schemas";
 import { Passwords } from "@/types/types";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Field, FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
 
 export default function NewPasswordCard() {
 	const alertId = React.useId();
+	const dispatch = useDispatch();
 	const { updateURLParam } = ManageSearchParams();
 	const [showPassword, setShowPassword] = React.useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
-	const [openPopup, setOpenPopup] = React.useState({
-		state: false,
-		message: "",
-		type: "success",
-	});
 	const [
 		changePassword,
 		{ isLoading, isSuccess, isError, data, error, status },
@@ -42,19 +39,27 @@ export default function NewPasswordCard() {
 
 	React.useEffect(() => {
 		if (isSuccess) {
-			setOpenPopup({
-				state: true,
-				message: data?.message ?? "Password changed successfully",
-				type: "success",
-			});
+			dispatch(
+				setAlertOpen({
+					alertId: alertId,
+					open: true,
+					severity: "success",
+					title: "Success",
+					message: "Password changed successfully",
+				})
+			);
 			setTimeout(() => updateURLParam("view", "resetPasswordSuccessful"), 500);
 		}
 		if (isError) {
-			setOpenPopup({
-				state: true,
-				message: data?.message ?? "Error changing password",
-				type: "error",
-			});
+			dispatch(
+				setAlertOpen({
+					alertId: alertId,
+					open: true,
+					severity: "error",
+					title: "Error",
+					message: "Error changing password",
+				})
+			);
 		}
 		// if (isLoading) {
 		// 	setOpenPopup((prev) => ({
@@ -64,7 +69,15 @@ export default function NewPasswordCard() {
 		// 		type: "loading",
 		// 	}));
 		// }
-	}, [data?.message, isError, isLoading, isSuccess, updateURLParam]);
+	}, [
+		alertId,
+		data?.message,
+		dispatch,
+		isError,
+		isLoading,
+		isSuccess,
+		updateURLParam,
+	]);
 
 	console.log(
 		"Data:",
@@ -91,23 +104,19 @@ export default function NewPasswordCard() {
 	// Cancel a sign in request after it has been made
 	const handleCancel = () => {
 		Change_Password_Abort_Controller.abort();
-		setOpenPopup({
-			...openPopup,
-			state: true,
-			message: "Sign in request cancelled",
-			type: "error",
-		});
+		dispatch(
+			setAlertOpen({
+				alertId: alertId,
+				open: true,
+				severity: "info",
+				title: "Info",
+				message: "Sign in request cancelled",
+			})
+		);
 	};
 
 	return (
 		<div className="bg-white flex flex-col items-center justify-center w-1/3 aspect-square p-10 gap-4 text-center max-sm:justify-start max-sm:w-full max-sm:h-full max-sm:aspect-auto  max-lg:w-1/2">
-			<AlertPopup
-				alertId={alertId}
-				open={openPopup.state}
-				severity={isSuccess ? "success" : "error"}
-				title={isSuccess ? "Success" : "Error"}
-				message={openPopup.message}
-			/>
 			<h1 className="text-3xl">Password reset request</h1>
 			<p className=" text-body-text">
 				Password reset request Please use a minimum of 8 characters, including

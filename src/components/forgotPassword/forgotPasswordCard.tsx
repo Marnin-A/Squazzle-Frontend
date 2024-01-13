@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import AlertPopup from "../notification/Alert";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -11,14 +10,12 @@ import {
 } from "@/app/redux/services/authServices";
 import ManageSearchParams from "@/hooks/updateSearchParams";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
+import { useDispatch } from "react-redux";
 
 export default function ForgotPasswordCard() {
 	const alertId = React.useId();
-	const [openPopup, setOpenPopup] = React.useState({
-		state: false,
-		message: "",
-		type: "success",
-	});
+	const dispatch = useDispatch();
 	// Form validation from React Hook Form
 	const {
 		register,
@@ -47,68 +44,59 @@ export default function ForgotPasswordCard() {
 	// Cancel a forgot password request after it has been made
 	const handleCancel = () => {
 		Forgot_Password_Abort_Controller.abort();
-		setOpenPopup({
-			...openPopup,
-			state: true,
-			message: "Request cancelled, refresh before resending",
-			type: "error",
-		});
+		dispatch(
+			setAlertOpen({
+				alertId: alertId,
+				open: true,
+				severity: "info",
+				title: "Info",
+				message: "Request cancelled, refresh before resending",
+			})
+		);
 	};
 	console.log("Error:", error, "Status:", status);
 
 	React.useEffect(() => {
 		if (isSuccess) {
-			setOpenPopup({
-				state: true,
-				message: data?.message as string,
-				type: "success",
-			});
-			// Update url
+			dispatch(
+				setAlertOpen({
+					alertId: alertId,
+					open: true,
+					severity: "success",
+					title: "Success",
+					message: "Request Successful",
+				})
+			);
 		}
 
 		if (isError) {
-			setOpenPopup({
-				state: true,
-				message:
-					(data?.message as string) ??
-					"Sorry an error occurred, please try again",
-				type: "error",
-			});
+			dispatch(
+				setAlertOpen({
+					alertId: alertId,
+					open: true,
+					severity: "error",
+					title: "Error",
+					message: "Sorry an error occurred, please try again",
+				})
+			);
 			setTimeout(
 				() => memoizedSetURLParam("view", "forgotPasswordSuccess"),
 				500
 			);
 		}
-		// Clean up function makes sure state is reset to ensure
-		// useEffect can run again
-		if (
-			(error as { error: string; status: string })?.status === "FETCH_ERROR"
-		) {
-			setOpenPopup({
-				state: false,
-				message: "",
-				type: "success",
-			});
-		}
-		return () => {
-			setOpenPopup((prev) => ({
-				...prev,
-				state: false,
-				message: "",
-				type: "success",
-			}));
-		};
-	}, [error, data, isError, isSuccess, status, memoizedSetURLParam]);
+	}, [
+		error,
+		data,
+		isError,
+		isSuccess,
+		status,
+		memoizedSetURLParam,
+		dispatch,
+		alertId,
+	]);
 
 	return (
 		<div className="bg-white flex flex-col items-center justify-center w-1/3 aspect-square p-10 gap-4 text-center max-sm:justify-start max-sm:w-full max-sm:h-full max-sm:aspect-auto  max-lg:w-1/2">
-			<AlertPopup
-				alertId={alertId}
-				open={openPopup.state}
-				severity={isSuccess ? "success" : "error"}
-				title={isSuccess ? "Success" : "Error"}
-				message={openPopup.message}
-			/>
 			<Image
 				src="/email-icon.svg"
 				alt="email icon"

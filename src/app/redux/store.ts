@@ -1,13 +1,13 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import CreateProfileReducer from "./slices/signUpSlice";
 import EmailVerificationReducer from "./slices/emailVerificationSlice";
-import MenuOpenReducer from "./slices/mobileMenuSlice";
+import NotificationSlice from "./slices/notificationSlice";
 import { authApi } from "./services/authServices";
 
 const reducers = combineReducers({
 	CreateProfile: CreateProfileReducer,
 	EmailVerification: EmailVerificationReducer,
-	MenuOpen: MenuOpenReducer,
+	Notification: NotificationSlice,
 	[authApi.reducerPath]: authApi.reducer,
 });
 export const store = configureStore({

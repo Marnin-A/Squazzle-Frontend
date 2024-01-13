@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
-import AlertPopup from "../notification/Alert";
 import { CircularProgress } from "@mui/material";
 import {
 	resetEmailVerification,
@@ -9,6 +8,7 @@ import {
 } from "@/app/redux/slices/emailVerificationSlice";
 // import { simulateOTPResponse } from "@/tests/signupTest";
 import { useResendOTPMutation } from "@/app/redux/services/authServices";
+import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
 
 export default function FailedEmailVerifiedCard() {
 	const alertId = React.useId();
@@ -18,34 +18,51 @@ export default function FailedEmailVerifiedCard() {
 	// Get the email from local storage
 	const localStorageEmail = localStorage.getItem("email") as string;
 	// Request for new OTP
-	const [resendOTP, { isError, isSuccess, isLoading, data }] =
-		useResendOTPMutation();
+	const [resendOTP, { isError, isSuccess, isLoading }] = useResendOTPMutation();
 	// const { data, isError, isSuccess } = await simulateOTPResponse(true);
 
-	React.useEffect(() => {
+	async function handleSubmit() {
+		const res = await resendOTP({
+			email: localStorageEmail,
+		});
 		if (isSuccess) {
-			// Set email verified state to true
 			dispatch(setEmailVerified({ emailVerified: true }));
-			// Reset email verification state
 			dispatch(resetEmailVerification());
+			dispatch(
+				setAlertOpen({
+					alertId: alertId,
+					open: true,
+					severity: "success",
+					title: "Success",
+					message: "Verification Email Sent",
+				})
+			);
 		}
 		if (isError) {
-			// Reset email verification state
+			const errorObj = res as unknown as {
+				error: {
+					data: { email: string; message: string; success: boolean };
+					status: number;
+				};
+			};
 			dispatch(resetEmailVerification());
-			// Set email verified state to false
 			dispatch(setEmailVerified({ emailVerified: false }));
+			dispatch(
+				setAlertOpen({
+					alertId: alertId,
+					open: true,
+					severity: "error",
+					title: "Error",
+					message: errorObj.error.data.email ?? "Sorry an error occurred",
+				})
+			);
 		}
-	}, [dispatch, isError, isSuccess]);
-	data && console.log(data);
+
+		console.log(res);
+	}
+
 	return (
 		<div className="bg-white flex flex-col items-center justify-center w-1/3 aspect-square p-10 gap-8 text-center max-sm:justify-start max-sm:w-full max-sm:h-full max-sm:aspect-auto  max-lg:w-1/2">
-			<AlertPopup
-				alertId={alertId}
-				open={data ? true : false}
-				severity={isSuccess ? "success" : "error"}
-				title={isSuccess ? "Success" : "Error"}
-				message={data?.message ?? "Sorry an error occurred"}
-			/>
 			<Image
 				src="/failed-icon.svg"
 				alt="Failed Icon"
@@ -63,11 +80,7 @@ export default function FailedEmailVerifiedCard() {
 			<button
 				className="w-full hover:bg-primary-lightgreen hover:text-primary-green bg-primary-green text-white font-bold py-2 px-4 rounded"
 				type="submit"
-				onClick={() =>
-					resendOTP({
-						email: localStorageEmail,
-					})
-				}
+				onClick={() => handleSubmit()}
 			>
 				{isLoading ? (
 					<CircularProgress color="inherit" />

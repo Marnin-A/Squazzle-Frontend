@@ -7,15 +7,14 @@ import {
 } from "@/app/redux/services/authServices";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import ManageSearchParams from "@/hooks/updateSearchParams";
+import { useDispatch } from "react-redux";
+import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
 
 export default function PasswordOtpCard() {
 	const alertId = React.useId();
+	const dispatch = useDispatch();
 	const { memoizedUpdateURLParam: test } = ManageSearchParams();
 	const [otp, setOtp] = React.useState<string>("");
-	const [openPopup, setOpenPopup] = React.useState({
-		state: false,
-		message: "",
-	});
 	const { getLocalStorage } = useLocalStorage();
 	// Get user email form localStorage
 	const userEmail = getLocalStorage("email");
@@ -55,24 +54,26 @@ export default function PasswordOtpCard() {
 
 	React.useEffect(() => {
 		if (sendOtpSuccess || resendOtpSuccess) {
-			setOpenPopup((prev) => ({
-				...prev,
-				state: true,
-				message: "OTP sent successfully",
-				type: "success",
-			}));
-
-			// Update url
+			dispatch(
+				setAlertOpen({
+					alertId: alertId,
+					open: true,
+					severity: "success",
+					title: "Success",
+					message: "OTP sent successfully",
+				})
+			);
 		}
 		if (sendOtpIsError || resendOtpIsError) {
-			setOpenPopup((prev) => ({
-				...prev,
-				state: true,
-				message:
-					(resendOtpData?.message || sendOtpData?.message) ??
-					"Sorry an error occurred, please try again",
-				type: "error",
-			}));
+			dispatch(
+				setAlertOpen({
+					alertId: alertId,
+					open: true,
+					severity: "error",
+					title: "Error",
+					message: "Sorry an error occurred, please try again",
+				})
+			);
 			setTimeout(() => test("view", "newPassword"), 500);
 		}
 		console.log(resendOtpData);
@@ -80,22 +81,16 @@ export default function PasswordOtpCard() {
 		resendOtpData,
 		resendOtpIsError,
 		resendOtpSuccess,
-		sendOtpData?.message,
 		sendOtpIsError,
 		sendOtpSuccess,
 		test,
 		sendOTP,
 		resendOTP,
+		dispatch,
+		alertId,
 	]);
 	return (
 		<div className="bg-white flex flex-col items-center justify-center w-1/2 aspect-square p-10 gap-8 text-center max-sm:justify-start max-sm:h-full max-sm:w-full max-lg:h-3/4 max-lg:w-3/4 max-sm:aspect-auto ">
-			<AlertPopup
-				alertId={alertId}
-				open={openPopup.state}
-				severity={sendOtpSuccess || resendOtpSuccess ? "success" : "error"}
-				title={sendOtpSuccess || resendOtpSuccess ? "Success" : "Error"}
-				message={openPopup.message ?? "Sorry an error occurred"}
-			/>
 			<h1 className="text-3xl">Password Reset</h1>
 			<p>
 				Please enter the 6-digit code sent to

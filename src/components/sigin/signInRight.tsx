@@ -4,25 +4,21 @@ import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "next/link";
-import { PopupSeverity } from "@/types/types";
 import CircularProgress from "@mui/material/CircularProgress";
 import {
 	useSignInMutation,
 	SignIn_Abort_Controller,
 } from "@/app/redux/services/authServices";
-import AlertPopup from "../notification/Alert";
 import { useRouter } from "next/navigation";
 import { FailedResponse } from "@/types/authTypes";
 import ShowPassword from "./showPassword";
+import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
+import { useDispatch } from "react-redux";
 
 export default function SignInRight() {
 	const router = useRouter();
 	const alertId = React.useId();
-	const [openPopup, setOpenPopup] = React.useState({
-		state: false,
-		message: "",
-		type: "success",
-	});
+	const dispatch = useDispatch();
 	const [showPassword, setShowPassword] = React.useState(false);
 	// Checkbox aria-label
 	const label = { inputProps: { "aria-label": "Remember me" } };
@@ -41,48 +37,53 @@ export default function SignInRight() {
 	// Cancel a sign in request after it has been made
 	const handleCancel = () => {
 		SignIn_Abort_Controller.abort();
-		setOpenPopup({
-			...openPopup,
-			state: true,
-			message: "Sign in request cancelled",
-			type: "error",
-		});
+		dispatch(
+			setAlertOpen({
+				alertId: alertId,
+				open: true,
+				severity: "info",
+				title: "Info",
+				message: "Sign in request cancelled",
+			})
+		);
 	};
 
 	React.useEffect(() => {
 		if (isSuccess) {
 			// Display Success popup
-			setOpenPopup((prev) => ({
-				...prev,
-				state: true,
-				message: data?.message as string,
-				type: "success",
-			}));
-
+			dispatch(
+				setAlertOpen({
+					alertId: alertId,
+					open: true,
+					severity: "success",
+					title: "Success",
+					message: data?.message as string,
+				})
+			);
 			router.push("/home");
 		}
 		if (isError) {
-			const e = error as unknown as FailedResponse;
-			// Display error popup
-			setOpenPopup((prev) => ({
-				...prev,
-				state: true,
-				message: e.message,
-				type: "error",
-			}));
+			const e = { ...error } as unknown as {
+				status: number;
+				data: FailedResponse;
+			};
 			console.log(e);
+
+			// Display error popup
+			dispatch(
+				setAlertOpen({
+					alertId: alertId,
+					open: true,
+					severity: "error",
+					title: "Error",
+					message: e.data.error ?? "Sorry an error occurred",
+				})
+			);
 		}
-	}, [data?.message, error, isError, isSuccess, router]);
+	}, [alertId, data?.message, dispatch, error, isError, isSuccess, router]);
 
 	return (
 		<div className="bg-off-white flex flex-col items-center justify-center h-screen w-1/2 py-8 px-16 max-xs:px-8 max-md:mt-8 max-md:w-full md:overflow-y-scroll">
-			<AlertPopup
-				alertId={alertId}
-				open={openPopup.state}
-				severity={openPopup.type as PopupSeverity}
-				title={openPopup.type === "success" ? "Success" : "Error"}
-				message={openPopup.message}
-			/>
 			{/* Header */}
 			<div className="flex flex-col items-start w-full">
 				<h1 className=" text-2xl leading-8 font-bold">Welcome back!</h1>

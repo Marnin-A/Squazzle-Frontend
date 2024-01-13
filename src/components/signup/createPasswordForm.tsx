@@ -9,25 +9,20 @@ import { RootState } from "@/app/redux/store";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "next/link";
 import { resetProfileData } from "@/app/redux/slices/signUpSlice";
-import AlertPopup from "../notification/Alert";
-import { Passwords, Popup } from "@/types/types";
+import { Passwords } from "@/types/types";
 // import { simulateApiResponse } from "@/tests/signupTest";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useSignUpMutation } from "@/app/redux/services/authServices";
 import { FailedResponse, SuccessfulSignupResponse } from "@/types/authTypes";
 import { passwordSchema } from "@/utils/schemas";
 import ShowPassword from "../sigin/showPassword";
+import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
 
 export default function UserCreatePasswordForm() {
 	const alertId = React.useId();
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const user = useSelector((state: RootState) => state.CreateProfile);
-	const [openPopup, setOpenPopup] = React.useState<Popup>({
-		state: false,
-		message: "",
-		type: undefined,
-	});
 	const [showPassword, setShowPassword] = React.useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
@@ -53,45 +48,40 @@ export default function UserCreatePasswordForm() {
 	console.log("##### Create Password Form Logs #####");
 	// Apply correct type to successfully retrieved data
 	const data = response as SuccessfulSignupResponse;
-	console.log("Data:", data);
-	console.log("error", isError, "success", isSuccess);
 
 	// Handle Form Submission
 	const onSubmit: SubmitHandler<FieldValues> = async (passwords) => {
-		// Log User data
-		console.log({ ...user, password: passwords.password });
-
 		// Upload user data
 		const res = await submitData({ ...user, password: passwords.password });
+		// console.log("Response:", res);
 
 		if (isSuccess) {
 			// Display popup
-			setOpenPopup({
-				...openPopup,
-				state: true,
-				message: data.message,
-				type: "success",
-			});
-			console.log(res);
+			dispatch(
+				setAlertOpen({
+					alertId: alertId,
+					open: true,
+					severity: "success",
+					title: "Success",
+					message: data.message ?? "Account created successfully.",
+				})
+			);
 
 			router.push("/emailVerification");
 		}
 		if (isError) {
-			const e = error as unknown as FailedResponse;
+			const e = error as unknown as { status: number; data: FailedResponse };
 			// Display error popup
-			setOpenPopup({
-				...openPopup,
-				state: true,
-				message: e.message,
-				type: "error",
-			});
-			console.log(e);
+			dispatch(
+				setAlertOpen({
+					alertId: alertId,
+					open: true,
+					severity: "error",
+					title: "Error",
+					message: e.data.error ?? "Sorry an error occurred, try again.",
+				})
+			);
 		}
-
-		// Log server response
-		console.log("RESPONSE:", res);
-		// Reset input fields
-		router.push("/emailVerification");
 	};
 
 	// Cancel sign up
@@ -104,19 +94,6 @@ export default function UserCreatePasswordForm() {
 			ref={containerRef}
 			className="bg-off-white flex flex-col items-center justify-start py-8 max-xs:px-8 px-16 h-screen max-md:mt-8 max-md:w-full md:overflow-y-scroll"
 		>
-			<AlertPopup
-				alertId={alertId}
-				container={containerRef.current}
-				open={openPopup.state}
-				severity={openPopup.type}
-				title={openPopup.type == "success" ? "Success" : "Error"}
-				message={
-					openPopup.type == "success"
-						? "Account created successfully."
-						: "Sorry an error occurred, try again."
-				}
-			/>
-
 			{/* Header */}
 			<div className="flex flex-col items-start w-full">
 				<h1 className=" text-2xl leading-8 font-bold">Create a Password</h1>

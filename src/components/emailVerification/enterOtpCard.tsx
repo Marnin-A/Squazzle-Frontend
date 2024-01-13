@@ -1,6 +1,5 @@
 import React from "react";
 import { MuiOtpInput } from "mui-one-time-password-input";
-import AlertPopup from "../notification/Alert";
 import { useDispatch } from "react-redux";
 import {
 	setEmailVerificationFailed,
@@ -10,6 +9,7 @@ import {
 	useResendOTPMutation,
 	useValidateOTPMutation,
 } from "@/app/redux/services/authServices";
+import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
 // import { simulateOTPResponse } from "@/tests/signupTest";
 
 export default function EnterOtpCard({ userEmail }: { userEmail: string }) {
@@ -37,31 +37,40 @@ export default function EnterOtpCard({ userEmail }: { userEmail: string }) {
 		},
 	] = useResendOTPMutation();
 
-	const popupOpenState =
-		isOtpSuccess || isResendSuccess || isOtpError || isResendError;
-
-	const popupSeverity =
-		isOtpSuccess || isResendSuccess
-			? "success"
-			: isOtpError || isResendError
-			? "error"
-			: "success";
-
-	// Get the email from local storage
 	const localStorageEmail = localStorage.getItem("email") as string;
 
 	React.useEffect(() => {
 		if (isOtpSuccess || isResendSuccess) {
 			// Set email verification and email verified state to true
 			dispatch(setEmailVerified({ emailVerified: true }));
+			dispatch(
+				setAlertOpen({
+					alertId: alertId,
+					open: true,
+					severity: "success",
+					title: "Success",
+					message:
+						(validateResponseData?.message || resendResponseData?.message) ??
+						"Email Verification Successful",
+				})
+			);
 		}
 
 		if (isOtpError || isResendError) {
-			console.log(error);
-
 			// Set email verification and email verified state to false
 			dispatch(setEmailVerified({ emailVerified: false }));
 			dispatch(setEmailVerificationFailed({ emailVerificationFailed: true }));
+			dispatch(
+				setAlertOpen({
+					alertId: alertId,
+					open: true,
+					severity: "error",
+					title: "Error",
+					message:
+						(validateResponseData?.message || resendResponseData?.message) ??
+						"Sorry an error occurred",
+				})
+			);
 		}
 
 		console.log("##### EnterOtpCard Logs #####");
@@ -73,20 +82,13 @@ export default function EnterOtpCard({ userEmail }: { userEmail: string }) {
 		isResendError,
 		isResendSuccess,
 		error,
+		alertId,
+		validateResponseData?.message,
+		resendResponseData?.message,
 	]);
 
 	return (
 		<div className="bg-white flex flex-col items-center justify-center w-1/2 aspect-square p-10 gap-8 text-center max-sm:justify-start max-sm:h-full max-sm:w-full max-lg:h-3/4 max-lg:w-3/4 max-sm:aspect-auto ">
-			<AlertPopup
-				alertId={alertId}
-				open={popupOpenState}
-				severity={popupSeverity}
-				title={isOtpSuccess || isResendSuccess ? "Success" : "Error"}
-				message={
-					(validateResponseData?.message || resendResponseData?.message) ??
-					"Sorry an error occurred"
-				}
-			/>
 			<h1 className="text-3xl">Email Verification</h1>
 			<p>
 				Please enter the 6-digit code sent to

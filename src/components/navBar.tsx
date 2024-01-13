@@ -6,21 +6,14 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { MobileSideMenu } from "./mobileMenu";
-import { SheetTrigger } from "./ui/sheet";
-import { Button } from "./ui/button";
 
 export default function NavBar() {
-	const triggerRef = React.useRef(null);
 	const { getLocalStorage } = useLocalStorage();
 	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
-	const toggleMenu = () => {
-		setIsMenuOpen(true);
-	};
 
 	React.useEffect(() => {
 		setIsLoggedIn(Boolean(getLocalStorage("accessToken")));
+		console.log(Boolean(getLocalStorage("accessToken")));
 	}, [getLocalStorage]);
 
 	return (
