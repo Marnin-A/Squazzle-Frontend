@@ -67,21 +67,25 @@ export default function ForgotPasswordCard() {
 					message: "Request Successful",
 				})
 			);
+			setTimeout(
+				() => memoizedSetURLParam("view", "forgotPasswordSuccess"),
+				500
+			);
 		}
 
 		if (isError) {
+			const e = error as unknown as {
+				status: number;
+				data: { error: string; message: string; success: boolean };
+			};
 			dispatch(
 				setAlertOpen({
 					alertId: alertId,
 					open: true,
 					severity: "error",
 					title: "Error",
-					message: "Sorry an error occurred, please try again",
+					message: e?.data.error ?? "Sorry an error occurred, please try again",
 				})
-			);
-			setTimeout(
-				() => memoizedSetURLParam("view", "forgotPasswordSuccess"),
-				500
 			);
 		}
 	}, [

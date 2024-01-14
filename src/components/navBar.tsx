@@ -2,12 +2,14 @@
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import { useRouter } from "next13-progressbar";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { MobileSideMenu } from "./mobileMenu";
 
 export default function NavBar() {
+	const router = useRouter();
 	const { getLocalStorage } = useLocalStorage();
 	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
@@ -40,12 +42,12 @@ export default function NavBar() {
 						{isLoggedIn ? (
 							<AccountCircleIcon color="inherit" className="w-10 h-10" />
 						) : (
-							<Link
+							<button
 								className="py-2 px-4 rounded-md text-off-white bg-primary-dark-green"
-								href="/signin"
+								onClick={() => router.push("/signin")}
 							>
 								Sign in
-							</Link>
+							</button>
 						)}
 					</div>
 				}

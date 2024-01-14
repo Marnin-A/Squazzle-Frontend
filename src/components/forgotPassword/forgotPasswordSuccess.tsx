@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import ManageSearchParams from "@/hooks/updateSearchParams";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next13-progressbar";
 
 export default function ForgotPasswordSuccess() {
 	const router = useRouter();

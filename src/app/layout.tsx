@@ -6,7 +6,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import NotificationContainer from "@/components/notification/NotificationContainer";
 
 const openSans = Open_Sans({
-	weight: ["400", "500", "700"],
+	weight: ["300", "400", "500", "600", "700"],
 	style: ["normal", "italic"],
 	subsets: ["latin"],
 	display: "swap",

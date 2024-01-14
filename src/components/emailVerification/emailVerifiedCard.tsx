@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next13-progressbar";
 
 export default function EmailVerifiedCard() {
 	const router = useRouter();
