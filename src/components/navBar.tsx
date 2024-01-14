@@ -15,11 +15,10 @@ export default function NavBar() {
 
 	React.useEffect(() => {
 		setIsLoggedIn(Boolean(getLocalStorage("accessToken")));
-		console.log(Boolean(getLocalStorage("accessToken")));
 	}, [getLocalStorage]);
 
 	return (
-		<nav className="self-start flex justify-between items-center w-full py-5 mlg:px-20 px-8">
+		<nav className="self-start flex justify-between items-center w-full py-5 mlg:px-20 max-md:border-b-2 max-md:border-b-slate-300 px-8">
 			<Image
 				src="/Mobile-logo.svg"
 				alt="Mobile Squazzle Logo"

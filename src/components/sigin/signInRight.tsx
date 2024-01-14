@@ -14,6 +14,7 @@ import { FailedResponse } from "@/types/authTypes";
 import ShowPassword from "./showPassword";
 import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
 import { useDispatch } from "react-redux";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export default function SignInRight() {
 	const router = useRouter();
@@ -30,6 +31,7 @@ export default function SignInRight() {
 	} = useForm<{ email: string; password: string; rememberMe: boolean }>({
 		criteriaMode: "all",
 	});
+	const { setLocalStorage } = useLocalStorage();
 	// Data mutation and req/res states from RTK Query
 	const [signIn, { isSuccess, isLoading, isError, data, error }] =
 		useSignInMutation();
@@ -49,7 +51,19 @@ export default function SignInRight() {
 	};
 
 	React.useEffect(() => {
+		console.log("Data: ", data);
+
 		if (isSuccess) {
+			if (data?.success === true) {
+				setLocalStorage(
+					"username",
+					`${data.response.data.user.firstName} ${data.response.data.user.lastName}`
+				);
+				setLocalStorage("accessToken", data.response.accessToken);
+				setLocalStorage("accessToken", data.response.refreshToken);
+				setLocalStorage("_id", data.response.data.user._id);
+				setLocalStorage("profileImage", data.response.data.user.profileImage);
+			}
 			// Display Success popup
 			dispatch(
 				setAlertOpen({
@@ -80,7 +94,17 @@ export default function SignInRight() {
 				})
 			);
 		}
-	}, [alertId, data?.message, dispatch, error, isError, isSuccess, router]);
+	}, [
+		alertId,
+		data,
+		data?.message,
+		dispatch,
+		error,
+		isError,
+		isSuccess,
+		router,
+		setLocalStorage,
+	]);
 
 	return (
 		<div className="bg-off-white flex flex-col items-center justify-center h-screen w-1/2 py-8 px-16 max-xs:px-8 max-md:mt-8 max-md:w-full md:overflow-y-scroll">
