@@ -19,15 +19,17 @@ export default function NavBar() {
 
 	return (
 		<nav className="self-start flex justify-between items-center w-full py-5 mlg:px-20 max-md:border-b-2 max-md:border-b-slate-300 px-8">
-			<Image
-				src="/Mobile-logo.svg"
-				alt="Mobile Squazzle Logo"
-				width={177}
-				height={57}
-				placeholder="empty"
-				priority={false}
-				className="w-min h-auto"
-			/>
+			<Link href={"/"} className="hover:cursor-pointer">
+				<Image
+					src="/Mobile-logo.svg"
+					alt="Mobile Squazzle Logo"
+					width={177}
+					height={57}
+					placeholder="empty"
+					priority={false}
+					className="w-min h-auto"
+				/>
+			</Link>
 			<div className="mlg:flex hidden gap-6">
 				<Link href="/accommodations">Accommodations</Link>
 				<Link href="/list-property">List your property</Link>
