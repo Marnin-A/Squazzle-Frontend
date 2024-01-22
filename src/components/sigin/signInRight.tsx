@@ -52,47 +52,48 @@ export default function SignInRight() {
 
 	React.useEffect(() => {
 		console.log("Data: ", data);
-
-		if (isSuccess) {
-			if (data?.success === true) {
-				setLocalStorage(
-					"username",
-					`${data.response.data.user.firstName} ${data.response.data.user.lastName}`
+		if (data) {
+			if (isSuccess) {
+				if (data?.success === true) {
+					setLocalStorage(
+						"username",
+						`${data.response.data.user.firstName} ${data.response.data.user.lastName}`
+					);
+					setLocalStorage("accessToken", data.response.accessToken);
+					setLocalStorage("accessToken", data.response.refreshToken);
+					setLocalStorage("_id", data.response.data.user._id);
+					setLocalStorage("profileImage", data.response.data.user.profileImage);
+				}
+				// Display Success popup
+				dispatch(
+					setAlertOpen({
+						alertId: alertId,
+						open: true,
+						severity: "success",
+						title: "Success",
+						message: data?.message as string,
+					})
 				);
-				setLocalStorage("accessToken", data.response.accessToken);
-				setLocalStorage("accessToken", data.response.refreshToken);
-				setLocalStorage("_id", data.response.data.user._id);
-				setLocalStorage("profileImage", data.response.data.user.profileImage);
+				router.push("/home");
 			}
-			// Display Success popup
-			dispatch(
-				setAlertOpen({
-					alertId: alertId,
-					open: true,
-					severity: "success",
-					title: "Success",
-					message: data?.message as string,
-				})
-			);
-			router.push("/home");
-		}
-		if (isError) {
-			const e = { ...error } as unknown as {
-				status: number;
-				data: FailedResponse;
-			};
-			console.log(e);
+			if (isError) {
+				const e = { ...error } as unknown as {
+					status: number;
+					data: FailedResponse;
+				};
+				console.log(e);
 
-			// Display error popup
-			dispatch(
-				setAlertOpen({
-					alertId: alertId,
-					open: true,
-					severity: "error",
-					title: "Error",
-					message: e.data.error ?? "Sorry an error occurred",
-				})
-			);
+				// Display error popup
+				dispatch(
+					setAlertOpen({
+						alertId: alertId,
+						open: true,
+						severity: "error",
+						title: "Error",
+						message: e.data.error ?? "Sorry an error occurred",
+					})
+				);
+			}
 		}
 	}, [
 		alertId,
