@@ -8,33 +8,30 @@ import NewPasswordCard from "./newPasswordCard";
 import ResetPasswordSuccess from "./resetPasswordSuccess";
 
 export default function BodyForgotPassword() {
-	const { getURLParam } = ManageSearchParams();
-
-	const RenderComponents = () => {
-		const view = getURLParam("view");
-		console.log(view);
-
-		switch (view) {
-			case "forgotPasswordSuccess":
-				return <ForgotPasswordSuccess />;
-
-			case "enterOTP":
-				return <PasswordOtpCard />;
-
-			case "newPassword":
-				return <NewPasswordCard />;
-
-			case "resetPasswordSuccess":
-				return <ResetPasswordSuccess />;
-
-			default:
-				return <ForgotPasswordCard />;
-		}
-	};
-
 	return (
 		<div className="flex-1 flex flex-col items-center justify-center w-full overflow-y-scroll max-sm:items-start">
-			{RenderComponents()}
+			<RenderComponents />
 		</div>
+	);
+}
+
+function RenderComponents() {
+	const { getURLParam } = ManageSearchParams();
+	const view = getURLParam("view");
+	console.log(view);
+	return (
+		<React.Suspense>
+			{view === "forgotPasswordSuccess" ? (
+				<ForgotPasswordSuccess />
+			) : view === "enterOTP" ? (
+				<PasswordOtpCard />
+			) : view === "newPassword" ? (
+				<NewPasswordCard />
+			) : view === "resetPasswordSuccess" ? (
+				<ResetPasswordSuccess />
+			) : (
+				<ForgotPasswordCard />
+			)}
+		</React.Suspense>
 	);
 }
