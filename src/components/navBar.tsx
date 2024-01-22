@@ -41,7 +41,9 @@ export default function NavBar() {
 					<div className="hidden items-center gap-4 text-primary-green mlg:flex">
 						<NotificationsNoneIcon color="inherit" />
 						{isLoggedIn ? (
-							<AccountCircleIcon color="inherit" className="w-10 h-10" />
+							<Link href="/home">
+								<AccountCircleIcon color="inherit" className="w-10 h-10" />
+							</Link>
 						) : (
 							<button
 								className="py-2 px-4 rounded-md text-off-white bg-primary-dark-green"

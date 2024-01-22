@@ -1,21 +1,11 @@
 "use client";
 
+import { useRouter } from "next13-progressbar";
 import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-
-import {
-	Sheet,
-	SheetClose,
-	SheetContent,
-	SheetDescription,
-	SheetFooter,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from "./ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 
 export function MobileSideMenu() {
+	const router = useRouter();
 	return (
 		<div className="w-min">
 			<Sheet key="right">
@@ -36,6 +26,7 @@ export function MobileSideMenu() {
 						<Button
 							className="text-left font-light justify-start hover:text-primary-green rounded-none"
 							variant={"ghost"}
+							onClick={() => router.push("/home")}
 						>
 							Manage account
 						</Button>
