@@ -10,7 +10,9 @@ import ResetPasswordSuccess from "./resetPasswordSuccess";
 export default function BodyForgotPassword() {
 	return (
 		<div className="flex-1 flex flex-col items-center justify-center w-full overflow-y-scroll max-sm:items-start">
-			<RenderComponents />
+			<React.Suspense>
+				<RenderComponents />
+			</React.Suspense>
 		</div>
 	);
 }
@@ -20,7 +22,7 @@ function RenderComponents() {
 	const view = getURLParam("view");
 	console.log(view);
 	return (
-		<React.Suspense>
+		<>
 			{view === "forgotPasswordSuccess" ? (
 				<ForgotPasswordSuccess />
 			) : view === "enterOTP" ? (
@@ -32,6 +34,6 @@ function RenderComponents() {
 			) : (
 				<ForgotPasswordCard />
 			)}
-		</React.Suspense>
+		</>
 	);
 }
