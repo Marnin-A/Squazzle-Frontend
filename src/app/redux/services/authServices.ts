@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import * as Types from "@/types/authTypes";
 import { ValidateOtpResponse } from "@/types/authTypes";
+import { UserProfileData } from "@/components/editProfile/profileForm";
 
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
@@ -94,9 +95,20 @@ export const authApi = createApi({
 				url: "/api/v1/auth/newsletterSignup",
 				method: "POST",
 				body: data,
-				signal: Change_Password_Abort_Controller.signal,
+				signal: Newsletter_Signup_Abort_Controller.signal,
 			}),
 		}),
+		updateProfile: builder.mutation<Types.ValidateOtpResponse, UserProfileData>(
+			{
+				query: (data) => ({
+					// Endpoint not yet resolved
+					url: "/api/v1/auth/updateProfile",
+					method: "POST",
+					body: data,
+					signal: Update_Profile_Abort_Controller.signal,
+				}),
+			}
+		),
 	}),
 });
 
@@ -112,6 +124,7 @@ export const {
 	useResendPasswordOTPMutation,
 	useChangePasswordMutation,
 	useNewsletterSignupMutation,
+	useUpdateProfileMutation,
 } = authApi;
 
 // Define abort controller to cancel requests
@@ -121,3 +134,4 @@ export const Forgot_Password_Abort_Controller = new AbortController();
 export const FP_OTP_Abort_Controller = new AbortController();
 export const Change_Password_Abort_Controller = new AbortController();
 export const Newsletter_Signup_Abort_Controller = new AbortController();
+export const Update_Profile_Abort_Controller = new AbortController();

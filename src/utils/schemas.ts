@@ -21,3 +21,25 @@ export const passwordSchema = yup.object().shape({
 export const emailSchema = yup.object().shape({
 	email: yup.string().email("*Invalid email").required("*Email is required"),
 });
+export const userProfileSchema = yup.object().shape({
+	firstName: yup
+		.string()
+		.required("First Name is required")
+		.min(2, "First Name must be greater than 2 characters"),
+	lastName: yup
+		.string()
+		.required("First Name is required")
+		.min(2, "First Name must be greater than 2 characters"),
+	email: yup.string().email("*Invalid email").required("*Email is required"),
+	occupation: yup.string().required("*Occupation is required"),
+	gender: yup.string().oneOf(["Male", "Female"]).required("Gender is required"),
+	state: yup.string().required("*State is required"),
+	city: yup.string().required("*City is required"),
+	NIN: yup.number().required("*NIN is required"),
+	phoneNumber: yup.number().required("*Phone Number is required"),
+	about: yup
+		.string()
+		.required("*About is required")
+		.min(20, "About can't be less than 20 characters")
+		.max(500, "About can't be more than 500 characters"),
+});

@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React from "react";
 import { Phone, getCountryByIso } from "react-telephone";
 import { useDispatch } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -177,7 +177,10 @@ export default function UserCreateProfileForm() {
 				</div>
 				{/* Phone Number Input */}
 				<div className="relative">
-					<label className="block text-gray-700 text-md mb-2" htmlFor="email">
+					<label
+						className="block text-gray-700 text-md mb-2"
+						htmlFor="phoneNumber"
+					>
 						Phone Number <sup className=" text-error">*</sup>
 					</label>
 					<div
