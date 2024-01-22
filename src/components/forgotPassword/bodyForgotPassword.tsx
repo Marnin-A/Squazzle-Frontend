@@ -1,16 +1,47 @@
 "use client";
 import React from "react";
-import dynamic from "next/dynamic";
-import CircularProgress from "@mui/material/CircularProgress";
+import ForgotPasswordCard from "./forgotPasswordCard";
+import ForgotPasswordSuccess from "./forgotPasswordSuccess";
+import PasswordOtpCard from "./passwordOtpCard";
+import ManageSearchParams from "@/hooks/updateSearchParams";
+import NewPasswordCard from "./newPasswordCard";
+import ResetPasswordSuccess from "./resetPasswordSuccess";
 
 export default function BodyForgotPassword() {
-	const DynamicComponentRender = dynamic(() => import("./renderComponent"), {
-		ssr: false,
-		loading: () => <CircularProgress color="success" className="m-auto" />,
-	});
 	return (
 		<div className="flex-1 flex flex-col items-center justify-center w-full overflow-y-scroll max-sm:items-start">
-			<DynamicComponentRender />
+			<RenderComponents />
 		</div>
+	);
+}
+
+function RenderComponents() {
+	const { getURLParam } = ManageSearchParams();
+	const view = getURLParam("view");
+	console.log(view);
+	return (
+		<>
+			{view === "forgotPasswordSuccess" ? (
+				<React.Suspense>
+					<ForgotPasswordSuccess />
+				</React.Suspense>
+			) : view === "enterOTP" ? (
+				<React.Suspense>
+					<PasswordOtpCard />
+				</React.Suspense>
+			) : view === "newPassword" ? (
+				<React.Suspense>
+					<NewPasswordCard />
+				</React.Suspense>
+			) : view === "resetPasswordSuccess" ? (
+				<React.Suspense>
+					<ResetPasswordSuccess />
+				</React.Suspense>
+			) : (
+				<React.Suspense>
+					<ForgotPasswordCard />
+				</React.Suspense>
+			)}
+		</>
 	);
 }
