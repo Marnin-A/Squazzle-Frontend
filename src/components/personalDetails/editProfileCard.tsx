@@ -26,7 +26,7 @@ export default function EditProfileCard() {
 				color="inherit"
 				className="min-w-[104px] min-h-[104px] max-sm:hidden"
 			/>
-			<Link href="home/editProfile" className="flex justify-center m-auto">
+			<Link href="./editProfile" className="flex justify-center m-auto">
 				Edit Profile <Pencil fill="#000" stroke="#fff" />
 			</Link>
 		</div>
