@@ -14,7 +14,7 @@ export default function NotificationContainer({
 			{children}
 			<Next13ProgressBar
 				height="4px"
-				color="#CCE6E7"
+				color="#018388"
 				options={{ showSpinner: true }}
 				showOnShallow
 			/>

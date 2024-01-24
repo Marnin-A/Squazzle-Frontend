@@ -52,7 +52,7 @@ export default function SignInRight() {
 
 	React.useEffect(() => {
 		console.log("Data: ", data);
-		if (data) {
+		if (data || data === undefined) {
 			if (isSuccess) {
 				if (data?.success === true) {
 					setLocalStorage(
