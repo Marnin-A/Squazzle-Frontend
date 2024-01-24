@@ -7,12 +7,25 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { MobileSideMenu } from "./mobileMenu";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+} from "./ui/dropdown-menu";
+import { DropdownMenuTrigger } from "./ui/dropdown-menu";
+import CircularProgress from "@mui/material/CircularProgress";
+import dynamic from "next/dynamic";
 
 export default function NavBar() {
 	const router = useRouter();
 	const { getLocalStorage } = useLocalStorage();
 	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-
+	const DynamicLogoutBtn = dynamic(() => import("./logoutBtn"), {
+		ssr: false,
+		loading: () => (
+			<CircularProgress color="success" className="m-auto w-2 h-2" />
+		),
+	});
 	React.useEffect(() => {
 		setIsLoggedIn(Boolean(getLocalStorage("accessToken")));
 	}, [getLocalStorage]);
@@ -42,7 +55,17 @@ export default function NavBar() {
 						<NotificationsNoneIcon color="inherit" />
 						{isLoggedIn ? (
 							<Link href="/home">
-								<AccountCircleIcon color="inherit" className="w-10 h-10" />
+								<DropdownMenu>
+									<DropdownMenuTrigger>
+										<AccountCircleIcon color="inherit" className="w-10 h-10" />
+									</DropdownMenuTrigger>
+									<DropdownMenuContent>
+										<DropdownMenuItem>Manage Account</DropdownMenuItem>
+										<DropdownMenuItem>
+											<DynamicLogoutBtn />
+										</DropdownMenuItem>
+									</DropdownMenuContent>
+								</DropdownMenu>
 							</Link>
 						) : (
 							<button
