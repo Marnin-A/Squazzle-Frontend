@@ -92,7 +92,9 @@ export default function SignInRight() {
 						open: true,
 						severity: "error",
 						title: "Error",
-						message: e.data?.error ?? "Sorry an error occurred",
+						message:
+							e.data?.error ??
+							"Sorry an error occurred, check your internet access and try again.",
 					})
 				);
 			}
