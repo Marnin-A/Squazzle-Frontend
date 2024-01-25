@@ -19,6 +19,7 @@ import dynamic from "next/dynamic";
 export default function NavBar() {
 	const router = useRouter();
 	const { getLocalStorage } = useLocalStorage();
+	const [imageFailed, setImageFailed] = React.useState(false);
 	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 	const DynamicLogoutBtn = dynamic(() => import("./logoutBtn"), {
 		ssr: false,
@@ -29,12 +30,13 @@ export default function NavBar() {
 	React.useEffect(() => {
 		setIsLoggedIn(Boolean(getLocalStorage("accessToken")));
 	}, [getLocalStorage]);
+	console.log(getLocalStorage("profileImage"));
 
 	return (
 		<nav className="self-start flex justify-between items-center w-full py-5 mlg:px-20 max-md:border-b-2 max-md:border-b-slate-300 px-8">
 			<Link href={"/"} className="hover:cursor-pointer">
 				<Image
-					src="/Mobile-logo.svg"
+					src={"/Mobile-logo.svg"}
 					alt="Mobile Squazzle Logo"
 					width={177}
 					height={57}
@@ -57,7 +59,30 @@ export default function NavBar() {
 							<Link href="/home">
 								<DropdownMenu>
 									<DropdownMenuTrigger>
-										<AccountCircleIcon color="inherit" className="w-10 h-10" />
+										{getLocalStorage("profileImage") ? (
+											imageFailed ? (
+												<AccountCircleIcon
+													color="inherit"
+													className="w-10 h-10"
+												/>
+											) : (
+												<Image
+													src={getLocalStorage("profileImage")}
+													alt={"User Profile Picture"}
+													width={40}
+													height={40}
+													placeholder="empty"
+													priority={false}
+													className="w-min h-auto rounded-full"
+													onError={() => setImageFailed(true)}
+												/>
+											)
+										) : (
+											<AccountCircleIcon
+												color="inherit"
+												className="w-10 h-10"
+											/>
+										)}
 									</DropdownMenuTrigger>
 									<DropdownMenuContent>
 										<DropdownMenuItem>Manage Account</DropdownMenuItem>
@@ -81,4 +106,7 @@ export default function NavBar() {
 			</div>
 		</nav>
 	);
+}
+function removeQuotes(word: string) {
+	return word.slice(1, word.length - 1);
 }
