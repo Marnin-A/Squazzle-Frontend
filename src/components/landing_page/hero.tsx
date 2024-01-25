@@ -6,12 +6,14 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useDispatch } from "react-redux";
 
 export default function Hero() {
 	const dispatch = useDispatch();
 	const userId = React.useId();
+	const router = useRouter();
 	function handleSearch() {
 		console.log("Start");
 		dispatch(
@@ -91,7 +93,10 @@ export default function Hero() {
 					priority={false}
 					className="md:w-3/5 w-full h-auto aspect-square mx-auto mb-6 shadow-md hidden min-w-max max-mlg:block"
 				/>
-				<button className="flex items-center justify-center py-4 px-12 text-white text-center font-semibold bg-primary-grey rounded-lg sm:hidden max-sm:w-full">
+				<button
+					onClick={() => router.push("/signin")}
+					className="flex items-center justify-center py-4 px-12 text-white text-center font-semibold bg-primary-grey rounded-lg sm:hidden max-sm:w-full"
+				>
 					Sign in
 				</button>
 			</div>

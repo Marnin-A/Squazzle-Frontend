@@ -112,7 +112,7 @@ export default function SignInRight() {
 	]);
 
 	return (
-		<div className="bg-off-white flex flex-col items-center justify-center h-screen w-1/2 py-8 px-16 max-xs:px-8 max-md:mt-8 max-md:w-full md:overflow-y-scroll">
+		<div className="bg-off-white flex flex-col items-center justify-center h-screen w-1/2 py-8 px-16 max-xs:justify-start max-xs:px-8 max-md:mt-8 max-md:w-full md:overflow-y-scroll">
 			{/* Header */}
 			<div className="flex flex-col items-start w-full">
 				<h1 className=" text-2xl leading-8 font-bold">Welcome back!</h1>
