@@ -52,6 +52,8 @@ export default function SignInRight() {
 
 	React.useEffect(() => {
 		console.log("Data: ", data);
+		console.log("Error: ", error);
+
 		if (data || data === undefined) {
 			if (isSuccess) {
 				if (data?.success === true) {

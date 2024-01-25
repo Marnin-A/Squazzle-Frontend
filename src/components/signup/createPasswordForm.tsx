@@ -51,9 +51,8 @@ export default function UserCreatePasswordForm() {
 			...user,
 			password: passwords.password,
 		})) as unknown as any;
-		// console.log("Response:", res);
-		// console.log("Data:", res);
-		// console.log("Error:", isError);
+		console.log("Response:", res);
+		console.log("Data:", res);
 
 		if (res.error?.status === "FETCH_ERROR") {
 			console.log("Error");
