@@ -7,7 +7,20 @@ export type FailedResponse = {
 	error: string;
 	message: string;
 };
-export type ApiResponse = SuccessfulSignupResponse | FailedResponse;
+export type SignUpResponse =
+	| {
+			data: SuccessfulSignupResponse;
+	  }
+	| {
+			error: {
+				status: number | "FETCH_ERROR";
+				data: {
+					success: true;
+					error: string;
+					message: string;
+				};
+			};
+	  };
 export type SuccessfulSignupResponse = {
 	status: "success";
 	message: "Account successfully created, Check your mail for activation code";

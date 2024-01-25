@@ -8,14 +8,16 @@ export const authApi = createApi({
 	reducerPath: "services",
 	baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_SERVER_URL }),
 	endpoints: (builder) => ({
-		signUp: builder.mutation<Types.ApiResponse, Types.CreateProfileFormData>({
-			query: (userData) => ({
-				url: "/api/v1/auth/signup",
-				method: "POST",
-				body: userData,
-				signal: SignUp_Abort_Controller.signal,
-			}),
-		}),
+		signUp: builder.mutation<Types.SignUpResponse, Types.CreateProfileFormData>(
+			{
+				query: (userData) => ({
+					url: "/api/v1/auth/signup",
+					method: "POST",
+					body: userData,
+					signal: SignUp_Abort_Controller.signal,
+				}),
+			}
+		),
 		validateOTP: builder.mutation<
 			Types.ValidateOtpResponse,
 			Types.ValidateOtpRequest

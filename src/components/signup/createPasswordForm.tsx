@@ -13,7 +13,6 @@ import { Passwords } from "@/types/types";
 // import { simulateApiResponse } from "@/tests/signupTest";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useSignUpMutation } from "@/app/redux/services/authServices";
-import { FailedResponse, SuccessfulSignupResponse } from "@/types/authTypes";
 import { passwordSchema } from "@/utils/schemas";
 import ShowPassword from "../sigin/showPassword";
 import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
@@ -43,34 +42,22 @@ export default function UserCreatePasswordForm() {
 		mode: "onChange",
 	});
 	// Data mutation and req/res states from RTK Query
-	const [submitData, { error, isError, isLoading, isSuccess, data: response }] =
-		useSignUpMutation();
-	console.log("##### Create Password Form Logs #####");
-	// Apply correct type to successfully retrieved data
-	const data = response as SuccessfulSignupResponse;
+	const [submitData, { isLoading }] = useSignUpMutation();
 
 	// Handle Form Submission
 	const onSubmit: SubmitHandler<FieldValues> = async (passwords) => {
 		// Upload user data
-		const res = await submitData({ ...user, password: passwords.password });
+		const res = (await submitData({
+			...user,
+			password: passwords.password,
+		})) as unknown as any;
 		// console.log("Response:", res);
+		// console.log("Data:", res);
+		// console.log("Error:", isError);
 
-		if (isSuccess) {
-			// Display popup
-			dispatch(
-				setAlertOpen({
-					alertId: alertId,
-					open: true,
-					severity: "success",
-					title: "Success",
-					message: data.message ?? "Account created successfully.",
-				})
-			);
+		if (res.error?.status === "FETCH_ERROR") {
+			console.log("Error");
 
-			router.push("/emailVerification");
-		}
-		if (isError) {
-			const e = error as unknown as { status: number; data: FailedResponse };
 			// Display error popup
 			dispatch(
 				setAlertOpen({
@@ -78,9 +65,44 @@ export default function UserCreatePasswordForm() {
 					open: true,
 					severity: "error",
 					title: "Error",
-					message: e.data.error ?? "Sorry an error occurred, try again.",
+					message: "Network error, check your internet access and try again.",
 				})
 			);
+			return;
+		}
+		if (res.error?.data.success === false) {
+			// console.log("Error");
+			const phoneNumberErrorMsg = `something went wrong here is the error MongoServerError: E11000 duplicate key error collection: stayshare.users index: phoneNumber_1 dup key: { phoneNumber: "${user.phoneNumber}" }`;
+			// Display error popup
+			dispatch(
+				setAlertOpen({
+					alertId: alertId,
+					open: true,
+					severity: "error",
+					title: "Error",
+					message:
+						res.error.data.error === phoneNumberErrorMsg
+							? `A user with the phone number ${user.phoneNumber} already exists`
+							: res.error.data.error ?? "Sorry an error occurred, try again.",
+				})
+			);
+			return;
+		}
+		if (res.data.status === "success") {
+			console.log("Success");
+
+			// Display popup
+			dispatch(
+				setAlertOpen({
+					alertId: alertId,
+					open: true,
+					severity: "success",
+					title: "Success",
+					message: res.data.message ?? "Account created successfully.",
+				})
+			);
+
+			router.push("/emailVerification");
 		}
 	};
 
