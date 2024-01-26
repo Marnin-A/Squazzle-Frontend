@@ -34,7 +34,7 @@ export function MobileSideMenu() {
 						<Button
 							className="text-left font-light justify-start hover:text-primary-green rounded-none"
 							variant={"ghost"}
-							onClick={() => router.push("/home")}
+							onClick={() => router.push("/manageAccount")}
 						>
 							Manage account
 						</Button>

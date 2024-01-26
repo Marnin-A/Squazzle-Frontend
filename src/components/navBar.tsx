@@ -51,7 +51,7 @@ export default function NavBar() {
 					<div className="hidden items-center gap-4 text-primary-green mlg:flex">
 						<NotificationsNoneIcon color="inherit" />
 						{isLoggedIn ? (
-							<Link href="/home">
+							<Link href="/manageAccount">
 								<DropdownMenu>
 									<DropdownMenuTrigger>
 										<ProfilePicture height={40} width={40} />

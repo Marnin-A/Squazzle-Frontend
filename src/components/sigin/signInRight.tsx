@@ -76,7 +76,7 @@ export default function SignInRight() {
 						message: data?.message as string,
 					})
 				);
-				router.push("/home");
+				router.push("/manageAccount");
 			}
 			if (isError) {
 				const e = { ...error } as unknown as {

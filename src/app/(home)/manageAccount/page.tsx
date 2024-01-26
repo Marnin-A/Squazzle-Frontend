@@ -23,37 +23,37 @@ export default function Page() {
 					<p className="font-semibold text-lg sm:hidden">Manage Account</p>
 					<PageCard
 						img={<AccountCircle className="w-7 h-7" htmlColor="#575757" />}
-						route="home/profile"
+						route="manageAccount/profile"
 						title="Personal Details"
 						key="Personal Details"
 					/>
 					<PageCard
 						img={<LocationCity className="w-7 h-7" htmlColor="#575757" />}
-						route="home/myListing"
+						route="manageAccount/myListing"
 						title="My listing"
 						key="My listing"
 					/>
 					<PageCard
 						img={<Notifications className="w-7 h-7" htmlColor="#575757" />}
-						route="home/notification"
+						route="manageAccount/notification"
 						title="Notification"
 						key="Notification"
 					/>
 					<PageCard
 						img={<GppMaybe className="w-7 h-7" htmlColor="#575757" />}
-						route="home/passwordSetting"
+						route="manageAccount/passwordSetting"
 						title="Password Setting"
 						key="Password Setting"
 					/>
 					<PageCard
 						img={<Payments className="w-7 h-7" htmlColor="#575757" />}
-						route="home/paymentDetails"
+						route="manageAccount/paymentDetails"
 						title="Payments and Payout"
 						key="Payments and Payout"
 					/>
 					<PageCard
 						img={<DeleteForever className="w-7 h-7" htmlColor="#575757" />}
-						route="home/deleteAccount"
+						route="manageAccount/deleteAccount"
 						title="Delete Account"
 						key="Delete Account"
 					/>
