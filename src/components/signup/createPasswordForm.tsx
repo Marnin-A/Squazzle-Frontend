@@ -12,7 +12,7 @@ import { resetProfileData } from "@/app/redux/slices/signUpSlice";
 import { Passwords } from "@/types/types";
 // import { simulateApiResponse } from "@/tests/signupTest";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useSignUpMutation } from "@/app/redux/services/authServices";
+import { useSignUpMutation } from "@/app/redux/services/apiServices";
 import { passwordSchema } from "@/utils/schemas";
 import ShowPassword from "../sigin/showPassword";
 import { setAlertOpen } from "@/app/redux/slices/notificationSlice";

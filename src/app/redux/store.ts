@@ -2,18 +2,18 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import CreateProfileReducer from "./slices/signUpSlice";
 import EmailVerificationReducer from "./slices/emailVerificationSlice";
 import NotificationSlice from "./slices/notificationSlice";
-import { authApi } from "./services/authServices";
+import { api } from "./services/apiServices";
 
 const reducers = combineReducers({
 	CreateProfile: CreateProfileReducer,
 	EmailVerification: EmailVerificationReducer,
 	Notification: NotificationSlice,
-	[authApi.reducerPath]: authApi.reducer,
+	[api.reducerPath]: api.reducer,
 });
 export const store = configureStore({
 	reducer: reducers,
 	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware().concat(authApi.middleware),
+		getDefaultMiddleware().concat(api.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

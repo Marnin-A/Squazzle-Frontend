@@ -4,7 +4,7 @@ import { MuiOtpInput } from "mui-one-time-password-input";
 import {
 	useForgotPasswordOTPMutation,
 	useResendPasswordOTPMutation,
-} from "@/app/redux/services/authServices";
+} from "@/app/redux/services/apiServices";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import ManageSearchParams from "@/hooks/updateSearchParams";
 import { useDispatch } from "react-redux";

@@ -7,7 +7,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import {
 	Forgot_Password_Abort_Controller,
 	useForgotPasswordMutation,
-} from "@/app/redux/services/authServices";
+} from "@/app/redux/services/apiServices";
 import ManageSearchParams from "@/hooks/updateSearchParams";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { setAlertOpen } from "@/app/redux/slices/notificationSlice";

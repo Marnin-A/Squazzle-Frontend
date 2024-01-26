@@ -4,7 +4,7 @@ import { ValidateOtpResponse } from "@/types/authTypes";
 import { UserProfileData } from "@/components/editProfile/profileForm";
 
 // Define a service using a base URL and expected endpoints
-export const authApi = createApi({
+export const api = createApi({
 	reducerPath: "services",
 	baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_SERVER_URL }),
 	endpoints: (builder) => ({
@@ -127,7 +127,7 @@ export const {
 	useChangePasswordMutation,
 	useNewsletterSignupMutation,
 	useUpdateProfileMutation,
-} = authApi;
+} = api;
 
 // Define abort controller to cancel requests
 export const SignIn_Abort_Controller = new AbortController();

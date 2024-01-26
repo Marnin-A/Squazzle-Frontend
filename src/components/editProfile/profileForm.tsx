@@ -6,7 +6,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import {
 	Update_Profile_Abort_Controller,
 	useUpdateProfileMutation,
-} from "@/app/redux/services/authServices";
+} from "@/app/redux/services/apiServices";
 import { useDispatch } from "react-redux";
 import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
 import CircularProgress from "@mui/material/CircularProgress";

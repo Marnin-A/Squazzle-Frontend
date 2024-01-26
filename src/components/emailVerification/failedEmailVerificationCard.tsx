@@ -7,7 +7,7 @@ import {
 	setEmailVerified,
 } from "@/app/redux/slices/emailVerificationSlice";
 // import { simulateOTPResponse } from "@/tests/signupTest";
-import { useResendOTPMutation } from "@/app/redux/services/authServices";
+import { useResendOTPMutation } from "@/app/redux/services/apiServices";
 import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
 
 export default function FailedEmailVerifiedCard() {

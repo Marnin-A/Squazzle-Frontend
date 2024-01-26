@@ -2,7 +2,7 @@ import React from "react";
 import {
 	Change_Password_Abort_Controller,
 	useChangePasswordMutation,
-} from "@/app/redux/services/authServices";
+} from "@/app/redux/services/apiServices";
 import ManageSearchParams from "@/hooks/updateSearchParams";
 import CircularProgress from "@mui/material/CircularProgress";
 import { ErrorMessage } from "@hookform/error-message";

@@ -1,5 +1,5 @@
 "use client";
-import { useNewsletterSignupMutation } from "@/app/redux/services/authServices";
+import { useNewsletterSignupMutation } from "@/app/redux/services/apiServices";
 import { ErrorMessage } from "@hookform/error-message";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Instagram, Facebook, Twitter, LinkedIn } from "@mui/icons-material";

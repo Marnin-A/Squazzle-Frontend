@@ -43,3 +43,26 @@ export const userProfileSchema = yup.object().shape({
 		.min(20, "About can't be less than 20 characters")
 		.max(500, "About can't be more than 500 characters"),
 });
+export const overviewFormSchema = yup.object().shape({
+	accommodationName: yup.string().required("*Accommodation Name is required"),
+	location: yup.string().required("*Location is required"),
+	accommodationType: yup
+		.string()
+		.oneOf([
+			"Duplex",
+			"Apartment",
+			"Single room",
+			"Bungalow",
+			"Flat",
+			"Studio",
+			"Mansion",
+		])
+		.required("*Select an accommodation type"),
+	availability: yup
+		.string()
+		.oneOf(["Available", "Not available"])
+		.required("*Select availability"),
+	accommodationPrice: yup.number().required("*Accommodation Price is required"),
+	startDate: yup.date().required(),
+	endDate: yup.date().required(),
+});

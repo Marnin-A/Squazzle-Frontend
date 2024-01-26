@@ -8,7 +8,7 @@ import {
 import {
 	useResendOTPMutation,
 	useValidateOTPMutation,
-} from "@/app/redux/services/authServices";
+} from "@/app/redux/services/apiServices";
 import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
 // import { simulateOTPResponse } from "@/tests/signupTest";
 
