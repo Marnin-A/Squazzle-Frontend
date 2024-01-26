@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useRouter } from "next13-progressbar";
-import { ArrowRight, ChevronRight } from "@mui/icons-material";
+import { ChevronRight } from "@mui/icons-material";
 export default function PageCard({
 	img,
 	title,

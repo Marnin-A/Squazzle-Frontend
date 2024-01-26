@@ -13,24 +13,19 @@ import {
 	DropdownMenuItem,
 } from "./ui/dropdown-menu";
 import { DropdownMenuTrigger } from "./ui/dropdown-menu";
-import CircularProgress from "@mui/material/CircularProgress";
-import dynamic from "next/dynamic";
+import LogoutBtn from "./logoutBtn";
+import ProfilePicture from "./profilePicture";
 
 export default function NavBar() {
 	const router = useRouter();
 	const { getLocalStorage } = useLocalStorage();
-	const [imageFailed, setImageFailed] = React.useState(false);
 	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-	const DynamicLogoutBtn = dynamic(() => import("./logoutBtn"), {
-		ssr: false,
-		loading: () => (
-			<CircularProgress color="success" className="m-auto w-2 h-2" />
-		),
-	});
+
 	React.useEffect(() => {
-		setIsLoggedIn(Boolean(getLocalStorage("accessToken")));
+		if (typeof window !== "undefined" && window.localStorage) {
+			setIsLoggedIn(Boolean(getLocalStorage("accessToken")));
+		}
 	}, [getLocalStorage]);
-	console.log(getLocalStorage("profileImage"));
 
 	return (
 		<nav className="self-start flex justify-between items-center w-full py-5 mlg:px-20 max-md:border-b-2 max-md:border-b-slate-300 px-8">
@@ -59,35 +54,12 @@ export default function NavBar() {
 							<Link href="/home">
 								<DropdownMenu>
 									<DropdownMenuTrigger>
-										{getLocalStorage("profileImage") ? (
-											imageFailed ? (
-												<AccountCircleIcon
-													color="inherit"
-													className="w-10 h-10"
-												/>
-											) : (
-												<Image
-													src={getLocalStorage("profileImage")}
-													alt={"User Profile Picture"}
-													width={40}
-													height={40}
-													placeholder="empty"
-													priority={false}
-													className="w-min h-auto rounded-full"
-													onError={() => setImageFailed(true)}
-												/>
-											)
-										) : (
-											<AccountCircleIcon
-												color="inherit"
-												className="w-10 h-10"
-											/>
-										)}
+										<ProfilePicture height={40} width={40} />
 									</DropdownMenuTrigger>
 									<DropdownMenuContent>
 										<DropdownMenuItem>Manage Account</DropdownMenuItem>
 										<DropdownMenuItem>
-											<DynamicLogoutBtn />
+											<LogoutBtn />
 										</DropdownMenuItem>
 									</DropdownMenuContent>
 								</DropdownMenu>
@@ -106,7 +78,4 @@ export default function NavBar() {
 			</div>
 		</nav>
 	);
-}
-function removeQuotes(word: string) {
-	return word.slice(1, word.length - 1);
 }

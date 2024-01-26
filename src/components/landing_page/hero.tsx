@@ -6,7 +6,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next13-progressbar";
 import React from "react";
 import { useDispatch } from "react-redux";
 

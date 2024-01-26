@@ -1,4 +1,5 @@
 import PageCard from "@/components/home/pageCard";
+import UserCard from "@/components/home/userCard";
 import {
 	LocationCity,
 	Notifications,
@@ -7,23 +8,17 @@ import {
 	DeleteForever,
 	AccountCircle,
 } from "@mui/icons-material";
-import CircularProgress from "@mui/material/CircularProgress";
-import dynamic from "next/dynamic";
 
 import React from "react";
 
 export default function Page() {
-	const DynamicUserCard = dynamic(() => import("@/components/home/userCard"), {
-		ssr: false,
-		loading: () => <CircularProgress color="success" className="m-auto" />,
-	});
 	return (
 		<div className="bg-off-white py-10 px-20 max-xl:px-5 max-sm:bg-white">
 			<p className="pb-8 max-sm:hidden text-primary-mid-green">
 				Manage Account
 			</p>
 			<div className="flex justify-between max-md:items-center max-md:flex-col max-sm:items-start">
-				<DynamicUserCard />
+				<UserCard />
 				<div className="flex flex-wrap gap-y-6 gap-x-5 justify-center w-full max-sm:flex-nowrap max-sm:flex-col max-sm:gap-6 max-sm:justify-start max-sm:text-primary-mid-green">
 					<p className="font-semibold text-lg sm:hidden">Manage Account</p>
 					<PageCard

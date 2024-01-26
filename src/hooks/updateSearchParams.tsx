@@ -1,4 +1,6 @@
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next13-progressbar";
+
 import React from "react";
 
 export default function ManageSearchParams() {
