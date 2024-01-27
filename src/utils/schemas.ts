@@ -62,7 +62,7 @@ export const overviewFormSchema = yup.object().shape({
 		.string()
 		.oneOf(["Available", "Not available"])
 		.required("*Select availability"),
-	accommodationPrice: yup.number().required("*Accommodation Price is required"),
-	startDate: yup.date().required(),
-	endDate: yup.date().required(),
+	accommodationPrice: yup.string().required("*Accommodation Price is required"),
+	startDate: yup.date().required("*Start Date is required"),
+	endDate: yup.date().required("*End Date is required"),
 });

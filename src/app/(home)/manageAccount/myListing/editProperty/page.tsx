@@ -1,3 +1,4 @@
+import OverviewForm from "@/components/editProperty/overviewForm";
 import SideNav from "@/components/editProperty/sideNav";
 import { CaretRightIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
@@ -13,8 +14,9 @@ export default function Page() {
 				<CaretRightIcon width={20} height={20} />
 				<span>My Listing</span>
 			</div>
-			<div className="flex flex-wrap">
+			<div className="flex">
 				<SideNav />
+				<OverviewForm />
 			</div>
 		</div>
 	);

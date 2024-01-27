@@ -12,7 +12,7 @@ export default function SideNav() {
 	const router = useRouter();
 	const { getURLParam } = ManageSearchParams();
 	return (
-		<div className="w-[305px]">
+		<div className="w-[305px] mr-16">
 			<div className="bg-primary-dark-green mb-5">
 				<button
 					onClick={() => router.push("../myListing")}
@@ -30,7 +30,7 @@ export default function SideNav() {
 					}
 				>
 					<AppsSharpIcon className="w-7 h-7" htmlColor="#03796E" />
-					Personal Details
+					Overview
 				</Link>
 				<Link
 					href="?view=description"
