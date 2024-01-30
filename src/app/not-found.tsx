@@ -10,7 +10,7 @@ export default function NotFound() {
 				href="/"
 				className="py-6 px-4 text-white text-2xl font-semibold bg-primary-mid-green rounded-md"
 			>
-				Back to homepage
+				Back to homepage.
 			</Link>
 		</div>
 	);
