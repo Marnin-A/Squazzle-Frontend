@@ -6,7 +6,6 @@ import PasswordOtpCard from "./passwordOtpCard";
 import ManageSearchParams from "@/hooks/updateSearchParams";
 import NewPasswordCard from "./newPasswordCard";
 import ResetPasswordSuccess from "./resetPasswordSuccess";
-import { CircularProgress } from "@mui/material";
 
 export default function BodyForgotPassword() {
 	const { getURLParam } = ManageSearchParams();

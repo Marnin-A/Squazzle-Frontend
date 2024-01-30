@@ -15,9 +15,8 @@ export default function PasswordOtpCard() {
 	const dispatch = useDispatch();
 	const { memoizedUpdateURLParam: test } = ManageSearchParams();
 	const [otp, setOtp] = React.useState<string>("");
+	const [userEmail, setUserEmail] = React.useState<string>("");
 	const { getLocalStorage } = useLocalStorage();
-	// Get user email form localStorage
-	const userEmail = getLocalStorage("email");
 
 	// Send OTP handler and States
 	const [
@@ -44,8 +43,6 @@ export default function PasswordOtpCard() {
 	] = useResendPasswordOTPMutation();
 
 	const handleSendOTP = () => {
-		console.log(userEmail, Number(otp));
-
 		sendOTP({
 			email: userEmail as string,
 			otp: Number(otp),
@@ -53,6 +50,9 @@ export default function PasswordOtpCard() {
 	};
 
 	React.useEffect(() => {
+		if (window !== undefined && window.localStorage) {
+			setUserEmail(getLocalStorage("email"));
+		}
 		if (sendOtpSuccess || resendOtpSuccess) {
 			dispatch(
 				setAlertOpen({
@@ -88,6 +88,7 @@ export default function PasswordOtpCard() {
 		resendOTP,
 		dispatch,
 		alertId,
+		getLocalStorage,
 	]);
 	return (
 		<Suspense fallback={<CircularProgress />}>

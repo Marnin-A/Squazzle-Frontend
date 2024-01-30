@@ -3,17 +3,11 @@
 import { useRouter } from "next13-progressbar";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
-import dynamic from "next/dynamic";
-import CircularProgress from "@mui/material/CircularProgress";
+import LogoutBtn from "./logoutBtn";
 
 export function MobileSideMenu() {
 	const router = useRouter();
-	const DynamicLogoutBtn = dynamic(() => import("./logoutBtn"), {
-		ssr: false,
-		loading: () => (
-			<CircularProgress color="success" className="m-auto w-2 h-2" />
-		),
-	});
+
 	return (
 		<div className="w-min">
 			<Sheet key="right">
@@ -76,7 +70,7 @@ export function MobileSideMenu() {
 						</Button>
 
 						<hr className="border-slate-300" />
-						<DynamicLogoutBtn />
+						<LogoutBtn />
 					</div>
 				</SheetContent>
 			</Sheet>
