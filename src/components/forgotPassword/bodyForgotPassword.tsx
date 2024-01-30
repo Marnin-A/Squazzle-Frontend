@@ -6,42 +6,27 @@ import PasswordOtpCard from "./passwordOtpCard";
 import ManageSearchParams from "@/hooks/updateSearchParams";
 import NewPasswordCard from "./newPasswordCard";
 import ResetPasswordSuccess from "./resetPasswordSuccess";
+import { CircularProgress } from "@mui/material";
 
 export default function BodyForgotPassword() {
-	return (
-		<div className="flex-1 flex flex-col items-center justify-center w-full overflow-y-scroll max-sm:items-start">
-			<RenderComponents />
-		</div>
-	);
-}
-
-function RenderComponents() {
 	const { getURLParam } = ManageSearchParams();
 	const view = getURLParam("view");
-	console.log(view);
+
 	return (
-		<>
-			{view === "forgotPasswordSuccess" ? (
-				<React.Suspense>
+		<div className="flex-1 flex flex-col items-center justify-center w-full overflow-y-scroll max-sm:items-start">
+			<React.Suspense fallback={<CircularProgress />}>
+				{view === "forgotPasswordSuccess" ? (
 					<ForgotPasswordSuccess />
-				</React.Suspense>
-			) : view === "enterOTP" ? (
-				<React.Suspense>
+				) : view === "enterOTP" ? (
 					<PasswordOtpCard />
-				</React.Suspense>
-			) : view === "newPassword" ? (
-				<React.Suspense>
+				) : view === "newPassword" ? (
 					<NewPasswordCard />
-				</React.Suspense>
-			) : view === "resetPasswordSuccess" ? (
-				<React.Suspense>
+				) : view === "resetPasswordSuccess" ? (
 					<ResetPasswordSuccess />
-				</React.Suspense>
-			) : (
-				<React.Suspense>
+				) : (
 					<ForgotPasswordCard />
-				</React.Suspense>
-			)}
-		</>
+				)}
+			</React.Suspense>
+		</div>
 	);
 }
