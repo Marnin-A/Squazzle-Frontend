@@ -10,6 +10,7 @@ import {
 	useValidateOTPMutation,
 } from "@/app/redux/services/apiServices";
 import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
+import { CircularProgress } from "@mui/material";
 // import { simulateOTPResponse } from "@/tests/signupTest";
 
 export default function EnterOtpCard({ userEmail }: { userEmail: string }) {
@@ -88,55 +89,57 @@ export default function EnterOtpCard({ userEmail }: { userEmail: string }) {
 	]);
 
 	return (
-		<div className="bg-white flex flex-col items-center justify-center w-1/2 aspect-square p-10 gap-8 text-center max-sm:justify-start max-sm:h-full max-sm:w-full max-lg:h-3/4 max-lg:w-3/4 max-sm:aspect-auto ">
-			<h1 className="text-3xl">Email Verification</h1>
-			<p>
-				Please enter the 6-digit code sent to
-				<span className="text-primary-green"> {userEmail}</span>
-			</p>
-			<MuiOtpInput
-				value={otp}
-				onChange={(newValue) => setOtp(newValue)}
-				length={6}
-			/>
-			<button
-				className="w-full bg-primary-lightgreen text-primary-green hover:bg-primary-green hover:text-white font-bold py-2 px-4 rounded"
-				type="button"
-				// Verify OTP
-				onClick={() => {
-					console.log(localStorageEmail, Number(otp));
+		<React.Suspense fallback={<CircularProgress />}>
+			<div className="bg-white flex flex-col items-center justify-center w-1/2 aspect-square p-10 gap-8 text-center max-sm:justify-start max-sm:h-full max-sm:w-full max-lg:h-3/4 max-lg:w-3/4 max-sm:aspect-auto ">
+				<h1 className="text-3xl">Email Verification</h1>
+				<p>
+					Please enter the 6-digit code sent to
+					<span className="text-primary-green"> {userEmail}</span>
+				</p>
+				<MuiOtpInput
+					value={otp}
+					onChange={(newValue) => setOtp(newValue)}
+					length={6}
+				/>
+				<button
+					className="w-full bg-primary-lightgreen text-primary-green hover:bg-primary-green hover:text-white font-bold py-2 px-4 rounded"
+					type="button"
+					// Verify OTP
+					onClick={() => {
+						console.log(localStorageEmail, Number(otp));
 
-					validateOTP({
-						email: localStorageEmail,
-						otp: Number(otp),
-					});
-				}}
-			>
-				{isOtpPending || isResendPending ? (
-					<div
-						className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-neutral-100 motion-reduce:animate-[spin_1.5s_linear_infinite]"
-						role="status"
-					>
-						<span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-							Loading...
-						</span>
-					</div>
-				) : (
-					<span>Confirm</span>
-				)}
-			</button>
-			<button
-				className="w-full hover:bg-primary-lightgreen text-primary-green bg-inherit font-bold py-2 px-4 rounded"
-				type="button"
-				// Resend OTP
-				onClick={() =>
-					resendOTP({
-						email: localStorageEmail,
-					})
-				}
-			>
-				Resend Code
-			</button>
-		</div>
+						validateOTP({
+							email: localStorageEmail,
+							otp: Number(otp),
+						});
+					}}
+				>
+					{isOtpPending || isResendPending ? (
+						<div
+							className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-neutral-100 motion-reduce:animate-[spin_1.5s_linear_infinite]"
+							role="status"
+						>
+							<span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+								Loading...
+							</span>
+						</div>
+					) : (
+						<span>Confirm</span>
+					)}
+				</button>
+				<button
+					className="w-full hover:bg-primary-lightgreen text-primary-green bg-inherit font-bold py-2 px-4 rounded"
+					type="button"
+					// Resend OTP
+					onClick={() =>
+						resendOTP({
+							email: localStorageEmail,
+						})
+					}
+				>
+					Resend Code
+				</button>
+			</div>
+		</React.Suspense>
 	);
 }

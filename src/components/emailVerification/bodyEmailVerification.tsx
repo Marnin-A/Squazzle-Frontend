@@ -28,17 +28,15 @@ export default function EmailVerificationBody() {
 
 	return (
 		<div className="flex-1 flex flex-col items-center justify-center w-full overflow-y-scroll max-sm:items-start">
-			<React.Suspense fallback={<CircularProgress />}>
-				{continueBtnClicked && emailVerified && !emailVerificationFailed ? (
-					<EmailVerifiedCard />
-				) : continueBtnClicked && !emailVerified && emailVerificationFailed ? (
-					<FailedEmailVerifiedCard />
-				) : continueBtnClicked ? (
-					<EnterOtpCard userEmail={localStorageEmail} />
-				) : (
-					<EmailNotificationCard userEmail={localStorageEmail} />
-				)}
-			</React.Suspense>
+			{continueBtnClicked && emailVerified && !emailVerificationFailed ? (
+				<EmailVerifiedCard />
+			) : continueBtnClicked && !emailVerified && emailVerificationFailed ? (
+				<FailedEmailVerifiedCard />
+			) : continueBtnClicked ? (
+				<EnterOtpCard userEmail={localStorageEmail} />
+			) : (
+				<EmailNotificationCard userEmail={localStorageEmail} />
+			)}
 		</div>
 	);
 }

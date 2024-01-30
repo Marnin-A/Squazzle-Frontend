@@ -62,32 +62,34 @@ export default function FailedEmailVerifiedCard() {
 	}
 
 	return (
-		<div className="bg-white flex flex-col items-center justify-center w-1/3 aspect-square p-10 gap-8 text-center max-sm:justify-start max-sm:w-full max-sm:h-full max-sm:aspect-auto  max-lg:w-1/2">
-			<Image
-				src="/failed-icon.svg"
-				alt="Failed Icon"
-				height={73.33}
-				width={73.33}
-				placeholder="empty"
-				priority={false}
-				className="w-min h-auto"
-			/>
-			<h1 className="text-3xl">Let&apos;s try that again!</h1>
-			<p className="text-error">
-				Your email address cannot be verified. It seems you entered the wrong
-				PIN.
-			</p>
-			<button
-				className="w-full hover:bg-primary-lightgreen hover:text-primary-green bg-primary-green text-white font-bold py-2 px-4 rounded"
-				type="submit"
-				onClick={() => handleSubmit()}
-			>
-				{isLoading ? (
-					<CircularProgress color="inherit" />
-				) : (
-					<span> Resend Code</span>
-				)}
-			</button>
-		</div>
+		<React.Suspense fallback={<CircularProgress />}>
+			<div className="bg-white flex flex-col items-center justify-center w-1/3 aspect-square p-10 gap-8 text-center max-sm:justify-start max-sm:w-full max-sm:h-full max-sm:aspect-auto  max-lg:w-1/2">
+				<Image
+					src="/failed-icon.svg"
+					alt="Failed Icon"
+					height={73.33}
+					width={73.33}
+					placeholder="empty"
+					priority={false}
+					className="w-min h-auto"
+				/>
+				<h1 className="text-3xl">Let&apos;s try that again!</h1>
+				<p className="text-error">
+					Your email address cannot be verified. It seems you entered the wrong
+					PIN.
+				</p>
+				<button
+					className="w-full hover:bg-primary-lightgreen hover:text-primary-green bg-primary-green text-white font-bold py-2 px-4 rounded"
+					type="submit"
+					onClick={() => handleSubmit()}
+				>
+					{isLoading ? (
+						<CircularProgress color="inherit" />
+					) : (
+						<span> Resend Code</span>
+					)}
+				</button>
+			</div>
+		</React.Suspense>
 	);
 }

@@ -14,19 +14,17 @@ export default function BodyForgotPassword() {
 
 	return (
 		<div className="flex-1 flex flex-col items-center justify-center w-full overflow-y-scroll max-sm:items-start">
-			<React.Suspense fallback={<CircularProgress />}>
-				{view === "forgotPasswordSuccess" ? (
-					<ForgotPasswordSuccess />
-				) : view === "enterOTP" ? (
-					<PasswordOtpCard />
-				) : view === "newPassword" ? (
-					<NewPasswordCard />
-				) : view === "resetPasswordSuccess" ? (
-					<ResetPasswordSuccess />
-				) : (
-					<ForgotPasswordCard />
-				)}
-			</React.Suspense>
+			{view === "forgotPasswordSuccess" ? (
+				<ForgotPasswordSuccess />
+			) : view === "enterOTP" ? (
+				<PasswordOtpCard />
+			) : view === "newPassword" ? (
+				<NewPasswordCard />
+			) : view === "resetPasswordSuccess" ? (
+				<ResetPasswordSuccess />
+			) : (
+				<ForgotPasswordCard />
+			)}
 		</div>
 	);
 }
