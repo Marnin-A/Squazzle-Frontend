@@ -1,7 +1,5 @@
 import EditPropertyForms from "@/components/editProperty/editPropertyForms";
-import OverviewForm from "@/components/editProperty/overviewForm";
 import SideNav from "@/components/editProperty/sideNav";
-import ManageSearchParams from "@/hooks/updateSearchParams";
 import { CircularProgress } from "@mui/material";
 import { CaretRightIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
@@ -18,7 +16,9 @@ export default function Page() {
 				<span>My Listing</span>
 			</div>
 			<div className="flex">
-				<SideNav />
+				<React.Suspense fallback={<CircularProgress color="primary" />}>
+					<SideNav />
+				</React.Suspense>
 				<React.Suspense fallback={<CircularProgress color="primary" />}>
 					<EditPropertyForms />
 				</React.Suspense>
