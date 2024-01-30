@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import Image from "next/image";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
@@ -100,7 +100,7 @@ export default function ForgotPasswordCard() {
 	]);
 
 	return (
-		<React.Suspense fallback={<CircularProgress />}>
+		<Suspense fallback={<CircularProgress />}>
 			<div className="bg-white flex flex-col items-center justify-center w-1/3 aspect-square p-10 gap-4 text-center max-sm:justify-start max-sm:w-full max-sm:h-full max-sm:aspect-auto  max-lg:w-1/2">
 				<Image
 					src="/email-icon.svg"
@@ -181,6 +181,6 @@ export default function ForgotPasswordCard() {
 					</button>
 				</form>
 			</div>
-		</React.Suspense>
+		</Suspense>
 	);
 }

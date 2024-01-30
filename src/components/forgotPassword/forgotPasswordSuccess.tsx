@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Image from "next/image";
 import ManageSearchParams from "@/hooks/updateSearchParams";
 import { useRouter } from "next13-progressbar";
@@ -9,7 +9,7 @@ export default function ForgotPasswordSuccess() {
 	const { updateURLParam } = ManageSearchParams();
 
 	return (
-		<React.Suspense fallback={<CircularProgress />}>
+		<Suspense fallback={<CircularProgress />}>
 			<div className="bg-white flex flex-col items-center justify-center w-1/3 aspect-square p-10 gap-4 text-center max-sm:justify-start max-sm:w-full max-sm:h-full max-sm:aspect-auto  max-lg:w-1/2">
 				<Image
 					src="/email-icon.svg"
@@ -40,6 +40,6 @@ export default function ForgotPasswordSuccess() {
 					Resend Code
 				</button>
 			</div>
-		</React.Suspense>
+		</Suspense>
 	);
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Image from "next/image";
 import { useRouter } from "next13-progressbar";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -13,7 +13,7 @@ export default function ResetPasswordSuccess() {
 	};
 
 	return (
-		<React.Suspense fallback={<CircularProgress />}>
+		<Suspense fallback={<CircularProgress />}>
 			<div className="bg-white flex flex-col items-center justify-center w-1/3 aspect-square p-10 gap-8 text-center max-sm:justify-start max-sm:w-full max-sm:h-full max-sm:aspect-auto  max-lg:w-1/2">
 				<Image
 					src="/success-tick.svg"
@@ -42,6 +42,6 @@ export default function ResetPasswordSuccess() {
 					)}
 				</button>
 			</div>
-		</React.Suspense>
+		</Suspense>
 	);
 }

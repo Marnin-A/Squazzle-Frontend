@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import {
 	Change_Password_Abort_Controller,
 	useChangePasswordMutation,
@@ -116,7 +116,7 @@ export default function NewPasswordCard() {
 	};
 
 	return (
-		<React.Suspense fallback={<CircularProgress />}>
+		<Suspense fallback={<CircularProgress />}>
 			<div className="bg-white flex flex-col items-center justify-center w-1/3 aspect-square p-10 gap-4 text-center max-sm:justify-start max-sm:w-full max-sm:h-full max-sm:aspect-auto  max-lg:w-1/2">
 				<h1 className="text-3xl">Password reset request</h1>
 				<p className=" text-body-text">
@@ -235,6 +235,6 @@ export default function NewPasswordCard() {
 					</div>
 				</form>
 			</div>
-		</React.Suspense>
+		</Suspense>
 	);
 }

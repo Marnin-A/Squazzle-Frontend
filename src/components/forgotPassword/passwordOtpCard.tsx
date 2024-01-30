@@ -1,5 +1,4 @@
-import React from "react";
-import AlertPopup from "../notification/Alert";
+import React, { Suspense } from "react";
 import { MuiOtpInput } from "mui-one-time-password-input";
 import {
 	useForgotPasswordOTPMutation,
@@ -91,7 +90,7 @@ export default function PasswordOtpCard() {
 		alertId,
 	]);
 	return (
-		<React.Suspense fallback={<CircularProgress />}>
+		<Suspense fallback={<CircularProgress />}>
 			<div className="bg-white flex flex-col items-center justify-center w-1/2 aspect-square p-10 gap-8 text-center max-sm:justify-start max-sm:h-full max-sm:w-full max-lg:h-3/4 max-lg:w-3/4 max-sm:aspect-auto ">
 				<h1 className="text-3xl">Password Reset</h1>
 				<p>
@@ -136,6 +135,6 @@ export default function PasswordOtpCard() {
 					Resend Code
 				</button>
 			</div>
-		</React.Suspense>
+		</Suspense>
 	);
 }
