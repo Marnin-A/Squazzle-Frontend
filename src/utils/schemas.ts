@@ -66,3 +66,18 @@ export const overviewFormSchema = yup.object().shape({
 	startDate: yup.date().required("*Start Date is required"),
 	endDate: yup.date().required("*End Date is required"),
 });
+
+export const descriptionFormSchema = yup.object().shape({
+	about: yup.string().required("*About is required"),
+	reason: yup.string().required("*Reason is required"),
+	rules: yup
+		.array()
+		.of(
+			yup.object().shape({
+				ruleName: yup.string().required("*Rule Name is required"),
+				ruleDescription: yup.string().required("*Rule Description is required"),
+			})
+		)
+		.max(10, "*You can't have more than 10 rules")
+		.required("*Accommodation rules are required"),
+});
