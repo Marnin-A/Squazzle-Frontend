@@ -14,7 +14,9 @@ export default function BodyForgotPassword() {
 
 	return (
 		<div className="flex-1 flex flex-col items-center justify-center w-full overflow-y-scroll max-sm:items-start">
-			<React.Suspense fallback={<CircularProgress color="primary" />}>
+			<React.Suspense
+				fallback={<CircularProgress color="success" className="m-auto" />}
+			>
 				{view === "forgotPasswordSuccess" ? (
 					<ForgotPasswordSuccess />
 				) : view === "enterOTP" ? (

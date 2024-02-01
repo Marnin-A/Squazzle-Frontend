@@ -1,6 +1,5 @@
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next13-progressbar";
-
 import React from "react";
 
 export default function ManageSearchParams() {
@@ -28,8 +27,6 @@ export default function ManageSearchParams() {
 	const getURLParam = (name: string) => searchParams.get(name);
 
 	const updateURLParam = (name: string, value: string) => {
-		console.log("Params:", params.has(name));
-
 		// Remove the url param if it already exists
 		if (params.has(name)) params.delete(name);
 

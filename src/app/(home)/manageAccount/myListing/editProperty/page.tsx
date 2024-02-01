@@ -16,10 +16,14 @@ export default function Page() {
 				<span>My Listing</span>
 			</div>
 			<div className="flex">
-				<React.Suspense fallback={<CircularProgress color="primary" />}>
+				<React.Suspense
+					fallback={<CircularProgress color="success" className="m-auto" />}
+				>
 					<SideNav />
 				</React.Suspense>
-				<React.Suspense fallback={<CircularProgress color="primary" />}>
+				<React.Suspense
+					fallback={<CircularProgress color="success" className="m-auto" />}
+				>
 					<EditPropertyForms />
 				</React.Suspense>
 			</div>

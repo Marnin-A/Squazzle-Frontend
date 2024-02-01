@@ -7,7 +7,9 @@ export default function Page() {
 	return (
 		<main className="h-screen flex flex-col justify-start items-center bg-off-white">
 			<EmailVerificationNavBar />
-			<React.Suspense fallback={<CircularProgress color="primary" />}>
+			<React.Suspense
+				fallback={<CircularProgress color="success" className="m-auto" />}
+			>
 				<EmailVerificationBody />
 			</React.Suspense>
 		</main>

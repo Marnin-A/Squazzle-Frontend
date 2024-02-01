@@ -7,14 +7,13 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { descriptionFormSchema } from "@/utils/schemas";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
-import {
-	Accordion,
-	AccordionContent,
-	AccordionItem,
-	DisplayAccordionTrigger,
-} from "../ui/accordion";
+import { PlusCircleIcon } from "lucide-react";
+import RuleAccordionItem from "./ruleAccordion";
+import { useRouter } from "next13-progressbar";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import ManageSearchParams from "@/hooks/updateSearchParams";
 
-type DescriptionForm = {
+export type DescriptionFormType = {
 	about: string;
 	reason: string;
 	rules: Array<{
@@ -24,21 +23,78 @@ type DescriptionForm = {
 };
 
 export default function DescriptionForm() {
+	const router = useRouter();
 	const dispatch = useDispatch();
 	const alertId = React.useId();
+	const [rules, setRules] = React.useState<
+		Array<{ ruleName: string; rulesDescription: string; ruleId: string }>
+	>([
+		{
+			ruleName: "Damage to property ",
+			rulesDescription:
+				"Guests will be held responsible for any loss or damage to the property caused by negligence either by themselves, their guests or any person for whom they are responsible for.",
+			ruleId: "rule0",
+		},
+		{
+			ruleName: "Check-in",
+			rulesDescription: "Check-in time is from 12:00 - 22:00",
+			ruleId: "rule1",
+		},
+		{
+			ruleName: "Departure",
+			rulesDescription: "Check-out time is from 12:00 - 13:00",
+			ruleId: "rule2",
+		},
+		{
+			ruleName: "Pets",
+			rulesDescription:
+				"Pets are not allowed here. Special arrangements could be made upon request.",
+			ruleId: "rule3",
+		},
+		{
+			ruleName: "Settlement of Bills",
+			rulesDescription:
+				"Bills can be paid through bank transfers or cash. Checks are not allowed.",
+			ruleId: "rule4",
+		},
+	]);
+	const { setLocalStorage } = useLocalStorage();
+	const { memoizedUpdateURLParam } = ManageSearchParams();
 	// Form validation from React Hook Form
 	const {
 		register,
 		formState: { errors },
 		handleSubmit,
 		setValue,
-	} = useForm<DescriptionForm>({
+	} = useForm<DescriptionFormType>({
 		resolver: yupResolver(descriptionFormSchema),
 		criteriaMode: "all",
 		reValidateMode: "onChange",
 	});
 
-	const onSubmit: SubmitHandler<FieldValues> = (data) => {};
+	const onSubmit: SubmitHandler<FieldValues> = ({ about, reason, rules }) => {
+		setLocalStorage("descriptionForm", {
+			about: about,
+			reason: reason,
+			rules: rules,
+		});
+		memoizedUpdateURLParam("view", "gallery");
+	};
+
+	function addNewRule(): void {
+		setRules(
+			rules?.concat({
+				ruleName: "",
+				rulesDescription: "",
+				ruleId: "rule" + rules.length, // So that rule numbers will go along with their array indexes
+			})
+		);
+	}
+
+	function handleBack() {
+		router.back();
+	}
+
 	return (
 		<>
 			<form
@@ -116,44 +172,43 @@ export default function DescriptionForm() {
 					>
 						Accommodation Rules
 					</Label>
-					<Accordion
-						type="single"
-						className="max-w-full flex flex-col gap-8"
-						collapsible
+					<div className="max-w-full flex flex-col gap-8">
+						{rules.map((rule) => (
+							<RuleAccordionItem
+								errors={errors}
+								setValue={setValue}
+								rule={rule}
+								key={rule.ruleId}
+								register={register}
+							/>
+						))}
+						<div className="py-3 px-6">
+							<button
+								type="button"
+								onClick={addNewRule}
+								className="bg-none border-none outline-none text-error flex items-center gap-2"
+							>
+								Add new rule <PlusCircleIcon color="#03796E" />
+							</button>
+						</div>
+					</div>
+				</div>
+				{/* Buttons */}
+				<div className="flex items-center justify-between ">
+					<button
+						className="w-max hover:bg-primary-lightgreen hover:text-primary-green bg-white text-primary-green outline outline-primary-green font-bold py-4 px-6 rounded-md"
+						type="button"
+						onClick={handleBack}
 					>
-						<AccordionItem
-							key={"damageToProperty"}
-							value={"damageToProperty"}
-							className="max-md:rounded-2xl  max-md:shadow-md"
-						>
-							<DisplayAccordionTrigger className="text-left no-underline font-semibold border rounded-lg hover:bg-slate-100 mb-2">
-								Damage to Property
-							</DisplayAccordionTrigger>
-							<AccordionContent className="overflow-visible">
-								<Textarea
-									className={
-										"min-h-[100px] text-xl appearance-none border rounded-lg w-full py-6 px-3 text-primary-green leading-tight placeholder:pl-4 " +
-										(errors.reason?.type === "required"
-											? " outline-error"
-											: " focus:outline-success focus:shadow-outline")
-									}
-									id="rule1"
-									placeholder="Write rules for damage done to property"
-									autoComplete="on"
-									{...register("rules")}
-								/>
-								<ErrorMessage
-									errors={errors}
-									name="rules"
-									render={({ message }) => (
-										<p className="text-xs text-error absolute bottom-[-22%]">
-											{message}
-										</p>
-									)}
-								/>
-							</AccordionContent>
-						</AccordionItem>
-					</Accordion>
+						Back
+					</button>
+					<button
+						className="w-max hover:bg-primary-lightgreen hover:text-primary-green bg-primary-green text-white font-bold py-4 px-6 rounded-xl"
+						type="submit"
+						formTarget="descriptionForm"
+					>
+						<span>Save & Continue</span>
+					</button>
 				</div>
 			</form>
 		</>
