@@ -24,8 +24,6 @@ export type DescriptionFormType = {
 
 export default function DescriptionForm() {
 	const router = useRouter();
-	const dispatch = useDispatch();
-	const alertId = React.useId();
 	const [rules, setRules] = React.useState<
 		Array<{ ruleName: string; rulesDescription: string; ruleId: string }>
 	>([

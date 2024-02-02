@@ -86,7 +86,10 @@ export type SignInSuccessful = {
 	};
 };
 export type SignInFailed = { success: false };
-
+export type myListings = {
+	data: Array<{ name: string; url: string }>;
+	success: true;
+};
 // {
 //   "status": "success",
 //   "message": "Account successfully created, Check your mail for activation code",

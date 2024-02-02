@@ -111,6 +111,17 @@ export const api = createApi({
 				}),
 			}
 		),
+		getMyListings: builder.query<
+			Types.myListings | { error: string; message: string; success: false },
+			{ _id: string; username: string; accessToken: string }
+		>({
+			query: (data) => ({
+				// Endpoint not yet resolved
+				url: "/api/v1/auth/myListings",
+				method: "GET",
+				body: data,
+			}),
+		}),
 	}),
 });
 
@@ -127,6 +138,7 @@ export const {
 	useChangePasswordMutation,
 	useNewsletterSignupMutation,
 	useUpdateProfileMutation,
+	useGetMyListingsQuery,
 } = api;
 
 // Define abort controller to cancel requests
