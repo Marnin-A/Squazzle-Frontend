@@ -7,11 +7,22 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 
 export default function ListedPropertyCard() {
 	const { getLocalStorage } = useLocalStorage();
-	const { data } = useGetMyListingsQuery({
-		_id: getLocalStorage("_id"),
-		accessToken: getLocalStorage("accessToken"),
-		username: getLocalStorage("username"),
-	});
+	const [requestData, setRequestData] = React.useState<{
+		_id: string;
+		accessToken: string;
+		username: string;
+	}>({ _id: "", accessToken: "", username: "" });
+	const { data } = useGetMyListingsQuery(requestData);
+
+	React.useEffect(() => {
+		if (window !== undefined && window.localStorage) {
+			setRequestData({
+				_id: getLocalStorage("_id"),
+				accessToken: getLocalStorage("accessToken"),
+				username: getLocalStorage("username"),
+			});
+		}
+	}, [getLocalStorage]);
 
 	return (
 		<div className="flex flex-wrap gap-5">
