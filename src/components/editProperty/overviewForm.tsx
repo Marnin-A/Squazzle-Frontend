@@ -5,25 +5,19 @@ import CurrencyInput from "react-currency-input-field";
 import { ErrorMessage } from "@hookform/error-message";
 import { useDispatch } from "react-redux";
 import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
-import CircularProgress from "@mui/material/CircularProgress";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { overviewFormSchema } from "@/utils/schemas";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { Label } from "@/components/ui/label";
 import { CountryDropdown } from "react-country-region-selector";
 import { Textarea } from "@/components/ui/textarea";
-import {
-	FormControl,
-	FormControlLabel,
-	Radio,
-	RadioGroup,
-} from "@mui/material";
+import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
 import { Calendar } from "../ui/calendar";
-import HostingDuration from "./hostingDuration";
+import ManageSearchParams from "@/hooks/updateSearchParams";
 
 export type OverviewForm = {
 	accommodationName: string;
@@ -66,6 +60,7 @@ export default function OverviewForm() {
 	const [availability, setAvailability] =
 		React.useState<OverviewForm["availability"]>("Available");
 	const { setLocalStorage, removeLocalStorage } = useLocalStorage();
+	const { memoizedUpdateURLParam } = ManageSearchParams();
 	const onSubmit: SubmitHandler<FieldValues> = ({
 		location,
 		accommodationType,
@@ -92,6 +87,7 @@ export default function OverviewForm() {
 				startDate: startDate,
 				endDate: endDate,
 			});
+			memoizedUpdateURLParam("view", "description");
 		};
 
 	const handleCancel = () => {

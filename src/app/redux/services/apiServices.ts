@@ -122,6 +122,22 @@ export const api = createApi({
 				body: data,
 			}),
 		}),
+		getPropertyDetails: builder.query<
+			| Types.PropertyDetails
+			| { error: string; message: string; success: false },
+			{ _id: string; username: string; accessToken: string; propertyId: string }
+		>({
+			query: (data) => ({
+				// Endpoint not yet resolved
+				url: `/api/v1/auth/myListings/${data.propertyId}`,
+				method: "GET",
+				body: {
+					_id: data._id,
+					username: data.username,
+					accessToken: data.accessToken,
+				},
+			}),
+		}),
 	}),
 });
 
@@ -139,6 +155,7 @@ export const {
 	useNewsletterSignupMutation,
 	useUpdateProfileMutation,
 	useGetMyListingsQuery,
+	useGetPropertyDetailsQuery,
 } = api;
 
 // Define abort controller to cancel requests

@@ -87,8 +87,26 @@ export type SignInSuccessful = {
 };
 export type SignInFailed = { success: false };
 export type myListings = {
-	data: Array<{ name: string; url: string }>;
+	data: Array<{ name: string; url: string; propertyId: string }>;
 	success: true;
+};
+export type PropertyDetails = {
+	data: {
+		name: string;
+		propertyId: string;
+		about: string;
+		accommodationPrice: string;
+		accommodationType: string;
+		availability: string;
+		endDate: string;
+		gallery: Array<{ name: string; url: string }>;
+		location: string;
+		reason: string;
+		rules: Array<{ ruleName: string; ruleDescription: string }>;
+		startDate: string;
+	};
+	success: true;
+	message: string;
 };
 // {
 //   "status": "success",
