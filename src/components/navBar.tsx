@@ -28,7 +28,7 @@ export default function NavBar() {
 	}, [getLocalStorage]);
 
 	return (
-		<nav className="self-start flex justify-between items-center w-full py-5 mlg:px-20 max-md:border-b-2 max-md:border-b-slate-300 px-8">
+		<nav className="self-start flex justify-between items-center w-full py-5 shadow mlg:px-20 max-md:border-b-2 max-md:border-b-slate-300 px-8">
 			<Link href={"/"} className="hover:cursor-pointer">
 				<Image
 					src={"/Mobile-logo.svg"}
@@ -42,7 +42,9 @@ export default function NavBar() {
 			</Link>
 			<div className="mlg:flex hidden gap-6">
 				<Link href="/accommodations">Accommodations</Link>
-				<Link href="/list-property">List your property</Link>
+				<Link href="/manageAccount/myListing/editProperty?view=overview">
+					List your property
+				</Link>
 				<Link href="/about-us">About us</Link>
 				<Link href="/faq">FAQ</Link>
 			</div>

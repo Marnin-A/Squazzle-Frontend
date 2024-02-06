@@ -106,6 +106,12 @@
 	background-size: cover;
 	background-position: 50% 50%;
 }
+.accommodations-bg {
+	background-image: url(../../public/Accommodation-Hero.png);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 50% 50%;
+}
 @media (width < 900px) {
 	.landing-page-bg {
 		background: none;
