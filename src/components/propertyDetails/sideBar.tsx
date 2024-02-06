@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Pencil } from "lucide-react";
 import { useGetPropertyDetailsQuery } from "@/app/redux/services/apiServices";
 import { DateRange, House } from "@mui/icons-material";
 import useLocalStorage from "@/hooks/useLocalStorage";
@@ -42,9 +42,13 @@ export default function SideBar({}) {
 
 	return (
 		<div className="w-[280px] mr-12">
-			<div className="bg-primary-dark-green mb-5">
+			<div className="flex justify-between bg-primary-dark-green mb-5">
 				<button className="border-none bg-transparent text-primary-lightgreen text-sm flex items-center py-5 px-6 gap-2">
 					<ArrowLeft color="#CCE6E7" /> Back
+				</button>
+				<button className="border-none bg-transparent text-primary-lightgreen text-sm flex items-center py-5 px-6 gap-2">
+					<Pencil size={25} fill="#CCE6E7" stroke="black" />
+					Edit
 				</button>
 			</div>
 			<div className="flex flex-col items-center gap-3 p-3 shadow-md">

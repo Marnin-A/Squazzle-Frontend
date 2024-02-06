@@ -29,9 +29,9 @@ export default function AccommodationRules() {
 		},
 	]);
 	return (
-		<div>
-			<h3>Accommodation rules</h3>
-			<div className="bg-off-white p-8">
+		<div className="mb-28">
+			<h3 className="text-[28px] mb-4">Accommodation rules</h3>
+			<div className="flex flex-col gap-6 bg-off-white p-8">
 				{rules.map((rule) => (
 					<div
 						key={rule.ruleName}
