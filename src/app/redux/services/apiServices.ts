@@ -119,7 +119,6 @@ export const api = createApi({
 				// Endpoint not yet resolved
 				url: "/api/v1/auth/myListings",
 				method: "GET",
-				body: data,
 			}),
 		}),
 		getPropertyDetails: builder.query<
@@ -131,11 +130,7 @@ export const api = createApi({
 				// Endpoint not yet resolved
 				url: `/api/v1/auth/myListings/${data.propertyId}`,
 				method: "GET",
-				body: {
-					_id: data._id,
-					username: data.username,
-					accessToken: data.accessToken,
-				},
+				headers: { Authorization: `Bear ${data.accessToken}` },
 			}),
 		}),
 	}),

@@ -198,7 +198,7 @@ function GalleryCard({
 	return (
 		<Link
 			href={`/accommodations/${propertyId}`}
-			className="flex flex-col items-center max-w-[287px] shadow-md"
+			className="flex flex-col items-center max-w-[287px] shadow-md hover:shadow-xl"
 		>
 			<div className="p-4 overflow-hidden w-full">
 				<Image
