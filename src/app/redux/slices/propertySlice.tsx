@@ -1,19 +1,21 @@
-import { PropertyDetails } from "@/types/authTypes";
+import { PropertyDetails } from "@/types/apiTypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: PropertyDetails["data"] = {
-	name: "",
+	accommodationName: "",
 	propertyId: "",
-	about: "",
-	accommodationPrice: "",
-	accommodationType: "",
-	availability: "",
-	endDate: "",
+	accommodationRules: [{ ruleId: "", ruleName: "", rulesDescription: "" }],
+	price: "",
+	accommodationType: "Duplex",
+	availability: "Available",
+	hostingPeriodFrom: new Date().toDateString(),
+	hostingPeriodTo: new Date().toDateString(),
+	city: "",
+	description: "",
+	state: "",
+	whyListing: "",
 	gallery: [],
-	location: "",
-	reason: "",
-	rules: [],
-	startDate: "",
+	address: "",
 };
 
 const PropertyDetailsSlice = createSlice({

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import * as Types from "@/types/authTypes";
-import { ValidateOtpResponse } from "@/types/authTypes";
+import * as Types from "@/types/apiTypes";
+import { ValidateOtpResponse } from "@/types/apiTypes";
 import { UserProfileData } from "@/components/editProfile/profileForm";
 
 // Define a service using a base URL and expected endpoints
@@ -11,7 +11,7 @@ export const api = createApi({
 		signUp: builder.mutation<Types.SignUpResponse, Types.CreateProfileFormData>(
 			{
 				query: (userData) => ({
-					url: "/api/v1/auth/signup",
+					url: "auth/signup",
 					method: "POST",
 					body: userData,
 					signal: SignUp_Abort_Controller.signal,
@@ -23,21 +23,21 @@ export const api = createApi({
 			Types.ValidateOtpRequest
 		>({
 			query: (data) => ({
-				url: "/api/v1/auth/activateAccount",
+				url: "auth/activateAccount",
 				method: "POST",
 				body: data,
 			}),
 		}),
 		resendOTP: builder.mutation<Types.ValidateOtpResponse, { email: string }>({
 			query: (data) => ({
-				url: "/api/v1/auth/resendOTP",
+				url: "auth/resendOTP",
 				method: "POST",
 				body: data,
 			}),
 		}),
 		signIn: builder.mutation<Types.SignInResponse, Types.SignInRequest>({
 			query: (data) => ({
-				url: "/api/v1/auth/signIn",
+				url: "auth/signIn",
 				method: "POST",
 				body: data,
 				signal: SignIn_Abort_Controller.signal,
@@ -45,7 +45,7 @@ export const api = createApi({
 		}),
 		forgotPassword: builder.mutation<ValidateOtpResponse, string>({
 			query: (data) => ({
-				url: "/api/v1/auth/forgotPassword",
+				url: "auth/forgotPassword",
 				method: "POST",
 				body: data,
 				signal: Forgot_Password_Abort_Controller.signal,
@@ -58,7 +58,7 @@ export const api = createApi({
 		>({
 			query: (data) => ({
 				// Endpoint not yet resolved
-				url: "/api/v1/auth/forgotPasswordOTP",
+				url: "auth/forgotPasswordOTP",
 				method: "POST",
 				body: data,
 				signal: FP_OTP_Abort_Controller.signal,
@@ -71,7 +71,7 @@ export const api = createApi({
 		>({
 			query: (data) => ({
 				// Endpoint not yet resolved
-				url: "/api/v1/auth/resendOTP",
+				url: "auth/resendOTP",
 				method: "POST",
 				body: data,
 			}),
@@ -82,7 +82,7 @@ export const api = createApi({
 		>({
 			query: (data) => ({
 				// Endpoint not yet resolved
-				url: "/api/v1/auth/resetPassword",
+				url: "auth/resetPassword",
 				method: "POST",
 				body: data,
 				signal: Change_Password_Abort_Controller.signal,
@@ -94,7 +94,7 @@ export const api = createApi({
 		>({
 			query: (data) => ({
 				// Endpoint not yet resolved
-				url: "/api/v1/auth/newsletterSignup",
+				url: "auth/newsletterSignup",
 				method: "POST",
 				body: data,
 				signal: Newsletter_Signup_Abort_Controller.signal,
@@ -104,20 +104,27 @@ export const api = createApi({
 			{
 				query: (data) => ({
 					// Endpoint not yet resolved
-					url: "/api/v1/auth/updateProfile",
+					url: "auth/updateProfile",
 					method: "POST",
 					body: data,
 					signal: Update_Profile_Abort_Controller.signal,
 				}),
 			}
 		),
+		listAccommodation: builder.mutation<any, FormData>({
+			query: (data) => ({
+				url: "accommodations",
+				method: "POST",
+				body: data,
+			}),
+		}),
 		getMyListings: builder.query<
 			Types.myListings | { error: string; message: string; success: false },
 			{ _id: string; username: string; accessToken: string }
 		>({
 			query: (data) => ({
 				// Endpoint not yet resolved
-				url: "/api/v1/auth/myListings",
+				url: "auth/myListings",
 				method: "GET",
 			}),
 		}),
@@ -128,7 +135,7 @@ export const api = createApi({
 		>({
 			query: (data) => ({
 				// Endpoint not yet resolved
-				url: `/api/v1/auth/myListings/${data.propertyId}`,
+				url: `auth/myListings/${data.propertyId}`,
 				method: "GET",
 				headers: { Authorization: `Bear ${data.accessToken}` },
 			}),
@@ -151,6 +158,7 @@ export const {
 	useUpdateProfileMutation,
 	useGetMyListingsQuery,
 	useGetPropertyDetailsQuery,
+	useListAccommodationMutation,
 } = api;
 
 // Define abort controller to cancel requests

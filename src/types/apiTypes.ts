@@ -67,20 +67,19 @@ export type SignInSuccessful = {
 		refreshToken: string;
 		data: {
 			user: {
-				_id: string;
-				firstName: string;
-				lastName: string;
+				createdAt: string;
 				email: string;
-				phoneNumber: string;
+				firstName: string;
 				isEmailVerified: boolean;
+				lastName: string;
 				otpExpiresAt: number;
+				passwordDigest: string;
+				phoneNumber: string;
 				profileImage: string;
 				role: string;
-				passwordDigest: string;
-				OTP: number;
-				createdAt: Date;
-				updatedAt: Date;
+				updatedAt: string;
 				__v: number;
+				_id: string;
 			};
 		};
 	};
@@ -92,18 +91,31 @@ export type myListings = {
 };
 export type PropertyDetails = {
 	data: {
-		name: string;
+		accommodationName: string;
 		propertyId: string;
-		about: string;
-		accommodationPrice: string;
-		accommodationType: string;
-		availability: string;
-		endDate: string;
-		gallery: Array<{ name: string; url: string }>;
-		location: string;
-		reason: string;
-		rules: Array<{ ruleName: string; ruleDescription: string }>;
-		startDate: string;
+		description: string;
+		price: string;
+		accommodationType:
+			| "Duplex"
+			| "Apartment"
+			| "Single room"
+			| "Bungalow"
+			| "Flat"
+			| "Studio"
+			| "Mansion";
+		availability: "Available" | "Not available";
+		hostingPeriodTo: string;
+		gallery: Array<{ name: string; url: string } | undefined>;
+		address: string;
+		whyListing: string;
+		accommodationRules: Array<{
+			ruleName: string;
+			rulesDescription: string;
+			ruleId: string;
+		}>;
+		hostingPeriodFrom: string;
+		state: string;
+		city: string;
 	};
 	success: true;
 	message: string;

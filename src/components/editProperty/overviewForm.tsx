@@ -21,7 +21,9 @@ import ManageSearchParams from "@/hooks/updateSearchParams";
 
 export type OverviewForm = {
 	accommodationName: string;
-	location: string;
+	address: string;
+	state: string;
+	city: string;
 	accommodationType:
 		| "Duplex"
 		| "Apartment"
@@ -33,8 +35,8 @@ export type OverviewForm = {
 
 	availability: "Available" | "Not available";
 	accommodationPrice: string;
-	startDate: Date;
-	endDate: Date;
+	startDate: string;
+	endDate: string;
 };
 
 export default function OverviewForm() {
@@ -62,16 +64,20 @@ export default function OverviewForm() {
 	const { setLocalStorage, removeLocalStorage } = useLocalStorage();
 	const { memoizedUpdateURLParam } = ManageSearchParams();
 	const onSubmit: SubmitHandler<FieldValues> = ({
-		location,
+		address,
 		accommodationType,
 		accommodationPrice,
 		startDate,
 		endDate,
+		state,
+		city,
 	}) =>
 		// data
 		{
 			console.log({
-				location: location,
+				address: address,
+				state: state,
+				city: city,
 				accommodationType: accommodationType,
 				availability: availability,
 				accommodationPrice: price,
@@ -80,12 +86,14 @@ export default function OverviewForm() {
 			});
 
 			setLocalStorage("accommodationOverview", {
-				location: location,
+				address: address,
 				accommodationType: accommodationType,
 				availability: availability,
 				accommodationPrice: accommodationPrice,
-				startDate: startDate,
-				endDate: endDate,
+				hostingPeriodFrom: startDate,
+				hostingPeriodTo: endDate,
+				state: state,
+				city: city,
 			});
 			memoizedUpdateURLParam("view", "description");
 		};
@@ -104,10 +112,14 @@ export default function OverviewForm() {
 	};
 	React.useEffect(() => {
 		if (startDate) {
-			setValue("startDate", startDate);
+			console.log(startDate.toDateString());
+
+			setValue("startDate", startDate.toDateString());
 		}
 		if (endDate) {
-			setValue("endDate", endDate);
+			console.log(endDate.toDateString());
+
+			setValue("endDate", endDate.toDateString());
 		}
 	}, [endDate, startDate, setValue]);
 
@@ -150,38 +162,6 @@ export default function OverviewForm() {
 						)}
 					/>
 				</div>
-				<hr className="my-5 border" />
-				{/* Location */}
-				<div className="relative">
-					<Label
-						className="block text-body-text font-normal text-[28px] mb-2"
-						htmlFor="location"
-					>
-						Location
-					</Label>
-					<Textarea
-						className={
-							"min-h-[100px] text-xl appearance-none border rounded-lg w-full py-6 px-3 text-gray-700 leading-tight placeholder:pl-4 " +
-							(errors.location?.type === "required"
-								? " outline-error"
-								: " focus:outline-success focus:shadow-outline")
-						}
-						id="location"
-						placeholder="Location Address"
-						autoComplete="on"
-						{...register("location")}
-					/>
-					<ErrorMessage
-						errors={errors}
-						name="location"
-						render={({ message }) => (
-							<p className="text-xs text-error absolute bottom-[-22%]">
-								{message}
-							</p>
-						)}
-					/>
-				</div>
-				<hr className="my-5 border" />
 				{/* Accommodation Type */}
 				<div className="relative">
 					<Label
@@ -292,6 +272,103 @@ export default function OverviewForm() {
 					/>
 				</div>
 				<hr className="my-5 border" />
+				{/* Address */}
+				<div className="relative">
+					<Label
+						className="block text-body-text font-normal text-[28px] mb-2"
+						htmlFor="address"
+					>
+						Address
+					</Label>
+					<Textarea
+						className={
+							"min-h-[100px] text-xl appearance-none border rounded-lg w-full py-6 px-3 text-gray-700 leading-tight placeholder:pl-4 " +
+							(errors.address?.type === "required"
+								? " outline-error"
+								: " focus:outline-success focus:shadow-outline")
+						}
+						id="address"
+						placeholder="Location Address"
+						autoComplete="on"
+						{...register("address")}
+					/>
+					<ErrorMessage
+						errors={errors}
+						name="address"
+						render={({ message }) => (
+							<p className="text-xs text-error absolute bottom-[-22%]">
+								{message}
+							</p>
+						)}
+					/>
+				</div>
+
+				<div className="flex items-center justify-between gap-6">
+					{/* State */}
+					<div className="relative">
+						<Label
+							className="block text-body-text font-normal text-[28px] mb-2"
+							htmlFor="state"
+						>
+							State
+						</Label>
+						<input
+							className={
+								"h-16 text-xl appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight  placeholder:pl-4" +
+								(errors.state?.type === "required"
+									? " outline-error"
+									: " focus:outline-success focus:shadow-outline")
+							}
+							id="state"
+							type="text"
+							placeholder="State"
+							autoComplete="on"
+							{...register("state")}
+						/>
+						<ErrorMessage
+							errors={errors}
+							name="state"
+							render={({ message }) => (
+								<p className="text-xs text-error absolute bottom-[-22%]">
+									{message}
+								</p>
+							)}
+						/>
+					</div>
+					{/* City */}
+					<div className="relative">
+						<Label
+							className="block text-body-text font-normal text-[28px] mb-2"
+							htmlFor="city"
+						>
+							City
+						</Label>
+						<input
+							className={
+								"h-16 text-xl appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight  placeholder:pl-4" +
+								(errors.city?.type === "required"
+									? " outline-error"
+									: " focus:outline-success focus:shadow-outline")
+							}
+							id="city"
+							type="text"
+							placeholder="City"
+							autoComplete="on"
+							{...register("city")}
+						/>
+						<ErrorMessage
+							errors={errors}
+							name="city"
+							render={({ message }) => (
+								<p className="text-xs text-error absolute bottom-[-22%]">
+									{message}
+								</p>
+							)}
+						/>
+					</div>
+				</div>
+				<hr className="my-5 border" />
+
 				{/* Availability */}
 				<div className="relative">
 					<Label

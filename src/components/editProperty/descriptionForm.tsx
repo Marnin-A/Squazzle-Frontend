@@ -14,9 +14,9 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import ManageSearchParams from "@/hooks/updateSearchParams";
 
 export type DescriptionFormType = {
-	about: string;
-	reason: string;
-	rules: Array<{
+	description: string;
+	whyListing: string;
+	accommodationRules: Array<{
 		ruleName: string;
 		ruleDescription: string;
 	}>;
@@ -104,25 +104,25 @@ export default function DescriptionForm() {
 				<div className="relative">
 					<Label
 						className="block text-body-text font-normal text-[28px] mb-2"
-						htmlFor="about"
+						htmlFor="description"
 					>
 						About this Accommodation
 					</Label>
 					<Textarea
 						className={
 							"min-h-[100px] text-xl appearance-none border rounded-lg w-full py-6 px-3 text-gray-700 leading-tight placeholder:pl-4 " +
-							(errors.about?.type === "required"
+							(errors.description?.type === "required"
 								? " outline-error"
 								: " focus:outline-success focus:shadow-outline")
 						}
-						id="about"
+						id="description"
 						placeholder="A brief description of the accommodation"
 						autoComplete="on"
-						{...register("about")}
+						{...register("description")}
 					/>
 					<ErrorMessage
 						errors={errors}
-						name="about"
+						name="description"
 						render={({ message }) => (
 							<p className="text-xs text-error absolute bottom-[-22%]">
 								{message}
@@ -135,25 +135,25 @@ export default function DescriptionForm() {
 				<div className="relative">
 					<Label
 						className="block text-body-text font-normal text-[28px] mb-2"
-						htmlFor="reason"
+						htmlFor="whyListing"
 					>
 						Reason for listing this accommodation
 					</Label>
 					<Textarea
 						className={
 							"min-h-[100px] text-xl appearance-none border rounded-lg w-full py-6 px-3 text-gray-700 leading-tight placeholder:pl-4 " +
-							(errors.reason?.type === "required"
+							(errors.whyListing?.type === "required"
 								? " outline-error"
 								: " focus:outline-success focus:shadow-outline")
 						}
-						id="reason"
+						id="whyListing"
 						placeholder="Why are you listing this accommodation?"
 						autoComplete="on"
-						{...register("reason")}
+						{...register("whyListing")}
 					/>
 					<ErrorMessage
 						errors={errors}
-						name="reason"
+						name="whyListing"
 						render={({ message }) => (
 							<p className="text-xs text-error absolute bottom-[-22%]">
 								{message}

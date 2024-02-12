@@ -10,7 +10,7 @@ import {
 	SignIn_Abort_Controller,
 } from "@/app/redux/services/apiServices";
 import { useRouter } from "next13-progressbar";
-import { FailedResponse } from "@/types/authTypes";
+import { FailedResponse } from "@/types/apiTypes";
 import ShowPassword from "./showPassword";
 import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
 import { useDispatch } from "react-redux";

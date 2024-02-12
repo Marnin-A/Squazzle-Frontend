@@ -7,6 +7,8 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import ImageCard from "./imageCard";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import { useListAccommodationMutation } from "@/app/redux/services/apiServices";
+import { imageConfigDefault } from "next/dist/shared/lib/image-config";
 
 type GalleryFormType = Array<string | undefined>;
 
@@ -23,13 +25,34 @@ export default function GalleryForm() {
 		Array<{ name: string; url: string } | undefined>
 	>([{ name: "", url: "" }]);
 	const { setLocalStorage, getLocalStorage } = useLocalStorage();
+	const [listAccommodation, { isError, isLoading, isSuccess, data, error }] =
+		useListAccommodationMutation();
 
-	const onSubmit: SubmitHandler<FieldValues> = () => {
+	const onSubmit: SubmitHandler<FieldValues> = async () => {
 		// Send Data to API
 		const overview = getLocalStorage("accommodationOverview");
 		const description = getLocalStorage("descriptionForm");
 		const gallery = getLocalStorage("galleryForm");
-		const allData = { ...overview, ...description, gallery: { ...gallery } };
+		const formData = new FormData();
+		for (const key in overview) {
+			if (Object.prototype.hasOwnProperty.call(overview, key)) {
+				formData.append(key, overview[key]);
+			}
+		}
+		for (const key in description) {
+			if (Object.prototype.hasOwnProperty.call(description, key)) {
+				formData.append(key, description[key]);
+			}
+		}
+		gallery.forEach((element: { name: string; url: string }) => {
+			const image = new Blob([element?.url], { type: "image/png" });
+			formData.append("image", image);
+		});
+
+		const res = await listAccommodation(formData);
+		console.log(res);
+		console.log(data);
+		console.log(error);
 
 		dispatch(
 			setAlertOpen({
@@ -43,8 +66,8 @@ export default function GalleryForm() {
 		setTimeout(() => {
 			router.push("/manageAccount/myListing");
 		}, 500);
-		console.log(allData);
 	};
+
 	function addPictureCard() {
 		if (getLocalStorage("galleryForm")) {
 			const images = getLocalStorage("galleryForm") as Array<

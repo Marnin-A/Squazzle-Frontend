@@ -45,7 +45,9 @@ export const userProfileSchema = yup.object().shape({
 });
 export const overviewFormSchema = yup.object().shape({
 	accommodationName: yup.string().required("*Accommodation Name is required"),
-	location: yup.string().required("*Location is required"),
+	address: yup.string().required("*Location is required"),
+	state: yup.string().required("*State is required"),
+	city: yup.string().required("*City is required"),
 	accommodationType: yup
 		.string()
 		.oneOf([
@@ -63,14 +65,14 @@ export const overviewFormSchema = yup.object().shape({
 		.oneOf(["Available", "Not available"])
 		.required("*Select availability"),
 	accommodationPrice: yup.string().required("*Accommodation Price is required"),
-	startDate: yup.date().required("*Start Date is required"),
-	endDate: yup.date().required("*End Date is required"),
+	startDate: yup.string().required("*Start Date is required"),
+	endDate: yup.string().required("*End Date is required"),
 });
 
 export const descriptionFormSchema = yup.object().shape({
-	about: yup.string().required("*About is required"),
-	reason: yup.string().required("*Reason is required"),
-	rules: yup
+	description: yup.string().required("*About is required"),
+	whyListing: yup.string().required("*Reason is required"),
+	accommodationRules: yup
 		.array()
 		.of(
 			yup.object().shape({

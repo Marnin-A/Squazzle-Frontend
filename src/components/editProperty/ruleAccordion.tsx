@@ -37,35 +37,41 @@ export default function RuleAccordionItem({
 				value={currentState.ruleName}
 				type="text"
 				className="focus:outline-primary-mid-grey text-left py-3 px-4 no-underline font-semibold border rounded-lg hover:bg-slate-100 mb-2"
-				{...register(`rules.${ruleIndex}.ruleName`, {
+				{...register(`accommodationRules.${ruleIndex}.ruleName`, {
 					onChange(e) {
 						setCurrentState({ ...currentState, ruleName: e.target.value });
-						setValue(`rules.${ruleIndex}.ruleName`, e.target.value);
+						setValue(
+							`accommodationRules.${ruleIndex}.ruleName`,
+							e.target.value
+						);
 					},
 				})}
 			/>
 			<textarea
 				className={
 					"text-xl appearance-none border rounded-lg w-full py-6 px-3 text-primary-green leading-tight placeholder:pl-4 " +
-					(errors.reason?.type === "required"
+					(errors.accommodationRules?.type === "required"
 						? " outline-error"
 						: " focus:outline-success focus:shadow-outline")
 				}
 				id={rule.ruleId}
 				value={currentState.rulesDescription}
-				{...register(`rules.${ruleIndex}.ruleDescription`, {
+				{...register(`accommodationRules.${ruleIndex}.ruleDescription`, {
 					onChange(e) {
 						setCurrentState({
 							...currentState,
 							rulesDescription: e.target.value,
 						});
-						setValue(`rules.${ruleIndex}.ruleDescription`, e.target.value);
+						setValue(
+							`accommodationRules.${ruleIndex}.ruleDescription`,
+							e.target.value
+						);
 					},
 				})}
 			></textarea>
 			<ErrorMessage
 				errors={errors}
-				name="rules"
+				name="accommodationRules"
 				render={({ message }) => (
 					<p className="text-xs text-error absolute bottom-[-22%]">{message}</p>
 				)}
