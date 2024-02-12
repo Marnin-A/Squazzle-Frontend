@@ -11,7 +11,7 @@ export const api = createApi({
 		signUp: builder.mutation<Types.SignUpResponse, Types.CreateProfileFormData>(
 			{
 				query: (userData) => ({
-					url: "auth/signup",
+					url: "auth/signUp",
 					method: "POST",
 					body: userData,
 					signal: SignUp_Abort_Controller.signal,

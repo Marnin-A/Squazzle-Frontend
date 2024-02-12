@@ -189,8 +189,8 @@ export default function OverviewForm() {
 							label="Duplex"
 							color="#018388"
 							{...register("accommodationType", {
-								onBlur(event) {
-									setAccommodationType(event.target.value);
+								onChange(event) {
+									setAccommodationType(() => event.target.value);
 								},
 							})}
 						/>
@@ -200,8 +200,8 @@ export default function OverviewForm() {
 							color="#018388"
 							label="Apartment"
 							{...register("accommodationType", {
-								onBlur(event) {
-									setAccommodationType(event.target.value);
+								onChange(event) {
+									setAccommodationType(() => event.target.value);
 								},
 							})}
 						/>
@@ -211,8 +211,8 @@ export default function OverviewForm() {
 							color="#018388"
 							label="Single Room"
 							{...register("accommodationType", {
-								onBlur(event) {
-									setAccommodationType(event.target.value);
+								onChange(event) {
+									setAccommodationType(() => event.target.value);
 								},
 							})}
 						/>
@@ -222,8 +222,8 @@ export default function OverviewForm() {
 							color="#018388"
 							label="Bungalow"
 							{...register("accommodationType", {
-								onBlur(event) {
-									setAccommodationType(event.target.value);
+								onChange(event) {
+									setAccommodationType(() => event.target.value);
 								},
 							})}
 						/>
@@ -233,8 +233,8 @@ export default function OverviewForm() {
 							color="#018388"
 							label="Flat"
 							{...register("accommodationType", {
-								onBlur(event) {
-									setAccommodationType(event.target.value);
+								onChange(event) {
+									setAccommodationType(() => event.target.value);
 								},
 							})}
 						/>
@@ -244,8 +244,8 @@ export default function OverviewForm() {
 							color="#018388"
 							label="Studio"
 							{...register("accommodationType", {
-								onBlur(event) {
-									setAccommodationType(event.target.value);
+								onChange(event) {
+									setAccommodationType(() => event.target.value);
 								},
 							})}
 						/>
@@ -255,8 +255,8 @@ export default function OverviewForm() {
 							color="#018388"
 							label="Mansion"
 							{...register("accommodationType", {
-								onBlur(event) {
-									setAccommodationType(event.target.value);
+								onChange(event) {
+									setAccommodationType(() => event.target.value);
 								},
 							})}
 						/>
@@ -397,7 +397,7 @@ export default function OverviewForm() {
 							color="#018388"
 							{...register("availability", {
 								onChange(event) {
-									setAvailability(event.target.value);
+									setAvailability(() => event.target.value);
 								},
 							})}
 						/>
@@ -408,7 +408,7 @@ export default function OverviewForm() {
 							label="Not Available"
 							{...register("availability", {
 								onChange(event) {
-									setAvailability(event.target.value);
+									setAvailability(() => event.target.value);
 								},
 							})}
 						/>
