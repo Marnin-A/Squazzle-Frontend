@@ -51,9 +51,6 @@ export default function SignInRight() {
 	};
 
 	React.useEffect(() => {
-		console.log("Data: ", data);
-		console.log("Error: ", error);
-
 		if (data || data === undefined) {
 			if (isSuccess) {
 				if (data?.success === true) {
@@ -62,8 +59,14 @@ export default function SignInRight() {
 						`${data.response.data.user.firstName} ${data.response.data.user.lastName}`
 					);
 					setLocalStorage("accessToken", data.response.accessToken);
-					setLocalStorage("accessToken", data.response.refreshToken);
+					setLocalStorage("refreshToken", data.response.refreshToken);
 					setLocalStorage("_id", data.response.data.user._id);
+					setLocalStorage("email", data.response.data.user.email);
+					setLocalStorage("role", data.response.data.user.role);
+					setLocalStorage(
+						"isEmailVerified",
+						data.response.data.user.isEmailVerified
+					);
 					setLocalStorage("profileImage", data.response.data.user.profileImage);
 				}
 				// Display Success popup
@@ -83,7 +86,6 @@ export default function SignInRight() {
 					status: number;
 					data: FailedResponse;
 				};
-				console.log(e);
 
 				// Display error popup
 				dispatch(

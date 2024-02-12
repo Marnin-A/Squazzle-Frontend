@@ -4,7 +4,7 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import { useRouter } from "next13-progressbar";
 
 export default function LogoutBtn() {
-	const { removeLocalStorage, getLocalStorage } = useLocalStorage();
+	const { clearLocalStorage, getLocalStorage } = useLocalStorage();
 	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 	const router = useRouter();
 
@@ -25,8 +25,8 @@ export default function LogoutBtn() {
 			variant={"ghost"}
 			onClick={() => {
 				if (isLoggedIn) {
-					removeLocalStorage("accessToken");
-					router.push("/login");
+					clearLocalStorage();
+					router.push("/signin");
 				} else {
 					router.push("/signin");
 				}
