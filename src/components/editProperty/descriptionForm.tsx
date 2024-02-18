@@ -16,7 +16,7 @@ import ManageSearchParams from "@/hooks/updateSearchParams";
 export type DescriptionFormType = {
 	description: string;
 	whyListing: string;
-	accommodationRules: Array<{
+	accomodationRules: Array<{
 		ruleName: string;
 		ruleDescription: string;
 	}>;
@@ -70,12 +70,10 @@ export default function DescriptionForm() {
 		reValidateMode: "onChange",
 	});
 
-	const onSubmit: SubmitHandler<FieldValues> = ({ about, reason, rules }) => {
-		setLocalStorage("descriptionForm", {
-			about: about,
-			reason: reason,
-			rules: rules,
-		});
+	const onSubmit: SubmitHandler<FieldValues> = (data) => {
+		console.log(data);
+
+		setLocalStorage("descriptionForm", data);
 		memoizedUpdateURLParam("view", "gallery");
 	};
 
@@ -203,7 +201,7 @@ export default function DescriptionForm() {
 					<button
 						className="w-max hover:bg-primary-lightgreen hover:text-primary-green bg-primary-green text-white font-bold py-4 px-6 rounded-xl"
 						type="submit"
-						formTarget="descriptionForm"
+						// formTarget="descriptionForm"
 					>
 						<span>Save & Continue</span>
 					</button>

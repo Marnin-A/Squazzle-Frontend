@@ -16,7 +16,8 @@ export default function HostingDuration({
 }: {
 	fieldDate: Date | undefined;
 	setFieldDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
-	name: "startDate" | "endDate";
+	name: "hostingPeriodFrom" | "hostingPeriodTo
+";
 	register: UseFormRegister<OverviewForm>;
 	dateRef: React.Ref<HTMLDivElement>;
 }) {

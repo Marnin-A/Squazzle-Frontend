@@ -76,7 +76,7 @@ export type SignInSuccessful = {
 				passwordDigest: string;
 				phoneNumber: string;
 				profileImage: string;
-				role: string;
+				role: "user" | "admin";
 				updatedAt: string;
 				__v: number;
 				_id: string;
@@ -103,12 +103,12 @@ export type PropertyDetails = {
 			| "Flat"
 			| "Studio"
 			| "Mansion";
-		availability: "Available" | "Not available";
+		// availability: "Available" | "Not available";
 		hostingPeriodTo: string;
 		gallery: Array<{ name: string; url: string } | undefined>;
 		address: string;
 		whyListing: string;
-		accommodationRules: Array<{
+		accomodationRules: Array<{
 			ruleName: string;
 			rulesDescription: string;
 			ruleId: string;

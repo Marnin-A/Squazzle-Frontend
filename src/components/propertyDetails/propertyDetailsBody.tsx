@@ -7,7 +7,7 @@ import {
 import Image from "next/image";
 import React from "react";
 import AboutComponent from "./aboutComponent";
-import AccommodationRules from "./accommodationRules";
+import AccommodationRules from "./accomodationRules";
 
 export default function PropertyDetailsBody() {
 	return (

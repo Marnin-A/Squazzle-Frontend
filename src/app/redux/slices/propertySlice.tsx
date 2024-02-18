@@ -4,10 +4,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const initialState: PropertyDetails["data"] = {
 	accommodationName: "",
 	propertyId: "",
-	accommodationRules: [{ ruleId: "", ruleName: "", rulesDescription: "" }],
+	accomodationRules: [{ ruleId: "", ruleName: "", rulesDescription: "" }],
 	price: "",
 	accommodationType: "Duplex",
-	availability: "Available",
+	// availability: "Available",
 	hostingPeriodFrom: new Date().toDateString(),
 	hostingPeriodTo: new Date().toDateString(),
 	city: "",

@@ -33,10 +33,10 @@ export type OverviewForm = {
 		| "Studio"
 		| "Mansion";
 
-	availability: "Available" | "Not available";
-	accommodationPrice: string;
-	startDate: string;
-	endDate: string;
+	// availability: "Available" | "Not available";
+	price: string;
+	hostingPeriodFrom: string;
+	hostingPeriodTo: string;
 };
 
 export default function OverviewForm() {
@@ -54,46 +54,25 @@ export default function OverviewForm() {
 		reValidateMode: "onChange",
 	});
 	const [country, setCountry] = React.useState("");
-	const [price, setPrice] = React.useState(0.0);
-	const [startDate, setStartDate] = React.useState<Date | undefined>();
-	const [endDate, setEndDate] = React.useState<Date | undefined>();
-	const [accommodationType, setAccommodationType] =
+	const [hostingPeriodFrom, setStartDate] = React.useState<Date | undefined>();
+	const [hostingPeriodTo, setEndDate] = React.useState<Date | undefined>();
+	const [accomodationType, setAccommodationType] =
 		React.useState<OverviewForm["accommodationType"]>("Duplex");
-	const [availability, setAvailability] =
-		React.useState<OverviewForm["availability"]>("Available");
+	// const [availability, setAvailability] =
+	// 	React.useState<OverviewForm["availability"]>("Available");
 	const { setLocalStorage, removeLocalStorage } = useLocalStorage();
 	const { memoizedUpdateURLParam } = ManageSearchParams();
-	const onSubmit: SubmitHandler<FieldValues> = ({
-		address,
-		accommodationType,
-		accommodationPrice,
-		startDate,
-		endDate,
-		state,
-		city,
-	}) =>
+	const onSubmit: SubmitHandler<FieldValues> = (data) =>
 		// data
 		{
 			console.log({
-				address: address,
-				state: state,
-				city: city,
-				accommodationType: accommodationType,
-				availability: availability,
-				accommodationPrice: price,
-				startDate: startDate,
-				endDate: endDate,
+				...data,
+				price: Number(data.price.replace(/[a-zA-Z,]/g, "").trim()),
 			});
 
 			setLocalStorage("accommodationOverview", {
-				address: address,
-				accommodationType: accommodationType,
-				availability: availability,
-				accommodationPrice: accommodationPrice,
-				hostingPeriodFrom: startDate,
-				hostingPeriodTo: endDate,
-				state: state,
-				city: city,
+				...data,
+				price: Number(data.price.replace(/[a-zA-Z,]/g, "").trim()),
 			});
 			memoizedUpdateURLParam("view", "description");
 		};
@@ -111,17 +90,17 @@ export default function OverviewForm() {
 		);
 	};
 	React.useEffect(() => {
-		if (startDate) {
-			console.log(startDate.toDateString());
+		if (hostingPeriodFrom) {
+			console.log(hostingPeriodFrom.toDateString());
 
-			setValue("startDate", startDate.toDateString());
+			setValue("hostingPeriodFrom", hostingPeriodFrom.toDateString());
 		}
-		if (endDate) {
-			console.log(endDate.toDateString());
+		if (hostingPeriodTo) {
+			console.log(hostingPeriodTo.toDateString());
 
-			setValue("endDate", endDate.toDateString());
+			setValue("hostingPeriodTo", hostingPeriodTo.toDateString());
 		}
-	}, [endDate, startDate, setValue]);
+	}, [hostingPeriodTo, hostingPeriodFrom, setValue]);
 
 	return (
 		<>
@@ -166,7 +145,7 @@ export default function OverviewForm() {
 				<div className="relative">
 					<Label
 						className="block text-body-text font-normal text-[28px] mb-2"
-						htmlFor="accommodationType"
+						htmlFor="price"
 					>
 						Accommodation Type
 					</Label>
@@ -180,7 +159,7 @@ export default function OverviewForm() {
 								? " outline-error"
 								: " focus:outline-success focus:shadow-outline")
 						}
-						value={accommodationType}
+						value={accomodationType}
 						id="accommodationType"
 					>
 						<FormControlLabel
@@ -369,7 +348,7 @@ export default function OverviewForm() {
 				</div>
 				<hr className="my-5 border" />
 
-				{/* Availability */}
+				{/* Availability
 				<div className="relative">
 					<Label
 						className="block text-body-text font-normal text-[28px] mb-2"
@@ -423,7 +402,7 @@ export default function OverviewForm() {
 						)}
 					/>
 				</div>
-				<hr className="my-5 border" />
+				<hr className="my-5 border" /> */}
 				{/* Accommodation Name Input */}
 				<div className="relative">
 					<label
@@ -435,7 +414,7 @@ export default function OverviewForm() {
 					<div
 						className={
 							"flex items-center border rounded-lg gap-2 px-3 " +
-							(errors.accommodationPrice?.type === "required"
+							(errors.price?.type === "required"
 								? " border-2 has-focus:border-error"
 								: " border-2 has-focus:border-success")
 						}
@@ -445,13 +424,12 @@ export default function OverviewForm() {
 							defaultValue={"0.00"}
 							decimalsLimit={4}
 							intlConfig={{ locale: "en-US", currency: "NGN" }}
-							onValueChange={(value) => setPrice(Number(value))}
 							className={
 								"h-16 text-xl appearance-none border-r outline-none border-primary-mid-grey w-full py-2 text-gray-700 leading-tight placeholder:pl-4"
 							}
 							id="accommodationPrice"
 							autoComplete="on"
-							{...register("accommodationPrice")}
+							{...register("price")}
 						/>
 						<CountryDropdown
 							value={country}
@@ -462,7 +440,7 @@ export default function OverviewForm() {
 					</div>
 					<ErrorMessage
 						errors={errors}
-						name="accommodationPrice"
+						name="price"
 						render={({ message }) => (
 							<p className="text-xs text-error absolute bottom-[-22%]">
 								{message}
@@ -478,7 +456,7 @@ export default function OverviewForm() {
 					</div>
 					<div className="relative mb-8">
 						<label
-							htmlFor="startDate"
+							htmlFor="hostingPeriodFrom"
 							className="text-sm font-semibold text-black"
 						>
 							Start Date
@@ -489,11 +467,11 @@ export default function OverviewForm() {
 									variant={"outline"}
 									className={cn(
 										"w-full px-6 py-8 text-left text-base font-normal",
-										!startDate && "text-muted-foreground"
+										!hostingPeriodFrom && "text-muted-foreground"
 									)}
 								>
-									{startDate ? (
-										new Date(startDate).toDateString()
+									{hostingPeriodFrom ? (
+										new Date(hostingPeriodFrom).toDateString()
 									) : (
 										<span>DD/MM/YY</span>
 									)}
@@ -503,19 +481,19 @@ export default function OverviewForm() {
 							<PopoverContent className="w-auto p-0" align="start">
 								<Calendar
 									mode="single"
-									selected={startDate}
+									selected={hostingPeriodFrom}
 									onSelect={setStartDate}
 									disabled={
 										(date) => date < new Date()
 										// || date < new Date("1900-01-01")
 									}
-									{...register("startDate")}
+									{...register("hostingPeriodFrom")}
 								/>
 							</PopoverContent>
 						</Popover>
 						<ErrorMessage
 							errors={errors}
-							name="startDate"
+							name="hostingPeriodFrom"
 							render={({ message }) => (
 								<p className="text-xs text-error absolute bottom-[-22%]">
 									{message}
@@ -526,7 +504,8 @@ export default function OverviewForm() {
 
 					<div className="relative mb-16">
 						<label
-							htmlFor="endDate"
+							htmlFor="hostingPeriodTo
+"
 							className="text-sm font-semibold text-black"
 						>
 							End Date
@@ -537,11 +516,11 @@ export default function OverviewForm() {
 									variant={"outline"}
 									className={cn(
 										"w-full px-6 py-8 text-left text-base font-normal",
-										!endDate && "text-muted-foreground"
+										!hostingPeriodTo && "text-muted-foreground"
 									)}
 								>
-									{endDate ? (
-										new Date(endDate).toDateString()
+									{hostingPeriodTo ? (
+										new Date(hostingPeriodTo).toDateString()
 									) : (
 										<span>DD/MM/YY</span>
 									)}
@@ -551,19 +530,19 @@ export default function OverviewForm() {
 							<PopoverContent className="w-auto p-0" align="start">
 								<Calendar
 									mode="single"
-									selected={endDate}
+									selected={hostingPeriodTo}
 									onSelect={setEndDate}
 									disabled={(date) =>
 										date < new Date() ||
-										date < new Date(startDate as unknown as Date)
+										date < new Date(hostingPeriodFrom as unknown as Date)
 									}
-									{...register("endDate")}
+									{...register("hostingPeriodTo")}
 								/>
 							</PopoverContent>
 						</Popover>
 						<ErrorMessage
 							errors={errors}
-							name="endDate"
+							name="hostingPeriodTo"
 							render={({ message }) => (
 								<p className="text-xs text-error absolute bottom-[-22%]">
 									{message}

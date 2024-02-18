@@ -60,19 +60,19 @@ export const overviewFormSchema = yup.object().shape({
 			"Mansion",
 		])
 		.required("*Select an accommodation type"),
-	availability: yup
-		.string()
-		.oneOf(["Available", "Not available"])
-		.required("*Select availability"),
-	accommodationPrice: yup.string().required("*Accommodation Price is required"),
-	startDate: yup.string().required("*Start Date is required"),
-	endDate: yup.string().required("*End Date is required"),
+	// availability: yup
+	// 	.string()
+	// 	.oneOf(["Available", "Not available"])
+	// 	.required("*Select availability"),
+	price: yup.string().required("*Accommodation Price is required"),
+	hostingPeriodFrom: yup.string().required("*Start Date is required"),
+	hostingPeriodTo: yup.string().required("*End Date is required"),
 });
 
 export const descriptionFormSchema = yup.object().shape({
 	description: yup.string().required("*About is required"),
 	whyListing: yup.string().required("*Reason is required"),
-	accommodationRules: yup
+	accomodationRules: yup
 		.array()
 		.of(
 			yup.object().shape({

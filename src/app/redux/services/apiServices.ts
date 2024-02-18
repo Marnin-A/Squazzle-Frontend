@@ -111,11 +111,15 @@ export const api = createApi({
 				}),
 			}
 		),
-		listAccommodation: builder.mutation<any, FormData>({
+		listAccommodation: builder.mutation<
+			any,
+			{ formData: FormData; token: string }
+		>({
 			query: (data) => ({
+				headers: { Authorization: `Bearer ${data.token}` },
 				url: "accommodations",
 				method: "POST",
-				body: data,
+				body: data.formData,
 			}),
 		}),
 		getMyListings: builder.query<
