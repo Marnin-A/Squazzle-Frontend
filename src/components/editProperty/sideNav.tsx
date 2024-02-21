@@ -12,8 +12,8 @@ export default function SideNav() {
 	const router = useRouter();
 	const { getURLParam } = ManageSearchParams();
 	return (
-		<div className="w-[305px] mr-16">
-			<div className="bg-primary-dark-green mb-5">
+		<div className="w-[305px] mr-16 max-md:m-0 max-md:w-full">
+			<div className="bg-primary-dark-green mb-5 block max-md:hidden">
 				<button
 					onClick={() => router.push("../myListing")}
 					className="border-none bg-transparent text-primary-lightgreen text-sm flex items-center py-5 px-6 gap-2"
@@ -21,11 +21,11 @@ export default function SideNav() {
 					<ArrowLeft color="#CCE6E7" /> Back to my listing
 				</button>
 			</div>
-			<div className="p-3 shadow-md">
+			<div className="max-md:shadow-none max-md:text-xs max-md:w-full max-md:font-semibold max-md:flex max-md:items-center max-md:justify-center max-md:gap-3">
 				<Link
 					href="?view=overview"
 					className={
-						"flex items-center gap-4 py-3 pl-3 " +
+						"flex items-center gap-4 py-3 pl-3 max-md:gap-2 max-md:p-[10px] max-md:bg-off-white max-md:hover:shadow " +
 						(getURLParam("view") == "overview" && "bg-primary-lightgreen")
 					}
 				>
@@ -35,7 +35,7 @@ export default function SideNav() {
 				<Link
 					href="?view=description"
 					className={
-						"flex items-center gap-4 py-3 pl-3 " +
+						"flex items-center gap-4 py-3 pl-3 max-md:gap-2 max-md:p-[10px] max-md:bg-off-white max-md:hover:shadow " +
 						(getURLParam("view") == "description" && "bg-primary-lightgreen")
 					}
 				>
@@ -45,7 +45,7 @@ export default function SideNav() {
 				<Link
 					href="?view=gallery"
 					className={
-						"flex items-center gap-4 py-3 pl-3 " +
+						"flex items-center gap-4 py-3 pl-3 max-md:gap-2 max-md:p-[10px] max-md:bg-off-white max-md:hover:shadow " +
 						(getURLParam("view") == "gallery" && "bg-primary-lightgreen")
 					}
 				>

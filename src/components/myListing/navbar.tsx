@@ -5,15 +5,16 @@ import { useRouter } from "next13-progressbar";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { MobileSideMenu } from "./mobileMenu";
+import { MobileSideMenu } from "../mobileMenu";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
-} from "./ui/dropdown-menu";
-import { DropdownMenuTrigger } from "./ui/dropdown-menu";
-import LogoutBtn from "./logoutBtn";
-import ProfilePicture from "./profilePicture";
+} from "../ui/dropdown-menu";
+import { DropdownMenuTrigger } from "../ui/dropdown-menu";
+import LogoutBtn from "../logoutBtn";
+import ProfilePicture from "../profilePicture";
+import { ChevronLeft } from "lucide-react";
 
 export default function NavBar() {
 	const router = useRouter();
@@ -36,7 +37,12 @@ export default function NavBar() {
 					height={57}
 					placeholder="empty"
 					priority={false}
-					className="w-min h-auto"
+					className="w-min h-auto max-xs:hidden visible"
+				/>
+				<ChevronLeft
+					color="#03796E"
+					size={30}
+					className="max-xs:block hidden"
 				/>
 			</Link>
 			<div className="mlg:flex hidden gap-6">

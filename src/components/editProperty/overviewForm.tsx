@@ -107,13 +107,13 @@ export default function OverviewForm() {
 			{/* Form */}
 			<form
 				name="overviewForm"
-				className="bg-transparent w-full pt-6 p-10 flex flex-col gap-6 shadow-sm"
+				className="bg-transparent w-full pt-6 p-10 flex flex-col gap-6 shadow-sm max-md:px-5"
 				onSubmit={handleSubmit(onSubmit)}
 			>
 				{/* Accommodation Name Input */}
 				<div className="relative">
 					<label
-						className="block text-body-text font-normal text-[28px] mb-2"
+						className="block text-body-text font-normal text-[28px] mb-2 max-md:text-lg max-md:font-semibold"
 						htmlFor="accommodationName"
 					>
 						Accommodation Name
@@ -144,7 +144,7 @@ export default function OverviewForm() {
 				{/* Accommodation Type */}
 				<div className="relative">
 					<Label
-						className="block text-body-text font-normal text-[28px] mb-2"
+						className="block text-body-text font-normal text-[28px] mb-2 max-md:text-lg max-md:font-semibold"
 						htmlFor="price"
 					>
 						Accommodation Type
@@ -254,7 +254,7 @@ export default function OverviewForm() {
 				{/* Address */}
 				<div className="relative">
 					<Label
-						className="block text-body-text font-normal text-[28px] mb-2"
+						className="block text-body-text font-normal text-[28px] mb-2 max-md:text-lg max-md:font-semibold"
 						htmlFor="address"
 					>
 						Address
@@ -286,7 +286,7 @@ export default function OverviewForm() {
 					{/* State */}
 					<div className="relative">
 						<Label
-							className="block text-body-text font-normal text-[28px] mb-2"
+							className="block text-body-text font-normal text-[28px] mb-2 max-md:text-lg max-md:font-semibold"
 							htmlFor="state"
 						>
 							State
@@ -317,7 +317,7 @@ export default function OverviewForm() {
 					{/* City */}
 					<div className="relative">
 						<Label
-							className="block text-body-text font-normal text-[28px] mb-2"
+							className="block text-body-text font-normal text-[28px] mb-2 max-md:text-lg max-md:font-semibold"
 							htmlFor="city"
 						>
 							City
@@ -351,7 +351,7 @@ export default function OverviewForm() {
 				{/* Availability
 				<div className="relative">
 					<Label
-						className="block text-body-text font-normal text-[28px] mb-2"
+						className="block text-body-text font-normal text-[28px] mb-2 max-md:text-lg max-md:font-semibold"
 						htmlFor="availability"
 					>
 						Availability
@@ -406,7 +406,7 @@ export default function OverviewForm() {
 				{/* Accommodation Name Input */}
 				<div className="relative">
 					<label
-						className="block text-body-text font-normal text-[28px] mb-2"
+						className="block text-body-text font-normal text-[28px] mb-2 max-md:text-lg max-md:font-semibold"
 						htmlFor="accommodationPrice"
 					>
 						Accommodation Price
@@ -451,7 +451,7 @@ export default function OverviewForm() {
 				<hr className="my-5 border" />
 				{/* Hosting */}
 				<div>
-					<div className="block text-body-text font-normal text-[28px] mb-2">
+					<div className="block text-body-text font-normal text-[28px] mb-2 max-md:text-lg max-md:font-semibold">
 						Hosting Duration
 					</div>
 					<div className="relative mb-8">
@@ -502,7 +502,7 @@ export default function OverviewForm() {
 						/>
 					</div>
 
-					<div className="relative mb-16">
+					<div className="relative mb-16 max-md:mb-10">
 						<label
 							htmlFor="hostingPeriodTo
 "
@@ -552,20 +552,21 @@ export default function OverviewForm() {
 					</div>
 				</div>
 				{/* Buttons */}
-				<div className="flex items-center justify-between ">
+				<div className="flex items-center justify-between max-md:flex-col-reverse max-md:gap-2">
 					<button
-						className="w-min hover:bg-primary-lightgreen hover:text-primary-green bg-white text-primary-green outline outline-primary-green font-bold py-4 px-6 rounded"
+						className="w-min hover:bg-primary-lightgreen hover:text-primary-green bg-white text-primary-green outline outline-primary-green font-bold py-4 px-6 rounded max-md:w-full"
 						type="button"
 						onClick={handleCancel}
 					>
 						Cancel
 					</button>
 					<button
-						className="w-min hover:bg-primary-lightgreen hover:text-primary-green bg-primary-green text-white font-bold py-4 px-6 rounded"
+						className="w-min hover:bg-primary-lightgreen hover:text-primary-green bg-primary-green text-white font-bold py-4 px-6 rounded max-md:w-full"
 						type="submit"
 						formTarget="overviewForm"
 					>
-						<span>Save</span>
+						<span className="max-md:hidden block">Save</span>
+						<span className="max-md:block hidden">Save & Continue</span>
 					</button>
 				</div>
 			</form>

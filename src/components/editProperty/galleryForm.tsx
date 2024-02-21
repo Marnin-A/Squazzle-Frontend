@@ -60,7 +60,7 @@ export default function GalleryForm() {
 				type: `image/${getImageType(element.url)}`,
 			});
 			formData.append("images", image);
-			console.log("image", image);
+			console.log("images", image);
 		});
 
 		const res = (await listAccommodation({

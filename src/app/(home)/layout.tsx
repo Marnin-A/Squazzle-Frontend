@@ -1,5 +1,5 @@
 import Footer from "@/components/footer";
-import NavBar from "@/components/navBar";
+import NavBar from "@/components/myListing/navbar";
 
 export default function OnboardingLayout({
 	children,
