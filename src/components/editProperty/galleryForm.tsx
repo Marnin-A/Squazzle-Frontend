@@ -200,20 +200,21 @@ export default function GalleryForm() {
 					))}
 				</div>
 				{/* Buttons */}
-				<div className="flex items-center justify-between ">
+				<div className="flex items-center justify-between max-md:flex-col-reverse max-md:gap-2">
 					<button
-						className="w-max hover:bg-primary-lightgreen hover:text-primary-green bg-white text-primary-green outline outline-primary-green font-bold py-4 px-6 rounded-md"
+						className="w-max hover:bg-primary-lightgreen hover:text-primary-green bg-white text-primary-green outline outline-primary-green font-bold py-4 px-6 rounded-md max-md:w-full"
 						type="button"
 						onClick={handleBack}
 					>
 						Back
 					</button>
 					<button
-						className="w-max hover:bg-primary-lightgreen hover:text-primary-green bg-primary-green text-white font-bold py-4 px-6 rounded-xl"
+						className="w-max hover:bg-primary-lightgreen hover:text-primary-green bg-primary-green text-white font-bold py-4 px-6 rounded-xl max-md:w-full"
 						type="submit"
 						formTarget="galleryForm"
 					>
-						<span>Save</span>
+						<span className="max-md:hidden block">Save</span>
+						<span className="max-md:block hidden">Save & Publish</span>
 					</button>
 				</div>
 			</form>

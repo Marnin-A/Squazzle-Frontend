@@ -72,8 +72,15 @@ export default function DescriptionForm() {
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		console.log(data);
+		const onlyRules: string[] = [];
+		rules.forEach((data) => {
+			onlyRules.push(data.ruleName);
+		});
 
-		setLocalStorage("descriptionForm", data);
+		setLocalStorage("descriptionForm", {
+			...data,
+			accomodationRules: onlyRules,
+		});
 		memoizedUpdateURLParam("view", "gallery");
 	};
 
@@ -190,16 +197,16 @@ export default function DescriptionForm() {
 					</div>
 				</div>
 				{/* Buttons */}
-				<div className="flex items-center justify-between ">
+				<div className="flex items-center justify-between max-md:flex-col-reverse max-md:gap-2">
 					<button
-						className="w-max hover:bg-primary-lightgreen hover:text-primary-green bg-white text-primary-green outline outline-primary-green font-bold py-4 px-6 rounded-md"
+						className="w-max hover:bg-primary-lightgreen hover:text-primary-green bg-white text-primary-green outline outline-primary-green font-bold py-4 px-6 rounded-md max-md:w-full"
 						type="button"
 						onClick={handleBack}
 					>
 						Back
 					</button>
 					<button
-						className="w-max hover:bg-primary-lightgreen hover:text-primary-green bg-primary-green text-white font-bold py-4 px-6 rounded-xl"
+						className="w-max hover:bg-primary-lightgreen hover:text-primary-green bg-primary-green text-white font-bold py-4 px-6 rounded-xl max-md:w-full"
 						type="submit"
 						// formTarget="descriptionForm"
 					>
