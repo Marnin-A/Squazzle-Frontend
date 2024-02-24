@@ -8,17 +8,27 @@ import { Button } from "../ui/button";
 import ImageCard from "./imageCard";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { useListAccommodationMutation } from "@/app/redux/services/apiServices";
+import { DescriptionFormType } from "./descriptionForm";
 
 type GalleryFormType = Array<string | undefined>;
 type CreateAccommodationResponse =
-	| { data: any }
+	| { data: { data: object; message: string; status: string } }
 	| {
 			error: {
 				data: { success: false; error: string; message: string };
 				status: number;
 			};
 	  };
-
+type descriptionType = {
+	description: string;
+	whyListing: string;
+	accomodationRules:
+		| Array<{
+				ruleName: string;
+				ruleDescription: string;
+		  }>
+		| string;
+};
 export default function GalleryForm() {
 	const router = useRouter();
 	const alertId = React.useId();
@@ -36,44 +46,33 @@ export default function GalleryForm() {
 		useListAccommodationMutation();
 
 	const onSubmit: SubmitHandler<FieldValues> = async () => {
-		// Send Data to API
 		const overview = getLocalStorage("accommodationOverview");
-		const description = getLocalStorage("descriptionForm");
+		const description: descriptionType = getLocalStorage("descriptionForm");
 		const gallery = getLocalStorage("galleryForm");
-		console.log({ ...overview, ...description, ...gallery });
-
 		const formData = new FormData();
+
 		for (const key in overview) {
 			if (Object.prototype.hasOwnProperty.call(overview, key)) {
 				formData.append(key, overview[key]);
-				console.log(key, ":", overview[key]);
 			}
 		}
-		for (const key in description) {
-			if (Object.prototype.hasOwnProperty.call(description, key)) {
-				formData.append(key, description[key]);
-				console.log(key, ":", description[key]);
-			}
-		}
+		formData.append("description", description["description"]);
+		formData.append("whyListing", description["whyListing"]);
+		formData.append(
+			"accomodationRules",
+			JSON.stringify(description["accomodationRules"])
+		);
 		gallery.forEach((element: { name: string; url: string }) => {
 			const image = new Blob([element?.url], {
 				type: `image/${getImageType(element.url)}`,
 			});
 			formData.append("images", image);
-			console.log("images", image);
 		});
 
 		const res = (await listAccommodation({
 			formData: formData,
 			token: getLocalStorage("accessToken"),
 		})) as unknown as CreateAccommodationResponse;
-		console.log(res);
-		// console.log(data);
-		// console.log(error);
-		// console.log(isLoading);
-		// for (const key of formData.keys()) {
-		// 	console.log(key);
-		// }
 
 		if ("error" in res) {
 			const { error } = res;
@@ -89,21 +88,20 @@ export default function GalleryForm() {
 		}
 		if ("data" in res) {
 			const { data } = res;
-			console.log(data);
-			formData.forEach((item) => console.log(item));
+
 			dispatch(
 				setAlertOpen({
 					alertId: alertId,
 					open: true,
 					severity: "success",
-					title: "success",
-					message: "success",
+					title: "Success",
+					message: data.message,
 				})
 			);
+			setTimeout(() => {
+				router.push("/manageAccount/myListing");
+			}, 500);
 		}
-		// setTimeout(() => {
-		// 	router.push("/manageAccount/myListing");
-		// }, 500);
 	};
 
 	function addPictureCard() {
@@ -135,6 +133,7 @@ export default function GalleryForm() {
 	function handleBack() {
 		router.back();
 	}
+
 	React.useEffect(() => {
 		if (getLocalStorage("galleryForm")) {
 			setImgArray(getLocalStorage("galleryForm"));

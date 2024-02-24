@@ -74,12 +74,8 @@ export const descriptionFormSchema = yup.object().shape({
 	whyListing: yup.string().required("*Reason is required"),
 	accomodationRules: yup
 		.array()
-		.of(
-			yup.object().shape({
-				ruleName: yup.string().required("*Rule Name is required"),
-				ruleDescription: yup.string().required("*Rule Description is required"),
-			})
-		)
+		.of(yup.string().required("*Rule is required"))
+
 		.max(10, "*You can't have more than 10 rules")
 		.required("*Accommodation rules are required"),
 });

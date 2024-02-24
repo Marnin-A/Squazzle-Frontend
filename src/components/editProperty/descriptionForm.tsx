@@ -1,8 +1,6 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ErrorMessage } from "@hookform/error-message";
-import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { descriptionFormSchema } from "@/utils/schemas";
 import { Label } from "../ui/label";
@@ -16,43 +14,32 @@ import ManageSearchParams from "@/hooks/updateSearchParams";
 export type DescriptionFormType = {
 	description: string;
 	whyListing: string;
-	accomodationRules: Array<{
-		ruleName: string;
-		ruleDescription: string;
-	}>;
+	accomodationRules: Array<string>;
 };
 
 export default function DescriptionForm() {
 	const router = useRouter();
 	const [rules, setRules] = React.useState<
-		Array<{ ruleName: string; rulesDescription: string; ruleId: string }>
+		Array<{ ruleName: string; ruleId: string }>
 	>([
 		{
 			ruleName: "Damage to property ",
-			rulesDescription:
-				"Guests will be held responsible for any loss or damage to the property caused by negligence either by themselves, their guests or any person for whom they are responsible for.",
 			ruleId: "rule0",
 		},
 		{
 			ruleName: "Check-in",
-			rulesDescription: "Check-in time is from 12:00 - 22:00",
 			ruleId: "rule1",
 		},
 		{
 			ruleName: "Departure",
-			rulesDescription: "Check-out time is from 12:00 - 13:00",
 			ruleId: "rule2",
 		},
 		{
 			ruleName: "Pets",
-			rulesDescription:
-				"Pets are not allowed here. Special arrangements could be made upon request.",
 			ruleId: "rule3",
 		},
 		{
 			ruleName: "Settlement of Bills",
-			rulesDescription:
-				"Bills can be paid through bank transfers or cash. Checks are not allowed.",
 			ruleId: "rule4",
 		},
 	]);
@@ -88,7 +75,6 @@ export default function DescriptionForm() {
 		setRules(
 			rules?.concat({
 				ruleName: "",
-				rulesDescription: "",
 				ruleId: "rule" + rules.length, // So that rule numbers will go along with their array indexes
 			})
 		);
