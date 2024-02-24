@@ -52,19 +52,19 @@ export default function NavBar() {
 					<div className="hidden items-center gap-4 text-primary-green mlg:flex">
 						<NotificationsNoneIcon color="inherit" />
 						{isLoggedIn ? (
-							<Link href="/manageAccount">
-								<DropdownMenu>
-									<DropdownMenuTrigger>
-										<ProfilePicture height={40} width={40} />
-									</DropdownMenuTrigger>
-									<DropdownMenuContent>
+							<DropdownMenu>
+								<DropdownMenuTrigger>
+									<ProfilePicture height={40} width={40} />
+								</DropdownMenuTrigger>
+								<DropdownMenuContent>
+									<Link href="/manageAccount">
 										<DropdownMenuItem>Manage Account</DropdownMenuItem>
-										<DropdownMenuItem>
-											<LogoutBtn />
-										</DropdownMenuItem>
-									</DropdownMenuContent>
-								</DropdownMenu>
-							</Link>
+									</Link>
+									<DropdownMenuItem>
+										<LogoutBtn />
+									</DropdownMenuItem>
+								</DropdownMenuContent>
+							</DropdownMenu>
 						) : (
 							<button
 								className="py-2 px-4 rounded-md text-off-white bg-primary-dark-green"

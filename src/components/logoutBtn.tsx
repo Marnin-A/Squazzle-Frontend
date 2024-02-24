@@ -26,7 +26,7 @@ export default function LogoutBtn() {
 			onClick={() => {
 				if (isLoggedIn) {
 					clearLocalStorage();
-					router.push("/signin");
+					router.push("/");
 				} else {
 					router.push("/signin");
 				}
