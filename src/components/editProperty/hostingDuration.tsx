@@ -12,12 +12,10 @@ export default function HostingDuration({
 	setFieldDate,
 	name,
 	register,
-	dateRef,
 }: {
 	fieldDate: Date | undefined;
 	setFieldDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
-	name: "hostingPeriodFrom" | "hostingPeriodTo
-";
+	name: "hostingPeriodFrom" | "hostingPeriodTo";
 	register: UseFormRegister<OverviewForm>;
 	dateRef: React.Ref<HTMLDivElement>;
 }) {
@@ -45,10 +43,7 @@ export default function HostingDuration({
 						mode="single"
 						selected={fieldDate}
 						onSelect={setFieldDate}
-						disabled={
-							(date) => date < new Date()
-							// || date < new Date("1900-01-01")
-						}
+						disabled={(date) => date < new Date()}
 						{...register(name, {
 							onBlur(event) {
 								console.log(event.target.value);
