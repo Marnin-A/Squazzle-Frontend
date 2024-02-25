@@ -145,7 +145,7 @@ export default function OverviewForm() {
 				<div className="relative">
 					<Label
 						className="block text-body-text font-normal text-[28px] mb-2 max-md:text-lg max-md:font-semibold"
-						htmlFor="price"
+						htmlFor="accommodationType"
 					>
 						Accommodation Type
 					</Label>

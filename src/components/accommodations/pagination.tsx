@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function Pagination({
 	firstIndex,
@@ -26,7 +26,7 @@ export default function Pagination({
 				}
 				disabled={firstIndex == 1}
 			>
-				<ArrowLeft color="#016D71" />
+				<ChevronLeft color="#016D71" />
 			</button>
 			<button
 				className={
@@ -35,7 +35,7 @@ export default function Pagination({
 				}
 				disabled={lastIndex == accommodationTotal}
 			>
-				<ArrowRight color="#016D71" />
+				<ChevronRight color="#016D71" />
 			</button>
 		</div>
 	);
