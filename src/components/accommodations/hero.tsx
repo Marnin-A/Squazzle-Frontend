@@ -18,19 +18,70 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import CurrencyInput from "react-currency-input-field";
+import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
+import { useDispatch } from "react-redux";
 type TPrice = { minPrice: string; maxPrice: string };
+type TFilter = {
+	propertyType: Array<
+		"Duplex" | "Flat" | "Bungalow" | "Self-contain" | "Apartment"
+	>;
+	datePosted: Array<
+		| "Just now"
+		| "Less than an hour"
+		| "Past 24 hours"
+		| "Past week"
+		| "Past Month"
+	>;
+	gender: "Male" | "Female" | "Both";
+};
 export default function Hero() {
 	const {
 		register,
 		formState: { errors },
 		handleSubmit,
+		getValues,
 	} = useForm<TPrice>({
 		criteriaMode: "all",
 	});
-	const onSubmit: SubmitHandler<TPrice> = async (data: TPrice) => {};
+	const alertId = React.useId();
+	const dispatch = useDispatch();
+	const [filter, setFilter] = React.useState<TFilter>({
+		propertyType: ["Duplex"],
+		datePosted: ["Just now"],
+		gender: "Male",
+	});
+	const prices = {
+		minPrice: getValues("minPrice"),
+		maxPrice: getValues("maxPrice"),
+	};
+	const [minPrice, setMinPrice] = React.useState("");
+	const onSubmit: SubmitHandler<TPrice> = async (data: TPrice) => {
+		if (
+			Number(
+				prices.minPrice ? prices.minPrice.replace(/[a-zA-Z,]/g, "").trim() : 0
+			) >
+			Number(
+				prices.maxPrice ? prices.maxPrice.replace(/[a-zA-Z,]/g, "").trim() : 0
+			)
+		) {
+			dispatch(
+				setAlertOpen({
+					alertId: alertId,
+					open: true,
+					severity: "error",
+					title: "Info",
+					message: "Maximum price must be greater than minimum price",
+				})
+			);
+		} else {
+			console.log({ ...data, ...filter });
+		}
+	};
 	function handleSearch() {
 		console.log();
 	}
+	// console.log(prices);
+
 	return (
 		<div className="flex items-center justify-center accommodations-bg py-40 w-full">
 			<div className="flex m-auto z-10 items-center max-mlg:flex-col">
@@ -57,7 +108,7 @@ export default function Hero() {
 
 				<Dialog>
 					<DialogTrigger className="max-mlg:mt-6">
-						<div className="bg-[#F5F5F5] rounded-lg px-10 py-3 ml-6">
+						<div className="bg-[#F5F5F5] rounded-lg px-10 py-3 ml-6 max-md:ml-0">
 							<FilterListIcon color="success" />
 							<span className="font-bold text-primary-green w-max">Filter</span>
 						</div>
@@ -66,7 +117,7 @@ export default function Hero() {
 						<DialogHeader className="text-left font-normal shadow-sm w-full pt-6 px-6">
 							<DialogTitle className="mb-6">Filter</DialogTitle>
 						</DialogHeader>
-						<DialogDescription className="px-6">
+						<DialogDescription typeof="div" className="px-6">
 							{/* Property Type */}
 							<div className="flex flex-col gap-4 mb-8 text-primary-green">
 								<h3 className="border-b flex items-center gap-4 pb-2 text-black text-lg font-semibold">
@@ -76,9 +127,16 @@ export default function Hero() {
 								<div className="flex items-center justify-between">
 									Duplex{" "}
 									<Checkbox
+										checked
 										key={"Duplex-filter"}
 										id="duplex-filter"
 										className=" border-primary-light-grey border-2"
+										onClick={() =>
+											setFilter({
+												...filter,
+												propertyType: [...filter.propertyType, "Duplex"],
+											})
+										}
 									/>
 								</div>
 								<div className="flex items-center justify-between">
@@ -87,6 +145,12 @@ export default function Hero() {
 										key={"Flat-filter"}
 										id="Flat-filter"
 										className=" border-primary-light-grey border-2"
+										onClick={() =>
+											setFilter({
+												...filter,
+												propertyType: [...filter.propertyType, "Flat"],
+											})
+										}
 									/>
 								</div>
 								<div className="flex items-center justify-between">
@@ -95,6 +159,12 @@ export default function Hero() {
 										key={"Bungalow-filter"}
 										id="Bungalow-filter"
 										className=" border-primary-light-grey border-2"
+										onClick={() =>
+											setFilter({
+												...filter,
+												propertyType: [...filter.propertyType, "Bungalow"],
+											})
+										}
 									/>
 								</div>
 								<div className="flex items-center justify-between">
@@ -103,6 +173,12 @@ export default function Hero() {
 										key={"Self-contain-filter"}
 										id="Self-contain-filter"
 										className=" border-primary-light-grey border-2"
+										onClick={() =>
+											setFilter({
+												...filter,
+												propertyType: [...filter.propertyType, "Self-contain"],
+											})
+										}
 									/>
 								</div>
 								<div className="flex items-center justify-between">
@@ -111,6 +187,12 @@ export default function Hero() {
 										key={"Apartment-filter"}
 										id="Apartment-filter"
 										className=" border-primary-light-grey border-2"
+										onClick={() =>
+											setFilter({
+												...filter,
+												propertyType: [...filter.propertyType, "Apartment"],
+											})
+										}
 									/>
 								</div>
 							</div>
@@ -123,9 +205,16 @@ export default function Hero() {
 								<div className="flex items-center justify-between">
 									Just now{" "}
 									<Checkbox
+										checked
 										key={"Now-filter"}
 										id="Now-filter"
 										className="border-primary-light-grey border-2"
+										onClick={() =>
+											setFilter({
+												...filter,
+												datePosted: [...filter.datePosted, "Just now"],
+											})
+										}
 									/>
 								</div>
 								<div className="flex items-center justify-between">
@@ -134,6 +223,12 @@ export default function Hero() {
 										key={"Last-hour-filter"}
 										id="Last-hour-filter"
 										className=" border-primary-light-grey border-2"
+										onClick={() =>
+											setFilter({
+												...filter,
+												datePosted: [...filter.datePosted, "Less than an hour"],
+											})
+										}
 									/>
 								</div>
 								<div className="flex items-center justify-between">
@@ -142,6 +237,12 @@ export default function Hero() {
 										key={"24hours-filter"}
 										id="24hours-filter"
 										className=" border-primary-light-grey border-2"
+										onClick={() =>
+											setFilter({
+												...filter,
+												datePosted: [...filter.datePosted, "Past 24 hours"],
+											})
+										}
 									/>
 								</div>
 								<div className="flex items-center justify-between">
@@ -150,6 +251,12 @@ export default function Hero() {
 										key={"Past-week-filter"}
 										id="Past-week-filter"
 										className=" border-primary-light-grey border-2"
+										onClick={() =>
+											setFilter({
+												...filter,
+												datePosted: [...filter.datePosted, "Past week"],
+											})
+										}
 									/>
 								</div>
 								<div className="flex items-center justify-between">
@@ -158,6 +265,12 @@ export default function Hero() {
 										key={"Past-month-filter"}
 										id="Past-month-filter"
 										className=" border-primary-light-grey border-2"
+										onClick={() =>
+											setFilter({
+												...filter,
+												datePosted: [...filter.datePosted, "Past Month"],
+											})
+										}
 									/>
 								</div>
 								{/* Suitable For */}
@@ -176,134 +289,158 @@ export default function Hero() {
 										control={<Radio color="default" className="p-0" />}
 										label="Male"
 										className="justify-between flex-row-reverse pl-3 mr-0"
+										onClick={() =>
+											setFilter({
+												...filter,
+												gender: "Male",
+											})
+										}
 									/>
 									<FormControlLabel
 										value="Female"
 										control={<Radio color="default" className="p-0" />}
 										label="Female"
 										className="justify-between flex-row-reverse pl-3 mr-0"
+										onClick={() =>
+											setFilter({
+												...filter,
+												gender: "Female",
+											})
+										}
 									/>
 									<FormControlLabel
 										value="Both"
 										control={<Radio color="default" className="p-0" />}
 										label="Both"
 										className="justify-between flex-row-reverse pl-3 mr-0"
+										onClick={() =>
+											setFilter({
+												...filter,
+												gender: "Both",
+											})
+										}
 									/>
 								</RadioGroup>
-								{/* Price Per Night */}
-								<form
-									name="priceRange"
-									className="flex flex-col gap-4 mb-8 text-primary-green"
-								>
-									<h3 className="border-b flex items-center gap-4 pb-2 text-black text-lg font-semibold">
-										<HouseOutlined className="w-5" htmlColor="#03796E" />
-										Price per night
-									</h3>
-									<div className="flex items-center justify-between gap-4">
-										{/* Min Price*/}
-										<div className="relative">
-											<label
-												className="block text-gray-700 text-md mb-2"
-												htmlFor="minPrice"
-											>
-												Minimum
-											</label>
-											<div
+							</div>
+							{/* Price Per Night */}
+							<form
+								name="priceRange"
+								className="flex flex-col gap-4 mb-8 text-primary-green"
+								onSubmit={handleSubmit(onSubmit)}
+							>
+								<h3 className="border-b flex items-center gap-4 pb-2 text-black text-lg font-semibold">
+									<HouseOutlined className="w-5" htmlColor="#03796E" />
+									Price per night
+								</h3>
+								<div className="flex items-center justify-between gap-4">
+									{/* Min Price*/}
+									<div className="relative">
+										<label
+											className="block text-gray-700 text-md mb-2"
+											htmlFor="minPrice"
+										>
+											Minimum
+										</label>
+										<div
+											className={
+												"flex items-center border rounded-lg gap-2 px-3 " +
+												(errors.minPrice?.type === "required"
+													? " border-2 has-focus:border-error"
+													: " border-2 has-focus:border-success")
+											}
+										>
+											<CurrencyInput
+												placeholder="NGN 0"
+												decimalsLimit={4}
+												intlConfig={{ locale: "en-US", currency: "NGN" }}
 												className={
-													"flex items-center border rounded-lg gap-2 px-3 " +
-													(errors.minPrice?.type === "required"
-														? " border-2 has-focus:border-error"
-														: " border-2 has-focus:border-success")
+													"h-16 text-xl appearance-none outline-none border-primary-mid-grey w-full py-2 text-gray-700 leading-tight placeholder:pl-4"
 												}
-											>
-												<CurrencyInput
-													placeholder="NGN 0"
-													decimalsLimit={4}
-													intlConfig={{ locale: "en-US", currency: "NGN" }}
-													className={
-														"h-16 text-xl appearance-none outline-none border-primary-mid-grey w-full py-2 text-gray-700 leading-tight placeholder:pl-4"
-													}
-													id="minPrice"
-													autoComplete="on"
-													{...register("minPrice", {
-														pattern: {
-															value: /^[0-9]/i,
-															message: "Price must be a number",
-														},
-														maxLength: {
-															value: 10,
-															message: "Price can't be more than 10 characters",
-														},
-													})}
-												/>
-												<ErrorMessage
-													errors={errors}
-													name="minPrice"
-													render={({ message }) => (
-														<p className="text-xs text-error absolute bottom-[-22%]">
-															{message}
-														</p>
-													)}
-												/>
-											</div>
-										</div>
-										{/* Max Price*/}
-										<div className="relative ">
-											<label
-												className="block text-gray-700 text-md mb-2"
-												htmlFor="maxPrice"
-											>
-												Maximum
-											</label>
-											<div
-												className={
-													"flex items-center border rounded-lg gap-2 px-3 " +
-													(errors.maxPrice?.type === "required"
-														? " border-2 has-focus:border-error"
-														: " border-2 has-focus:border-success")
-												}
-											>
-												<CurrencyInput
-													placeholder="NGN 250,000+"
-													decimalsLimit={4}
-													intlConfig={{ locale: "en-US", currency: "NGN" }}
-													className={
-														"h-16 text-xl appearance-none outline-none border-primary-mid-grey w-full py-2 text-gray-700 leading-tight placeholder:pl-4"
-													}
-													id="maxPrice"
-													autoComplete="on"
-													{...register("maxPrice", {
-														pattern: {
-															value: /^[0-9]/i,
-															message: "Price must be a number",
-														},
-														maxLength: {
-															value: 10,
-															message: "Price can't be more than 10 characters",
-														},
-													})}
-												/>
-												<ErrorMessage
-													errors={errors}
-													name="minPrice"
-													render={({ message }) => (
-														<p className="text-xs text-error absolute bottom-[-22%]">
-															{message}
-														</p>
-													)}
-												/>
-											</div>
+												id="minPrice"
+												autoComplete="on"
+												{...register("minPrice", {
+													pattern: {
+														value: /^[NGN,0-9]/i,
+														message: "Price must be a number",
+													},
+													maxLength: {
+														value: 15,
+														message:
+															"Price must not be more than 10 characters",
+													},
+													onChange(event) {
+														setMinPrice(event.target.value);
+													},
+												})}
+											/>
+											<ErrorMessage
+												errors={errors}
+												name="minPrice"
+												render={({ message }) => (
+													<p className="text-xs text-error absolute bottom-[-30%]">
+														{message}
+													</p>
+												)}
+											/>
 										</div>
 									</div>
-									<button
-										className="w-max self-end hover:bg-primary-lightgreen hover:text-primary-green bg-primary-green text-white font-bold py-4 px-6 rounded max-md:w-full"
-										type="submit"
-										formTarget="priceRange"
-									>
-										Apply Filter
-									</button>
-								</form>
-							</div>
+									{/* Max Price*/}
+									<div className="relative ">
+										<label
+											className="block text-gray-700 text-md mb-2"
+											htmlFor="maxPrice"
+										>
+											Maximum
+										</label>
+										<div
+											className={
+												"flex items-center border rounded-lg gap-2 px-3 " +
+												(errors.maxPrice?.type === "required"
+													? " border-2 has-focus:border-error"
+													: " border-2 has-focus:border-success")
+											}
+										>
+											<CurrencyInput
+												placeholder="NGN 250,000+"
+												decimalsLimit={4}
+												intlConfig={{ locale: "en-US", currency: "NGN" }}
+												className={
+													"h-16 text-xl appearance-none outline-none border-primary-mid-grey w-full py-2 text-gray-700 leading-tight placeholder:pl-4"
+												}
+												id="maxPrice"
+												autoComplete="on"
+												{...register("maxPrice", {
+													pattern: {
+														value: /^[NGN,0-9]/i,
+														message: "Price must be a number",
+													},
+													maxLength: {
+														value: 15,
+														message:
+															"Price must not be more than 10 characters",
+													},
+												})}
+											/>
+											<ErrorMessage
+												errors={errors}
+												name="maxPrice"
+												render={({ message }) => (
+													<p className="text-xs text-error absolute bottom-[-22%]">
+														{message}
+													</p>
+												)}
+											/>
+										</div>
+									</div>
+								</div>
+								<button
+									className="w-max self-end mt-4 hover:bg-primary-lightgreen hover:text-primary-green bg-primary-green text-white font-bold py-4 px-6 rounded max-md:w-full"
+									type="submit"
+									formTarget="priceRange"
+								>
+									Apply Filter
+								</button>
+							</form>
 						</DialogDescription>
 					</DialogContent>
 				</Dialog>
