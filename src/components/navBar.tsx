@@ -44,7 +44,7 @@ export default function NavBar() {
 				<Link href="/manageAccount/myListing/editProperty?view=overview">
 					List your property
 				</Link>
-				<Link href="/about-us">About us</Link>
+				<Link href="/onboarding">About us</Link>
 				<Link href="/faq">FAQ</Link>
 			</div>
 			<div className="self-end">
