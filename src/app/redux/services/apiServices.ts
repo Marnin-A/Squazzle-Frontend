@@ -145,6 +145,12 @@ export const api = createApi({
 				headers: { Authorization: `Bear ${data.accessToken}` },
 			}),
 		}),
+		// getProperties: builder.query<Types.TAccommodations, any>({
+		// 	query: () => ({
+		// 		url: `accommodations`,
+		// 		method: "GET",
+		// 	}),
+		// }),
 	}),
 });
 
@@ -164,6 +170,7 @@ export const {
 	useGetMyListingsQuery,
 	useGetPropertyDetailsQuery,
 	useListAccommodationMutation,
+	// useGetPropertiesQuery,
 } = api;
 
 // Define abort controller to cancel requests

@@ -120,6 +120,40 @@ export type PropertyDetails = {
 	success: true;
 	message: string;
 };
+export type TAccommodationsResponseSuccess = {
+	status: "success";
+	message: "Accomodations fetch successfully";
+	data: {
+		accomodation: Array<{
+			_id: string;
+			createdBy: string;
+			accommodationName: string;
+			state: string;
+			city: string;
+			description: string;
+			whyListing: string;
+			accommodationType: string;
+			accommodationRules: Array<string>;
+			price: number;
+			status: "available" | "not available";
+			hostingPeriodFrom: string;
+			hostingPeriodTo: string;
+			address: string;
+			gallery: Array<{
+				imageId: string;
+				imageUrl: string;
+			}>;
+			createdAt: Date;
+			updatedAt: Date;
+			__v: number;
+		}>;
+	};
+};
+export type TAccommodationsResponseFailed = {
+	status: number;
+	error: string;
+	message: string;
+};
 // {
 //   "status": "success",
 //   "message": "Account successfully created, Check your mail for activation code",
