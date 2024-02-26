@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function Page() {
@@ -16,12 +17,18 @@ export default function Page() {
 				</h3>
 			</div>
 			<div className="flex items-center justify-center gap-16 w-full">
-				<button className="w-max py-5 px-24 bg-primary-lightgreen text-primary-dark-green text-xl font-bold rounded-2xl">
+				<Link
+					href={"/manageAccount/myListing/editProperty?view=overview"}
+					className="w-max py-5 px-24 bg-primary-lightgreen text-primary-dark-green text-xl font-bold rounded-2xl"
+				>
 					List accommodation
-				</button>
-				<button className="w-max py-5 px-24 bg-primary-lightgreen text-primary-dark-green text-xl font-bold rounded-2xl">
+				</Link>
+				<Link
+					href="/accommodations"
+					className="w-max py-5 px-24 bg-primary-lightgreen text-primary-dark-green text-xl font-bold rounded-2xl"
+				>
 					Browse accommodation
-				</button>
+				</Link>
 			</div>
 		</div>
 	);
