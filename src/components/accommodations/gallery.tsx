@@ -7,162 +7,22 @@ import Pagination from "./pagination";
 import { TAccommodationsResponseSuccess } from "@/types/apiTypes";
 
 export default async function Gallery() {
-	const data = [
-		{
-			name: "Primrose View",
-			location: "Jos, Nigeria",
-			availability: true,
-			type: "Duplex",
-			Duration: "Fri 18 Nov - Fri 16 Dec",
-			price: 65000,
-			img: "/accommodation/Primrose-View.png",
-			propertyId: "1",
-		},
-		{
-			name: "Primrose View",
-			location: "Jos, Nigeria",
-			availability: true,
-			type: "Duplex",
-			Duration: "Fri 18 Nov - Fri 16 Dec",
-			price: 65000,
-			img: "/accommodation/Primrose-View.png",
-			propertyId: "1",
-		},
-		{
-			name: "Primrose View",
-			location: "Jos, Nigeria",
-			availability: true,
-			type: "Duplex",
-			Duration: "Fri 18 Nov - Fri 16 Dec",
-			price: 65000,
-			img: "/accommodation/Primrose-View.png",
-			propertyId: "1",
-		},
-		{
-			name: "Primrose View",
-			location: "Jos, Nigeria",
-			availability: true,
-			type: "Duplex",
-			Duration: "Fri 18 Nov - Fri 16 Dec",
-			price: 65000,
-			img: "/accommodation/Primrose-View.png",
-			propertyId: "1",
-		},
-		{
-			name: "Primrose View",
-			location: "Jos, Nigeria",
-			availability: true,
-			type: "Duplex",
-			Duration: "Fri 18 Nov - Fri 16 Dec",
-			price: 65000,
-			img: "/accommodation/Primrose-View.png",
-			propertyId: "1",
-		},
-		{
-			name: "Primrose View",
-			location: "Jos, Nigeria",
-			availability: true,
-			type: "Duplex",
-			Duration: "Fri 18 Nov - Fri 16 Dec",
-			price: 65000,
-			img: "/accommodation/Primrose-View.png",
-			propertyId: "1",
-		},
-		{
-			name: "Primrose View",
-			location: "Jos, Nigeria",
-			availability: true,
-			type: "Duplex",
-			Duration: "Fri 18 Nov - Fri 16 Dec",
-			price: 65000,
-			img: "/accommodation/Primrose-View.png",
-			propertyId: "1",
-		},
-		{
-			name: "Primrose View",
-			location: "Jos, Nigeria",
-			availability: true,
-			type: "Duplex",
-			Duration: "Fri 18 Nov - Fri 16 Dec",
-			price: 65000,
-			img: "/accommodation/Primrose-View.png",
-			propertyId: "1",
-		},
-		{
-			name: "Primrose View",
-			location: "Jos, Nigeria",
-			availability: true,
-			type: "Duplex",
-			Duration: "Fri 18 Nov - Fri 16 Dec",
-			price: 65000,
-			img: "/accommodation/Primrose-View.png",
-			propertyId: "1",
-		},
-		{
-			name: "Primrose View",
-			location: "Jos, Nigeria",
-			availability: true,
-			type: "Duplex",
-			Duration: "Fri 18 Nov - Fri 16 Dec",
-			price: 65000,
-			img: "/accommodation/Primrose-View.png",
-			propertyId: "1",
-		},
-		{
-			name: "Primrose View",
-			location: "Jos, Nigeria",
-			availability: true,
-			type: "Duplex",
-			Duration: "Fri 18 Nov - Fri 16 Dec",
-			price: 65000,
-			img: "/accommodation/Primrose-View.png",
-			propertyId: "1",
-		},
-		{
-			name: "Primrose View",
-			location: "Jos, Nigeria",
-			availability: true,
-			type: "Duplex",
-			Duration: "Fri 18 Nov - Fri 16 Dec",
-			price: 65000,
-			img: "/accommodation/Primrose-View.png",
-			propertyId: "1",
-		},
-		{
-			name: "Primrose View",
-			location: "Jos, Nigeria",
-			availability: true,
-			type: "Duplex",
-			Duration: "Fri 18 Nov - Fri 16 Dec",
-			price: 65000,
-			img: "/accommodation/Primrose-View.png",
-			propertyId: "1",
-		},
-		{
-			name: "Primrose View",
-			location: "Jos, Nigeria",
-			availability: true,
-			type: "Duplex",
-			Duration: "Fri 18 Nov - Fri 16 Dec",
-			price: 65000,
-			img: "/accommodation/Primrose-View.png",
-			propertyId: "1",
-		},
-	];
 	let accommodations;
 	try {
 		const res = await fetch(
-			(process.env.NEXT_PUBLIC_SERVER_URL + "accommodations") as string
+			(process.env.NEXT_PUBLIC_SERVER_URL + "accommodations") as string,
+			{ cache: "no-store" }
 		);
 		const data = await res.json();
 		accommodations = data as TAccommodationsResponseSuccess;
-		console.log(data);
 	} catch (error) {
 		console.error(error);
 	}
 
 	function handleFetch() {
-		return data;
+		console.log("Fetched");
+
+		return;
 	}
 	return (
 		<div className="flex flex-col px-20">

@@ -5,9 +5,11 @@ import React from "react";
 
 export default function Page() {
 	return (
-		<div>
+		<div className="flex flex-col items-center">
 			<Hero />
-			<React.Suspense fallback={<CircularProgress color="success" />}>
+			<React.Suspense
+				fallback={<CircularProgress className="my-5" color="success" />}
+			>
 				<Gallery />
 			</React.Suspense>
 		</div>
