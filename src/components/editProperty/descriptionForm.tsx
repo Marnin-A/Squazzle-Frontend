@@ -58,7 +58,6 @@ export default function DescriptionForm() {
 	});
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
-		console.log(data);
 		const onlyRules: string[] = [];
 		rules.forEach((data) => {
 			onlyRules.push(data.ruleName);

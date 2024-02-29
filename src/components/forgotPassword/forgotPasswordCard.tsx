@@ -3,7 +3,6 @@ import React from "react";
 import Image from "next/image";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
-import CircularProgress from "@mui/material/CircularProgress";
 import {
 	Forgot_Password_Abort_Controller,
 	useForgotPasswordMutation,
@@ -12,6 +11,7 @@ import ManageSearchParams from "@/hooks/updateSearchParams";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
 import { useDispatch } from "react-redux";
+import LoadingSpinner from "../loadingSpinner";
 
 export default function ForgotPasswordCard() {
 	const alertId = React.useId();
@@ -165,11 +165,9 @@ export default function ForgotPasswordCard() {
 					type="submit"
 					formTarget="signup"
 				>
-					{isLoading ? (
-						<CircularProgress size={25} color="inherit" />
-					) : (
-						<span>Get a reset code</span>
-					)}
+					<span className="flex items-center justify-center gap-2">
+						{isLoading && <LoadingSpinner />}Get a reset code
+					</span>
 				</button>
 				<button
 					className="w-full hover:bg-primary-lightgreen hover:text-primary-green bg-white text-primary-green outline outline-primary-green font-bold py-2 px-4 rounded"

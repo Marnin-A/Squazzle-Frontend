@@ -76,15 +76,33 @@ export default function GalleryForm() {
 
 		if ("error" in res) {
 			const { error } = res;
-			dispatch(
-				setAlertOpen({
-					alertId: alertId,
-					open: true,
-					severity: "error",
-					title: "Error",
-					message: error.data.error,
-				})
-			);
+			console.log(error);
+
+			if (error.data.error === "Expired token please login") {
+				dispatch(
+					setAlertOpen({
+						alertId: alertId,
+						open: true,
+						severity: "error",
+						title: "Error",
+						message:
+							"Your session has expired, login page to upload information.",
+					})
+				);
+				setTimeout(() => {
+					router.push("/signin");
+				}, 3000);
+			} else {
+				dispatch(
+					setAlertOpen({
+						alertId: alertId,
+						open: true,
+						severity: "error",
+						title: "Error",
+						message: error.data.error,
+					})
+				);
+			}
 		}
 		if ("data" in res) {
 			const { data } = res;

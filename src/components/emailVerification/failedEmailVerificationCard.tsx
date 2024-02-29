@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
-import { CircularProgress } from "@mui/material";
 import {
 	resetEmailVerification,
 	setEmailVerified,
@@ -9,6 +8,7 @@ import {
 // import { simulateOTPResponse } from "@/tests/signupTest";
 import { useResendOTPMutation } from "@/app/redux/services/apiServices";
 import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
+import LoadingSpinner from "../loadingSpinner";
 
 export default function FailedEmailVerifiedCard() {
 	const alertId = React.useId();
@@ -82,11 +82,9 @@ export default function FailedEmailVerifiedCard() {
 				type="submit"
 				onClick={() => handleSubmit()}
 			>
-				{isLoading ? (
-					<CircularProgress color="inherit" />
-				) : (
-					<span> Resend Code</span>
-				)}
+				<span className="flex items-center justify-center gap-2">
+					{isLoading && <LoadingSpinner />} Resend Code
+				</span>
 			</button>
 		</div>
 	);

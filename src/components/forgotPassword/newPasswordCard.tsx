@@ -4,7 +4,6 @@ import {
 	useChangePasswordMutation,
 } from "@/app/redux/services/apiServices";
 import ManageSearchParams from "@/hooks/updateSearchParams";
-import CircularProgress from "@mui/material/CircularProgress";
 import { ErrorMessage } from "@hookform/error-message";
 import ShowPassword from "../sigin/showPassword";
 import { passwordSchema } from "@/utils/schemas";
@@ -13,6 +12,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
+import LoadingSpinner from "../loadingSpinner";
 
 export default function NewPasswordCard() {
 	const alertId = React.useId();
@@ -218,11 +218,9 @@ export default function NewPasswordCard() {
 						formTarget="reset-password-form"
 						disabled={isSubmitting}
 					>
-						{isLoading ? (
-							<CircularProgress color="inherit" />
-						) : (
-							<span> Reset Password</span>
-						)}
+						<span className="flex items-center justify-center gap-2">
+							{isLoading && <LoadingSpinner />} Reset Password
+						</span>
 					</button>
 					<button
 						className="w-full hover:bg-primary-lightgreen hover:text-primary-green bg-white text-primary-green outline outline-primary-green font-bold py-2 px-4 rounded-lg"

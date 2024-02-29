@@ -1,6 +1,7 @@
 import EditPropertyForms from "@/components/editProperty/editPropertyForms";
 import SideNav from "@/components/editProperty/sideNav";
-import { CircularProgress } from "@mui/material";
+import LoadingSpinner from "@/components/loadingSpinner";
+
 import { CaretRightIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import React from "react";
@@ -16,14 +17,10 @@ export default function Page() {
 				<span>My Listing</span>
 			</div>
 			<div className="flex max-md:flex-col">
-				<React.Suspense
-					fallback={<CircularProgress color="success" className="m-auto" />}
-				>
+				<React.Suspense fallback={<LoadingSpinner className="m-auto" />}>
 					<SideNav />
 				</React.Suspense>
-				<React.Suspense
-					fallback={<CircularProgress color="success" className="m-auto" />}
-				>
+				<React.Suspense fallback={<LoadingSpinner className="m-auto" />}>
 					<EditPropertyForms />
 				</React.Suspense>
 			</div>

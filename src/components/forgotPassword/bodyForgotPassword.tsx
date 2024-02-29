@@ -6,7 +6,7 @@ import PasswordOtpCard from "./passwordOtpCard";
 import ManageSearchParams from "@/hooks/updateSearchParams";
 import NewPasswordCard from "./newPasswordCard";
 import ResetPasswordSuccess from "./resetPasswordSuccess";
-import { CircularProgress } from "@mui/material";
+import LoadingSpinner from "../loadingSpinner";
 
 export default function BodyForgotPassword() {
 	const { getURLParam } = ManageSearchParams();
@@ -14,9 +14,7 @@ export default function BodyForgotPassword() {
 
 	return (
 		<div className="flex-1 flex flex-col items-center justify-center w-full overflow-y-scroll max-sm:items-start">
-			<React.Suspense
-				fallback={<CircularProgress color="success" className="m-auto" />}
-			>
+			<React.Suspense fallback={<LoadingSpinner className="m-auto" />}>
 				{view === "forgotPasswordSuccess" ? (
 					<ForgotPasswordSuccess />
 				) : view === "enterOTP" ? (

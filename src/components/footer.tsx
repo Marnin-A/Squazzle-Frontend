@@ -1,12 +1,12 @@
 "use client";
 import { useNewsletterSignupMutation } from "@/app/redux/services/apiServices";
 import { ErrorMessage } from "@hookform/error-message";
-import CircularProgress from "@mui/material/CircularProgress";
 import { Instagram, Facebook, Twitter, LinkedIn } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
+import LoadingSpinner from "./loadingSpinner";
 
 export default function Footer() {
 	const [signupToNewsletter, { data, isLoading }] =
@@ -70,11 +70,9 @@ export default function Footer() {
 						type="submit"
 						formTarget="subscribe"
 					>
-						{isLoading ? (
-							<CircularProgress size={25} color="inherit" />
-						) : (
-							<span>Subscribe!</span>
-						)}
+						<span className="flex items-center justify-center gap-2">
+							{isLoading && <LoadingSpinner className="w-6" />}Subscribe!
+						</span>
 					</button>
 				</form>
 				<div className="flex flex-col gap-4 max-md:w-full min-w-[150px]">
@@ -143,11 +141,11 @@ export default function Footer() {
 						type="submit"
 						formTarget="subscribe"
 					>
-						{isLoading ? (
-							<CircularProgress size={25} color="inherit" />
-						) : (
-							<span>Subscribe!</span>
-						)}
+						{
+							<span className="flex items-center justify-center gap-2">
+								{isLoading && <LoadingSpinner className="w-6" />}Subscribe!
+							</span>
+						}
 					</button>
 				</form>
 			</div>

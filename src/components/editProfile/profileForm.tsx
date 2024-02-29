@@ -9,7 +9,6 @@ import {
 } from "@/app/redux/services/apiServices";
 import { useDispatch } from "react-redux";
 import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
-import CircularProgress from "@mui/material/CircularProgress";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { userProfileSchema } from "@/utils/schemas";
 import {
@@ -19,6 +18,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "../ui/select";
+import LoadingSpinner from "../loadingSpinner";
 
 export type UserProfileData = {
 	firstName: string;
@@ -439,11 +439,9 @@ export default function ProfileForm() {
 						formTarget="sigIn"
 						disabled={isLoading}
 					>
-						{isLoading ? (
-							<CircularProgress color="inherit" className="h-8 w-8" />
-						) : (
-							<span>Save</span>
-						)}
+						<span className="flex items-center justify-center gap-2">
+							{isLoading && <LoadingSpinner className="h-8 w-8" />}Save
+						</span>
 					</button>
 				</div>
 			</form>

@@ -10,8 +10,7 @@ export default async function Gallery() {
 	let accommodations;
 	try {
 		const res = await fetch(
-			(process.env.NEXT_PUBLIC_SERVER_URL + "accommodations") as string,
-			{ cache: "no-store" }
+			(process.env.NEXT_PUBLIC_SERVER_URL + "accommodations") as string
 		);
 		const data = await res.json();
 		accommodations = data as TAccommodationsResponseSuccess;

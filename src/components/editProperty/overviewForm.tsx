@@ -62,20 +62,13 @@ export default function OverviewForm() {
 	// 	React.useState<OverviewForm["availability"]>("Available");
 	const { setLocalStorage, removeLocalStorage } = useLocalStorage();
 	const { memoizedUpdateURLParam } = ManageSearchParams();
-	const onSubmit: SubmitHandler<FieldValues> = (data) =>
-		// data
-		{
-			console.log({
-				...data,
-				price: Number(data.price.replace(/[a-zA-Z,]/g, "").trim()),
-			});
-
-			setLocalStorage("accommodationOverview", {
-				...data,
-				price: Number(data.price.replace(/[a-zA-Z,]/g, "").trim()),
-			});
-			memoizedUpdateURLParam("view", "description");
-		};
+	const onSubmit: SubmitHandler<FieldValues> = (data) => {
+		setLocalStorage("accommodationOverview", {
+			...data,
+			price: Number(data.price.replace(/[a-zA-Z,]/g, "").trim()),
+		});
+		memoizedUpdateURLParam("view", "description");
+	};
 
 	const handleCancel = () => {
 		removeLocalStorage("accommodationOverview");
@@ -91,13 +84,9 @@ export default function OverviewForm() {
 	};
 	React.useEffect(() => {
 		if (hostingPeriodFrom) {
-			console.log(hostingPeriodFrom.toDateString());
-
 			setValue("hostingPeriodFrom", hostingPeriodFrom.toDateString());
 		}
 		if (hostingPeriodTo) {
-			console.log(hostingPeriodTo.toDateString());
-
 			setValue("hostingPeriodTo", hostingPeriodTo.toDateString());
 		}
 	}, [hostingPeriodTo, hostingPeriodFrom, setValue]);

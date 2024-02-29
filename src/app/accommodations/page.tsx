@@ -1,15 +1,14 @@
 import Gallery from "@/components/accommodations/gallery";
 import Hero from "@/components/accommodations/hero";
-import { CircularProgress } from "@mui/material";
+import LoadingSpinner from "@/components/loadingSpinner";
+
 import React from "react";
 
 export default function Page() {
 	return (
 		<div className="flex flex-col items-center">
 			<Hero />
-			<React.Suspense
-				fallback={<CircularProgress className="my-5" color="success" />}
-			>
+			<React.Suspense fallback={<LoadingSpinner className="my-5" />}>
 				<Gallery />
 			</React.Suspense>
 		</div>

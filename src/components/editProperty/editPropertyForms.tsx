@@ -4,7 +4,7 @@ import React from "react";
 import DescriptionForm from "./descriptionForm";
 import GalleryForm from "./galleryForm";
 import OverviewForm from "./overviewForm";
-import { CircularProgress } from "@mui/material";
+import LoadingSpinner from "../loadingSpinner";
 
 export default function EditPropertyForms() {
 	const [searchParam, setSearchParam] = React.useState<string | null>("");
@@ -22,7 +22,7 @@ export default function EditPropertyForms() {
 			) : searchParam === "overview" ? (
 				<OverviewForm />
 			) : (
-				<CircularProgress color="success" className="m-auto" />
+				<LoadingSpinner className="m-auto" />
 			)}
 		</>
 	);

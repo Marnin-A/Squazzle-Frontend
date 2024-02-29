@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "next/link";
-import CircularProgress from "@mui/material/CircularProgress";
+
 import {
 	useSignInMutation,
 	SignIn_Abort_Controller,
@@ -15,6 +15,7 @@ import ShowPassword from "./showPassword";
 import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
 import { useDispatch } from "react-redux";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import LoadingSpinner from "../loadingSpinner";
 
 export default function SignInRight() {
 	const router = useRouter();
@@ -216,11 +217,7 @@ export default function SignInRight() {
 						formTarget="sigIn"
 						disabled={isLoading}
 					>
-						{isLoading ? (
-							<CircularProgress color="inherit" />
-						) : (
-							<span>Sign In</span>
-						)}
+						<span>{isLoading && <LoadingSpinner />}Sign In</span>
 					</button>
 					<button
 						className="w-full hover:bg-primary-lightgreen hover:text-primary-green bg-white text-primary-green outline outline-primary-green font-bold py-2 px-4 rounded"

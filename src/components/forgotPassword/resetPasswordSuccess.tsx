@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next13-progressbar";
-import CircularProgress from "@mui/material/CircularProgress";
+import LoadingSpinner from "../loadingSpinner";
 
 export default function ResetPasswordSuccess() {
 	const router = useRouter();
@@ -34,11 +34,9 @@ export default function ResetPasswordSuccess() {
 				formTarget="signup"
 				onClick={handleClick}
 			>
-				{btnClicked ? (
-					<CircularProgress color="inherit" />
-				) : (
-					<span>Proceed to sign in</span>
-				)}
+				<span className="flex justify-center items-center gap-2">
+					{btnClicked && <LoadingSpinner />}Proceed to sign in
+				</span>
 			</button>
 		</div>
 	);

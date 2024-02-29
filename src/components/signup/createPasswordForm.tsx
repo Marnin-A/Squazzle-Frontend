@@ -11,11 +11,12 @@ import Link from "next/link";
 import { resetProfileData } from "@/app/redux/slices/signUpSlice";
 import { Passwords } from "@/types/types";
 // import { simulateApiResponse } from "@/tests/signupTest";
-import CircularProgress from "@mui/material/CircularProgress";
+
 import { useSignUpMutation } from "@/app/redux/services/apiServices";
 import { passwordSchema } from "@/utils/schemas";
 import ShowPassword from "../sigin/showPassword";
 import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
+import LoadingSpinner from "../loadingSpinner";
 
 export default function UserCreatePasswordForm() {
 	const alertId = React.useId();
@@ -240,11 +241,7 @@ export default function UserCreatePasswordForm() {
 						formTarget="password-form"
 						disabled={isSubmitting}
 					>
-						{isLoading ? (
-							<CircularProgress color="inherit" />
-						) : (
-							<span> Create Account</span>
-						)}
+						{isLoading ? <LoadingSpinner /> : <span> Create Account</span>}
 					</button>
 					<button
 						className="w-full hover:bg-primary-lightgreen hover:text-primary-green bg-white text-primary-green outline outline-primary-green font-bold py-2 px-4 rounded"
