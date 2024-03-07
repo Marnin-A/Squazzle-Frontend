@@ -9,25 +9,28 @@ import {
 import { useResendOTPMutation } from "@/app/redux/services/apiServices";
 import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
 import LoadingSpinner from "../loadingSpinner";
+import ManageSearchParams from "@/hooks/updateSearchParams";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export default function FailedEmailVerifiedCard() {
 	const alertId = React.useId();
-
 	const dispatch = useDispatch();
+	const [email, setEmail] = React.useState("");
+	const { setURLParam } = ManageSearchParams();
+	const { getLocalStorage } = useLocalStorage();
 
-	// Get the email from local storage
-	const localStorageEmail = localStorage.getItem("email") as string;
 	// Request for new OTP
 	const [resendOTP, { isError, isSuccess, isLoading }] = useResendOTPMutation();
 	// const { data, isError, isSuccess } = await simulateOTPResponse(true);
 
 	async function handleSubmit() {
-		const res = await resendOTP({
-			email: localStorageEmail,
-		});
-		if (isSuccess) {
-			dispatch(setEmailVerified({ emailVerified: true }));
-			dispatch(resetEmailVerification());
+		const res = (await resendOTP({
+			email: email,
+		})) as unknown as any;
+		if (res.data.success == true) {
+			// dispatch(setEmailVerified({ emailVerified: true }));
+			setURLParam("view", "enterOTP");
+			// dispatch(resetEmailVerification());
 			dispatch(
 				setAlertOpen({
 					alertId: alertId,
@@ -38,15 +41,15 @@ export default function FailedEmailVerifiedCard() {
 				})
 			);
 		}
-		if (isError) {
+		if (res.error) {
 			const errorObj = res as unknown as {
 				error: {
 					data: { email: string; message: string; success: boolean };
 					status: number;
 				};
 			};
-			dispatch(resetEmailVerification());
-			dispatch(setEmailVerified({ emailVerified: false }));
+			setURLParam("view", "resendOTP");
+
 			dispatch(
 				setAlertOpen({
 					alertId: alertId,
@@ -60,6 +63,11 @@ export default function FailedEmailVerifiedCard() {
 
 		console.log(res);
 	}
+	React.useEffect(() => {
+		if (window && window.localStorage) {
+			setEmail(getLocalStorage("email"));
+		}
+	}, []);
 
 	return (
 		<div className="bg-white flex flex-col items-center justify-center w-1/3 aspect-square p-10 gap-8 text-center max-sm:justify-start max-sm:w-full max-sm:h-full max-sm:aspect-auto  max-lg:w-1/2">
@@ -88,4 +96,12 @@ export default function FailedEmailVerifiedCard() {
 			</button>
 		</div>
 	);
+}
+{
+	data: {
+		error: "Resource for user not found";
+		message: "This wasn't supposed to happen Our engineers are working on it. How about a fresh start?";
+		success: false;
+	}
+	status: 404;
 }

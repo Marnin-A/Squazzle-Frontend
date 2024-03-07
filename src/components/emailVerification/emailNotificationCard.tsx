@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { setContinueBtnClicked } from "@/app/redux/slices/emailVerificationSlice";
+import ManageSearchParams from "@/hooks/updateSearchParams";
 
 export default function EmailNotificationCard({
 	userEmail,
@@ -9,8 +10,11 @@ export default function EmailNotificationCard({
 	userEmail: string;
 }) {
 	const dispatch = useDispatch();
+	const { setURLParam } = ManageSearchParams();
+
 	const handleClick = () => {
 		dispatch(setContinueBtnClicked());
+		setURLParam("view", "enterOTP");
 	};
 	return (
 		<div className="bg-white flex flex-col items-center justify-center w-1/3 aspect-square p-10 gap-8 text-center max-sm:justify-start max-sm:w-full max-sm:h-full max-sm:aspect-auto  max-lg:w-1/2">

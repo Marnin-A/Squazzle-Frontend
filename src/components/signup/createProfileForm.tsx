@@ -8,6 +8,7 @@ import {
 	CreateProfileType,
 	setProfileData,
 } from "@/app/redux/slices/signUpSlice";
+import Link from "next/link";
 
 export default function UserCreateProfileForm() {
 	const dispatch = useDispatch();
@@ -233,6 +234,14 @@ export default function UserCreateProfileForm() {
 					>
 						Continue
 					</button>
+				</div>
+				<div className="flex justify-center items-center">
+					<p>
+						Already have an account?{" "}
+						<Link className="text-primary-green" href={"/signin"}>
+							Sign in
+						</Link>
+					</p>
 				</div>
 			</form>
 		</div>

@@ -9,6 +9,7 @@ import ImageCard from "./imageCard";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { useListAccommodationMutation } from "@/app/redux/services/apiServices";
 import { DescriptionFormType } from "./descriptionForm";
+import LoadingSpinner from "../loadingSpinner";
 
 type GalleryFormType = Array<string | undefined>;
 type CreateAccommodationResponse =
@@ -46,6 +47,7 @@ export default function GalleryForm() {
 		useListAccommodationMutation();
 
 	const onSubmit: SubmitHandler<FieldValues> = async () => {
+		let timeout;
 		const overview = getLocalStorage("accommodationOverview");
 		const description: descriptionType = getLocalStorage("descriptionForm");
 		const gallery = getLocalStorage("galleryForm");
@@ -73,11 +75,21 @@ export default function GalleryForm() {
 			formData: formData,
 			token: getLocalStorage("accessToken"),
 		})) as unknown as CreateAccommodationResponse;
-
+		timeout = setTimeout(() => {
+			dispatch(
+				setAlertOpen({
+					alertId: alertId,
+					open: true,
+					severity: "info",
+					title: "Possible Network Issue",
+					message: "Just a few more seconds, we're working on it",
+				})
+			);
+		}, 5000);
 		if ("error" in res) {
 			const { error } = res;
 			console.log(error);
-
+			clearTimeout(timeout);
 			if (error.data.error === "Expired token please login") {
 				dispatch(
 					setAlertOpen({
@@ -85,8 +97,23 @@ export default function GalleryForm() {
 						open: true,
 						severity: "error",
 						title: "Error",
-						message:
-							"Your session has expired, login page to upload information.",
+						message: "Your session has expired, sending you to login page.",
+					})
+				);
+				setTimeout(() => {
+					router.push("/signin");
+				}, 3000);
+			} else if (
+				error.data.error ===
+				"something went wrong here is the error JsonWebTokenError: jwt malformed"
+			) {
+				dispatch(
+					setAlertOpen({
+						alertId: alertId,
+						open: true,
+						severity: "error",
+						title: "Error",
+						message: "Your session has expired, sending you to login page.",
 					})
 				);
 				setTimeout(() => {
@@ -106,6 +133,7 @@ export default function GalleryForm() {
 		}
 		if ("data" in res) {
 			const { data } = res;
+			clearTimeout(timeout);
 
 			dispatch(
 				setAlertOpen({
@@ -230,8 +258,12 @@ export default function GalleryForm() {
 						type="submit"
 						formTarget="galleryForm"
 					>
-						<span className="max-md:hidden block">Save</span>
-						<span className="max-md:block hidden">Save & Publish</span>
+						<span className="max-md:hidden flex gap-2 items-center justify-center ">
+							{isLoading && <LoadingSpinner className="w-6" />}Save
+						</span>
+						<span className="max-md:flex gap-2 items-center justify-center  hidden">
+							{isLoading && <LoadingSpinner className="w-6" />}Save & Publish
+						</span>
 					</button>
 				</div>
 			</form>

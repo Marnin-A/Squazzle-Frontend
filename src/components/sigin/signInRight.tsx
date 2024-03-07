@@ -88,6 +88,14 @@ export default function SignInRight() {
 					data: FailedResponse;
 				};
 
+				if (
+					e.data.error === "User account is not active, Kindly activate account"
+				) {
+					setTimeout(() => {
+						router.push("/emailVerification?view=verificationFailed");
+					}, 3000);
+				}
+
 				// Display error popup
 				dispatch(
 					setAlertOpen({
@@ -127,7 +135,10 @@ export default function SignInRight() {
 			<form
 				name="sigIn"
 				className=" bg-transparent w-full pt-6 flex flex-col gap-6"
-				onSubmit={handleSubmit((userData) => signIn(userData))}
+				onSubmit={handleSubmit((userData) => {
+					signIn(userData);
+					setLocalStorage("email", userData.email);
+				})}
 			>
 				{/* Email Input */}
 				<div className="relative">
@@ -217,7 +228,9 @@ export default function SignInRight() {
 						formTarget="sigIn"
 						disabled={isLoading}
 					>
-						<span>{isLoading && <LoadingSpinner />}Sign In</span>
+						<span className="flex items-center justify-center gap-2">
+							{isLoading && <LoadingSpinner className="w-5" />}Sign In
+						</span>
 					</button>
 					<button
 						className="w-full hover:bg-primary-lightgreen hover:text-primary-green bg-white text-primary-green outline outline-primary-green font-bold py-2 px-4 rounded"

@@ -114,7 +114,7 @@ export default function UserCreatePasswordForm() {
 	return (
 		<div
 			ref={containerRef}
-			className="bg-off-white flex flex-col items-center justify-start py-8 max-xs:px-8 px-16 h-screen max-md:mt-8 max-md:w-full md:overflow-y-scroll"
+			className="bg-off-white flex flex-col items-center justify-start py-8 max-xs:px-8 px-16 h-screen max-md:mb-8 max-xs:mb-20 max-md:w-full md:overflow-y-scroll"
 		>
 			{/* Header */}
 			<div className="flex flex-col items-start w-full">
@@ -241,7 +241,9 @@ export default function UserCreatePasswordForm() {
 						formTarget="password-form"
 						disabled={isSubmitting}
 					>
-						{isLoading ? <LoadingSpinner /> : <span> Create Account</span>}
+						<span className="flex items-center justify-center gap-2">
+							{isLoading && <LoadingSpinner />} Create Account
+						</span>
 					</button>
 					<button
 						className="w-full hover:bg-primary-lightgreen hover:text-primary-green bg-white text-primary-green outline outline-primary-green font-bold py-2 px-4 rounded"

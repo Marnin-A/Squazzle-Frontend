@@ -1,7 +1,7 @@
 export type ValidateOtpResponse =
 	| { success: true; message: string }
 	| { success: false; message: string; error: string };
-export type ValidateOtpRequest = { otp: number; email: string };
+export type ValidateOtpRequest = { OTP: string; email: string };
 export type FailedResponse = {
 	success: false;
 	error: string;

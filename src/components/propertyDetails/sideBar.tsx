@@ -3,38 +3,22 @@ import React from "react";
 import { ArrowLeft, Pencil } from "lucide-react";
 import { useGetPropertyDetailsQuery } from "@/app/redux/services/apiServices";
 import { DateRange, House } from "@mui/icons-material";
-import useLocalStorage from "@/hooks/useLocalStorage";
 import { useDispatch } from "react-redux";
 import { setPropertyDetails } from "@/app/redux/slices/propertySlice";
+import ManageSearchParams from "@/hooks/updateSearchParams";
 
 export default function SideBar({}) {
 	const dispatch = useDispatch();
-	const { getLocalStorage } = useLocalStorage();
-	const [userData, setUserData] = React.useState<{
-		_id: string;
-		username: string;
-		accessToken: string;
-		propertyId: string;
-	}>({ _id: "", username: "", accessToken: "", propertyId: "" });
+	const propertyId =
+		window.location.pathname.split("/")[
+			window.location.pathname.split("/").length - 1
+		];
+
 	const { data } = useGetPropertyDetailsQuery({
-		_id: userData._id,
-		accessToken: userData.accessToken,
-		propertyId: userData.propertyId,
-		username: userData.username,
+		propertyId: propertyId,
 	});
+	console.log(data);
 	React.useEffect(() => {
-		const propertyId =
-			window.location.pathname.split("/")[
-				window.location.pathname.split("/").length - 1
-			];
-		if (window !== undefined && window.localStorage) {
-			setUserData({
-				_id: getLocalStorage("_id"),
-				accessToken: getLocalStorage("accessToken"),
-				propertyId: propertyId,
-				username: getLocalStorage("username"),
-			});
-		}
 		if (data?.success) {
 			dispatch(setPropertyDetails({ ...data.data }));
 		}

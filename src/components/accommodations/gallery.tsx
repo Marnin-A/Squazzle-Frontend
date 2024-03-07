@@ -3,14 +3,16 @@ import React from "react";
 import Image from "next/image";
 import { Circle } from "lucide-react";
 import Pagination from "./pagination";
-// import { useGetPropertiesQuery } from "@/app/redux/services/apiServices";
 import { TAccommodationsResponseSuccess } from "@/types/apiTypes";
 
 export default async function Gallery() {
 	let accommodations;
 	try {
 		const res = await fetch(
-			(process.env.NEXT_PUBLIC_SERVER_URL + "accommodations") as string
+			(process.env.NEXT_PUBLIC_SERVER_URL + "accommodations") as string,
+			{
+				cache: "no-store",
+			}
 		);
 		const data = await res.json();
 		accommodations = data as TAccommodationsResponseSuccess;

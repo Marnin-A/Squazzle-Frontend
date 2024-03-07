@@ -8,7 +8,7 @@ export default function Page() {
 	return (
 		<main className="h-screen flex flex-col justify-start items-center bg-off-white">
 			<EmailVerificationNavBar />
-			<React.Suspense fallback={ />}>
+			<React.Suspense fallback={<LoadingSpinner />}>
 				<EmailVerificationBody />
 			</React.Suspense>
 		</main>

@@ -1,5 +1,5 @@
 import React from "react";
-import SideBar from "./sideBar";
+import SideBar from "../propertyDetails/sideBar";
 import PropertyDetailsBody from "./propertyDetailsBody";
 
 export default async function PropertyDetails() {

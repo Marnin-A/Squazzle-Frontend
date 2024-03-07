@@ -7,8 +7,10 @@ import EmailVerifiedCard from "./emailVerifiedCard";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import EmailNotificationCard from "./emailNotificationCard";
 import FailedEmailVerifiedCard from "./failedEmailVerificationCard";
+import ManageSearchParams from "@/hooks/updateSearchParams";
 
 export default function EmailVerificationBody() {
+	const { getURLParam } = ManageSearchParams();
 	const { setLocalStorage, getLocalStorage } = useLocalStorage();
 	const [localStorageEmail, setLocalStorageEmail] = React.useState("");
 	const { email } = useSelector((state: RootState) => state.CreateProfile);
@@ -28,17 +30,20 @@ export default function EmailVerificationBody() {
 			setLocalStorageEmail(getLocalStorage("email"));
 		}
 	}, [email, getLocalStorage, setLocalStorage]);
+	console.log(getURLParam("view"));
 
 	return (
 		<div className="flex-1 flex flex-col items-center justify-center w-full overflow-y-scroll max-sm:items-start">
-			{continueBtnClicked && emailVerified && !emailVerificationFailed ? (
+			{getURLParam("view") === "emailVerified" ? (
 				<EmailVerifiedCard />
-			) : continueBtnClicked && !emailVerified && emailVerificationFailed ? (
+			) : getURLParam("view") === "verificationFailed" ? (
 				<FailedEmailVerifiedCard />
-			) : continueBtnClicked ? (
+			) : getURLParam("view") === "enterOTP" ? (
 				<EnterOtpCard userEmail={localStorageEmail} />
-			) : (
+			) : getURLParam("view") === null ? (
 				<EmailNotificationCard userEmail={localStorageEmail} />
+			) : (
+				""
 			)}
 		</div>
 	);

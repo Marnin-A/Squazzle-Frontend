@@ -6,8 +6,8 @@ import {
 } from "@mui/icons-material";
 import Image from "next/image";
 import React from "react";
-import AboutComponent from "./aboutComponent";
-import AccommodationRules from "./accommodationRules";
+import AboutComponent from "../propertyDetails/aboutComponent";
+import AccommodationRules from "../propertyDetails/accommodationRules";
 
 export default function PropertyDetailsBody() {
 	return (

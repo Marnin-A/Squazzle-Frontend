@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { CaretRightIcon } from "@radix-ui/react-icons";
-import PropertyDetails from "@/components/propertyDetails/propertyDetails";
+import PropertyDetails from "@/components/myPropertyDetails/propertyDetails";
 
 export default function Page() {
 	return (

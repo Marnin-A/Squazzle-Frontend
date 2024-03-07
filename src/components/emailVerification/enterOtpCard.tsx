@@ -2,20 +2,25 @@ import React from "react";
 import { MuiOtpInput } from "mui-one-time-password-input";
 import { useDispatch } from "react-redux";
 import {
-	setEmailVerificationFailed,
-	setEmailVerified,
-} from "@/app/redux/slices/emailVerificationSlice";
-import {
 	useResendOTPMutation,
 	useValidateOTPMutation,
 } from "@/app/redux/services/apiServices";
 import { setAlertOpen } from "@/app/redux/slices/notificationSlice";
-// import { simulateOTPResponse } from "@/tests/signupTest";
+import ManageSearchParams from "@/hooks/updateSearchParams";
+import useLocalStorage from "@/hooks/useLocalStorage";
+
+type TError = {
+	data: { error: string; message: string; success: false };
+	status: number;
+};
 
 export default function EnterOtpCard({ userEmail }: { userEmail: string }) {
 	const alertId = React.useId();
 	const dispatch = useDispatch();
 	const [otp, setOtp] = React.useState<string>("");
+	const [email, setEmail] = React.useState("");
+	const { getLocalStorage } = useLocalStorage();
+	const { memoizedUpdateURLParam } = ManageSearchParams();
 	const [
 		validateOTP,
 		{
@@ -34,32 +39,35 @@ export default function EnterOtpCard({ userEmail }: { userEmail: string }) {
 			isSuccess: isResendSuccess,
 			isLoading: isResendPending,
 			data: resendResponseData,
+			error: resendError,
 		},
 	] = useResendOTPMutation();
 
-	const localStorageEmail = localStorage.getItem("email") as string;
+	async function handleValidateOTP() {
+		console.log({
+			email: email,
+			OTP: otp,
+		});
 
-	React.useEffect(() => {
-		if (isOtpSuccess || isResendSuccess) {
-			// Set email verification and email verified state to true
-			dispatch(setEmailVerified({ emailVerified: true }));
+		const res = (await validateOTP({
+			email: email,
+			OTP: otp,
+		})) as unknown as any;
+
+		console.log(res);
+		if (res.data?.success) {
 			dispatch(
 				setAlertOpen({
 					alertId: alertId,
 					open: true,
 					severity: "success",
 					title: "Success",
-					message:
-						(validateResponseData?.message || resendResponseData?.message) ??
-						"Email Verification Successful",
+					message: res.data.message ?? "Email Verification Successful",
 				})
 			);
+			return memoizedUpdateURLParam("view", "emailVerified");
 		}
-
-		if (isOtpError || isResendError) {
-			// Set email verification and email verified state to false
-			dispatch(setEmailVerified({ emailVerified: false }));
-			dispatch(setEmailVerificationFailed({ emailVerificationFailed: true }));
+		if (res.error?.data.success === false) {
 			dispatch(
 				setAlertOpen({
 					alertId: alertId,
@@ -67,14 +75,45 @@ export default function EnterOtpCard({ userEmail }: { userEmail: string }) {
 					severity: "error",
 					title: "Error",
 					message:
-						(validateResponseData?.message || resendResponseData?.message) ??
-						"Sorry an error occurred",
+						(res.error as TError)?.data.error ?? "Sorry an error occurred",
 				})
 			);
 		}
+	}
+	async function handleResendOTP() {
+		const res = (await resendOTP({
+			email: email,
+		})) as unknown as any;
+		console.log(res);
 
-		console.log("##### EnterOtpCard Logs #####");
-		console.log("error", isOtpError, "success", isOtpSuccess);
+		if (res.data.success === true) {
+			dispatch(
+				setAlertOpen({
+					alertId: alertId,
+					open: true,
+					severity: "success",
+					title: "Success",
+					message: res.data.message ?? "OTP Resent to email",
+				})
+			);
+		}
+		if (res.data.success === false) {
+			dispatch(
+				setAlertOpen({
+					alertId: alertId,
+					open: true,
+					severity: "error",
+					title: "Error",
+					message: res.data.error ?? "Sorry an error occurred",
+				})
+			);
+		}
+	}
+
+	React.useEffect(() => {
+		if (window && window.localStorage) {
+			setEmail(getLocalStorage("email"));
+		}
 	}, [
 		dispatch,
 		isOtpError,
@@ -85,6 +124,8 @@ export default function EnterOtpCard({ userEmail }: { userEmail: string }) {
 		alertId,
 		validateResponseData?.message,
 		resendResponseData?.message,
+		memoizedUpdateURLParam,
+		resendError,
 	]);
 
 	return (
@@ -94,23 +135,19 @@ export default function EnterOtpCard({ userEmail }: { userEmail: string }) {
 				Please enter the 6-digit code sent to
 				<span className="text-primary-green"> {userEmail}</span>
 			</p>
+
 			<MuiOtpInput
+				key="otpInputField"
 				value={otp}
 				onChange={(newValue) => setOtp(newValue)}
 				length={6}
 			/>
+
 			<button
 				className="w-full bg-primary-lightgreen text-primary-green hover:bg-primary-green hover:text-white font-bold py-2 px-4 rounded"
 				type="button"
-				// Verify OTP
-				onClick={() => {
-					console.log(localStorageEmail, Number(otp));
-
-					validateOTP({
-						email: localStorageEmail,
-						otp: Number(otp),
-					});
-				}}
+				key="validateOTPBtn"
+				onClick={handleValidateOTP}
 			>
 				{isOtpPending || isResendPending ? (
 					<div
@@ -128,12 +165,9 @@ export default function EnterOtpCard({ userEmail }: { userEmail: string }) {
 			<button
 				className="w-full hover:bg-primary-lightgreen text-primary-green bg-inherit font-bold py-2 px-4 rounded"
 				type="button"
+				key={"resendOTPBtn"}
 				// Resend OTP
-				onClick={() =>
-					resendOTP({
-						email: localStorageEmail,
-					})
-				}
+				onClick={handleResendOTP}
 			>
 				Resend Code
 			</button>

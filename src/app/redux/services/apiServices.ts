@@ -136,13 +136,12 @@ export const api = createApi({
 		getPropertyDetails: builder.query<
 			| Types.PropertyDetails
 			| { error: string; message: string; success: false },
-			{ _id: string; username: string; accessToken: string; propertyId: string }
+			{ propertyId: string }
 		>({
 			query: (data) => ({
-				// Endpoint not yet resolved
-				url: `auth/myListings/${data.propertyId}`,
+				url: `accommodations/${data.propertyId}`,
 				method: "GET",
-				headers: { Authorization: `Bear ${data.accessToken}` },
+				// cache: "no-store",
 			}),
 		}),
 		// getProperties: builder.query<Types.TAccommodations, any>({
