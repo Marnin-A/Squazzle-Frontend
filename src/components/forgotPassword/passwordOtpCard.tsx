@@ -44,7 +44,7 @@ export default function PasswordOtpCard() {
 	const handleSendOTP = () => {
 		sendOTP({
 			email: userEmail as string,
-			otp: Number(otp),
+			OTP: otp,
 		});
 	};
 
