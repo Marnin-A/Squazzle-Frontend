@@ -23,6 +23,7 @@ const config: Config = {
 				"primary-lightgreen": "#CCE6E7",
 				"primary-dark-green": "#001A1B",
 				"secondary-red": "#8D173A",
+				"light-red": "#F6D3DD",
 				"body-text": "#353535",
 				text: "#232323",
 				success: "#3D7D50",

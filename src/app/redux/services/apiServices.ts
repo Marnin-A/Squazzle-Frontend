@@ -150,6 +150,14 @@ export const api = createApi({
 		// 		method: "GET",
 		// 	}),
 		// }),
+		deleteAccount: builder.mutation<any, { email: string }>({
+			query: (data) => ({
+				// Endpoint not yet resolved
+				url: "deleteAccount",
+				method: "POST",
+				body: data,
+			}),
+		}),
 	}),
 });
 
@@ -169,6 +177,7 @@ export const {
 	useGetMyListingsQuery,
 	useGetPropertyDetailsQuery,
 	useListAccommodationMutation,
+	useDeleteAccountMutation,
 	// useGetPropertiesQuery,
 } = api;
 
