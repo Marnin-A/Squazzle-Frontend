@@ -2,6 +2,7 @@
 import React from "react";
 import AlertPopup from "./Alert";
 import { Next13ProgressBar } from "next13-progressbar";
+import PopupDialog from "./PopupDialog";
 
 export default function NotificationContainer({
 	children,
@@ -10,7 +11,10 @@ export default function NotificationContainer({
 }) {
 	return (
 		<div className="w-full h-full">
-			<AlertPopup />
+			<>
+				<PopupDialog />
+				<AlertPopup />
+			</>
 			{children}
 			<Next13ProgressBar
 				height="4px"

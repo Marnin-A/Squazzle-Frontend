@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { CaretRightIcon } from "@radix-ui/react-icons";
 import PropertyDetails from "@/components/accommodations/propertyDetails";
+import LoadingSpinner from "@/components/loadingSpinner";
 
 export default function Page() {
 	return (
@@ -13,8 +14,10 @@ export default function Page() {
 				<CaretRightIcon width={20} height={20} />
 				<span>My Listing</span>
 			</div>
-			<div className="flex flex-wrap">
-				<PropertyDetails />
+			<div className="flex flex-wrap justify-center">
+				<React.Suspense fallback={<LoadingSpinner className="m-auto" />}>
+					<PropertyDetails />
+				</React.Suspense>
 			</div>
 		</div>
 	);

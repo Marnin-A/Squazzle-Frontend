@@ -1,15 +1,17 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import CreateProfileReducer from "./slices/signUpSlice";
 import EmailVerificationReducer from "./slices/emailVerificationSlice";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import NotificationReducer from "./slices/notificationSlice";
+import CreateProfileReducer from "./slices/signUpSlice";
+import AuthorDetailsReducer from "./slices/authorDetailsSlice";
+import DialogReducer from "./slices/dialogSlice";
 import { api } from "./services/apiServices";
-import PropertyDetailsReducer from "./slices/propertySlice";
 
 const reducers = combineReducers({
 	CreateProfile: CreateProfileReducer,
 	EmailVerification: EmailVerificationReducer,
 	Notification: NotificationReducer,
-	PropertyDetails: PropertyDetailsReducer,
+	AuthorDetails: AuthorDetailsReducer,
+	Dialog: DialogReducer,
 	[api.reducerPath]: api.reducer,
 });
 export const store = configureStore({

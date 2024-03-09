@@ -29,16 +29,15 @@ export default function AccommodationRules() {
 		},
 	]);
 	return (
-		<div className="mb-28">
+		<div className="mb-28" id="accommodationRules">
 			<h3 className="text-[28px] mb-4">Accommodation rules</h3>
-			<div className="flex flex-col gap-6 bg-off-white p-8">
+			<div className="flex flex-wrap gap-6 bg-off-white p-8">
 				{rules.map((rule) => (
 					<div
 						key={rule.ruleName}
-						className="py-3 px-6 flex flex-col gap-4 bg-white"
+						className="w-max py-3 px-6 flex flex-col gap-4 bg-white"
 					>
 						<h4 className="text-lg font-semibold">{rule.ruleName}</h4>
-						<p>{rule.ruleDescription}</p>
 					</div>
 				))}
 			</div>

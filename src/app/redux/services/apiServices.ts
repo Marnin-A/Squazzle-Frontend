@@ -133,14 +133,13 @@ export const api = createApi({
 			}),
 		}),
 		getPropertyDetails: builder.query<
-			| Types.PropertyDetails
+			| Types.PropertyDetailsResponse
 			| { error: string; message: string; success: false },
 			{ propertyId: string }
 		>({
 			query: (data) => ({
 				url: `accommodations/${data.propertyId}`,
 				method: "GET",
-				// cache: "no-store",
 			}),
 		}),
 		// getProperties: builder.query<Types.TAccommodations, any>({
@@ -149,6 +148,17 @@ export const api = createApi({
 		// 		method: "GET",
 		// 	}),
 		// }),
+		getUserDetails: builder.query<
+			| Types.TUserDataResponseSuccess
+			| { error: string; message: string; success: false },
+			{ userId: string; token: string }
+		>({
+			query: (data) => ({
+				url: `accommodations/${data.userId}`,
+				method: "GET",
+				headers: { Authorization: `Bearer ${data.token}` },
+			}),
+		}),
 		deleteAccount: builder.mutation<any, { email: string }>({
 			query: (data) => ({
 				// Endpoint not yet resolved
@@ -177,6 +187,7 @@ export const {
 	useGetPropertyDetailsQuery,
 	useListAccommodationMutation,
 	useDeleteAccountMutation,
+	useGetUserDetailsQuery,
 	// useGetPropertiesQuery,
 } = api;
 

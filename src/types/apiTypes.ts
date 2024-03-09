@@ -91,36 +91,66 @@ export type myListings = {
 };
 export type PropertyDetails = {
 	data: {
-		accommodationName: string;
-		propertyId: string;
-		description: string;
-		price: string;
-		accommodationType:
-			| "Duplex"
-			| "Apartment"
-			| "Single room"
-			| "Bungalow"
-			| "Flat"
-			| "Studio"
-			| "Mansion";
-		// availability: "Available" | "Not available";
-		hostingPeriodTo: string;
-		gallery: Array<{ name: string; url: string } | undefined>;
-		address: string;
-		whyListing: string;
-		accomodationRules: Array<{
-			ruleName: string;
-			rulesDescription: string;
-			ruleId: string;
-		}>;
-		hostingPeriodFrom: string;
-		state: string;
-		city: string;
+		accomodation: {
+			accommodationName: string;
+			propertyId: string;
+			description: string;
+			price: string;
+			accommodationType:
+				| "Duplex"
+				| "Apartment"
+				| "Single room"
+				| "Bungalow"
+				| "Flat"
+				| "Studio"
+				| "Mansion";
+			status?: "available" | "not available";
+			hostingPeriodTo: string;
+			gallery: Array<{ name: string; url: string } | undefined>;
+			address: string;
+			whyListing: string;
+			accomodationRules: Array<string>;
+			hostingPeriodFrom: string;
+			state: string;
+			city: string;
+		};
 	};
-	success: true;
+	status: "success";
 	message: string;
 };
-export type TAccommodationsResponseSuccess = {
+export type PropertyDetailsResponse = {
+	status: "success";
+	message: "Accomodation fetch successfully";
+	data: {
+		accomodation: {
+			accommodationName: string;
+			propertyId: string;
+			description: string;
+			price: string;
+			accommodationType:
+				| "Duplex"
+				| "Apartment"
+				| "Single room"
+				| "Bungalow"
+				| "Flat"
+				| "Studio"
+				| "Mansion";
+			status?: "available" | "not available";
+			hostingPeriodTo: string;
+			address: string;
+			whyListing: string;
+			accomodationRules: Array<string>;
+			hostingPeriodFrom: string;
+			state: string;
+			city: string;
+			gallery: Array<{ imageId: string; imageUrl: string }>;
+			createdAt: Date;
+			createdBy: string;
+			updatedAt: Date;
+		};
+	};
+};
+export interface TAccommodationsResponseSuccess {
 	status: "success";
 	message: "Accomodations fetch successfully";
 	data: {
@@ -148,11 +178,33 @@ export type TAccommodationsResponseSuccess = {
 			__v: number;
 		}>;
 	};
-};
+}
 export type TAccommodationsResponseFailed = {
 	status: number;
 	error: string;
 	message: string;
+};
+export type TUserDataResponseSuccess = {
+	status: "success";
+	message: "Profile fetch successfully";
+	data: {
+		profile: {
+			_id: string;
+			firstName: string;
+			lastName: string;
+			email: string;
+			phoneNumber: string;
+			isEmailVerified: boolean;
+			otpExpiresAt: number;
+			profileImage: string;
+			role: "user" | "admin";
+			passwordDigest: string;
+			OTP: number;
+			createdAt: Date;
+			updatedAt: Date;
+			__v: number;
+		};
+	};
 };
 // {
 //   "status": "success",

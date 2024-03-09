@@ -1,67 +1,107 @@
-"use client";
 import React from "react";
 import Image from "next/image";
-import { Call, CameraAlt, Email } from "@mui/icons-material";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { Call, Email } from "@mui/icons-material";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import { useGetUserDetailsQuery } from "@/app/redux/services/apiServices";
+import { useDispatch } from "react-redux";
+import { setAuthorDetails } from "@/app/redux/slices/authorDetailsSlice";
 
-export default function AboutHost() {
-	const [userData, setUserData] = React.useState<{
-		name: string;
-		dataJoined: string;
-		emailVerified: boolean;
-		idVerified: boolean;
-		phoneNumber: string;
-	}>({
-		name: "Jonathan Doe",
-		dataJoined: "July 2022",
-		emailVerified: true,
-		idVerified: true,
-		phoneNumber: " +2340123456789",
+export default function AboutHost({ userId }: { userId: string }) {
+	const dispatch = useDispatch();
+	const [token, setToken] = React.useState("");
+	const { getLocalStorage } = useLocalStorage();
+
+	const { data, isLoading, isError } = useGetUserDetailsQuery({
+		userId: userId,
+		token: token,
 	});
+	React.useEffect(() => {
+		setToken(getLocalStorage("accessToken"));
+		if (data && "status" in data && data.status === "success") {
+			dispatch(
+				setAuthorDetails({
+					authorImg: data.data.profile.profileImage,
+					authorName: data.data.profile.firstName,
+				})
+			);
+		}
+	}, [data, dispatch]);
 	return (
 		<div className="w-full flex flex-col gap-2 mb-28">
 			<h2 className="text-[28px]">About host</h2>
-			<div className="bg-off-white p-8">
-				<div className="flex gap-[22px] px-6 py-4 bg-white">
-					<Image
-						src="/temp/Jonathan_Doe.png"
-						alt={"Johnathan Doe's Profile picture"}
-						width={56}
-						height={56}
-						placeholder="empty"
-						priority={false}
-						className="w-14 aspect-square h-14 rounded-full"
-					/>
-					<div className="flex flex-col gap-2 px-3">
-						<div className="font-semibold">{userData.name}</div>
-						<div className="text-error">
-							Joined squazzle {userData.dataJoined}
+			{data && "status" in data && data.status === "success" ? (
+				<div className="bg-off-white p-8">
+					<div className="flex gap-[22px] px-6 py-4 bg-white">
+						<Image
+							src={data.data.profile.profileImage}
+							alt={"Johnathan Doe's Profile picture"}
+							width={56}
+							height={56}
+							placeholder="empty"
+							priority={false}
+							className="w-14 aspect-square h-14 rounded-full"
+						/>
+						<div className="flex flex-col gap-2 px-3">
+							<div className="font-semibold">
+								{data.data.profile.firstName + " " + data.data.profile.lastName}
+							</div>
+							<div className="text-error">
+								Joined squazzle{" "}
+								{new Date(data.data.profile.createdAt).toLocaleDateString()}
+							</div>
+							<div className="flex items-center gap-6 mb-10">
+								<span className="text-primary-mid-green">
+									<Email className="mr-1" />
+									{data.data.profile.isEmailVerified
+										? "Email Verified"
+										: "Email Not Verified"}
+								</span>
+								<span>
+									<Call className="mr-1" />
+									{data.data.profile.phoneNumber}
+								</span>
+							</div>
+							<button
+								className="w-max py-3 px-4 rounded-lg hover:bg-primary-lightgreen hover:text-primary-green bg-primary-green text-off-white font-bold"
+								type="submit"
+								formTarget="subscribe"
+							>
+								<DropdownMenu>
+									<DropdownMenuTrigger>Contact Host</DropdownMenuTrigger>
+									<DropdownMenuContent>
+										<DropdownMenuItem
+											onClick={() =>
+												navigator.clipboard.writeText(
+													data.data.profile.phoneNumber
+												)
+											}
+										>
+											Phone
+										</DropdownMenuItem>
+										<DropdownMenuItem
+											onClick={() =>
+												navigator.clipboard.writeText(data.data.profile.email)
+											}
+										>
+											Email
+										</DropdownMenuItem>
+									</DropdownMenuContent>
+								</DropdownMenu>
+							</button>
 						</div>
-						<div className="flex items-center gap-6 mb-10">
-							<span className="text-primary-mid-green">
-								<Email className="mr-1" />
-								{userData.emailVerified
-									? "Email Verified"
-									: "Email Not Verified"}
-							</span>
-							<span>
-								<Call className="mr-1" />
-								{userData.phoneNumber}
-							</span>
-							<span className="text-primary-mid-green">
-								<CameraAlt className="mr-1" />
-								{userData.idVerified ? "ID Verified" : "ID Not Verified"}
-							</span>
-						</div>
-						<button
-							className="w-max py-3 px-4 rounded-lg hover:bg-primary-lightgreen hover:text-primary-green bg-primary-green text-off-white font-bold"
-							type="submit"
-							formTarget="subscribe"
-						>
-							Contact Host
-						</button>
 					</div>
 				</div>
-			</div>
+			) : (
+				<div className="flex items-center justify-center h-full font-semibold text-lg">
+					Failed to fetch author&apos;s data
+				</div>
+			)}
 		</div>
 	);
 }
