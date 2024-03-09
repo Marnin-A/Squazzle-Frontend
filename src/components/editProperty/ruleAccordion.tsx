@@ -29,14 +29,14 @@ export default function RuleAccordionItem({
 		setCurrentState({ ...rule });
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-	console.log(errors.accomodationRules && currentState.ruleName.trim() === "");
-	console.log(errors.accomodationRules, currentState.ruleName);
 
 	return (
 		<div className="min-w-full flex flex-col">
 			<input
 				value={currentState.ruleName}
 				type="text"
+				autoFocus={false}
+				defaultValue={currentState.ruleName}
 				className={cn(
 					"focus:outline-primary-mid-grey text-left py-3 px-4 no-underline font-semibold border rounded-lg hover:bg-slate-100 mb-2",
 					errors.accomodationRules && currentState.ruleName.trim() === ""

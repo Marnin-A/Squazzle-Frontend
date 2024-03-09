@@ -22,7 +22,7 @@ export default function EditPropertyForms() {
 			) : searchParam === "overview" ? (
 				<OverviewForm />
 			) : (
-				<LoadingSpinner className="m-auto" />
+				<LoadingSpinner className="mx-auto" />
 			)}
 		</>
 	);

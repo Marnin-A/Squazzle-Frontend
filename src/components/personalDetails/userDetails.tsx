@@ -8,6 +8,8 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "../ui/dialog";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm, SubmitHandler, set } from "react-hook-form";
 import { useDeleteAccountMutation } from "@/app/redux/services/apiServices";
@@ -96,12 +98,12 @@ export default function UserDetails() {
 			<div>
 				<Dialog>
 					<DialogTrigger className="max-mlg:mt-6">
-						<button className="bg-none border-none hover:bg-primary-lightgreen">
+						<div className="bg-none border-none hover:bg-slate-100">
 							<h3 className="font-semibold text-lg mb-2 text-left text-error">
 								Delete Account
 							</h3>
 							<div>Permanently delete your account and all your content</div>
-						</button>
+						</div>
 					</DialogTrigger>
 					<DialogContent className="py-10 flex flex-col gap-4">
 						<DialogHeader className="text-left font-normal w-full px-6">
@@ -109,10 +111,7 @@ export default function UserDetails() {
 								Delete your squazzle account
 							</DialogTitle>
 						</DialogHeader>
-						<DialogDescription
-							typeof="div"
-							className="flex flex-col gap-6 px-6"
-						>
+						<DialogDescription className="flex flex-col gap-6 px-6">
 							<p>
 								We’re sorry to see you go. Once your account is deleted, the
 								profile and listings associated with this account will
@@ -162,13 +161,12 @@ export default function UserDetails() {
 									</p>
 								</div>
 								<div className="flex items-center justify-between">
-									<button
+									<div
 										className="w-max hover:bg-error hover:text-light-red bg-white text-error outline outline-error font-bold py-2 px-4 rounded"
-										type="button"
 										// onClick={handleCancel}
 									>
-										Cancel
-									</button>
+										<DialogPrimitive.Close>Cancel</DialogPrimitive.Close>
+									</div>
 									<button
 										className="w-max hover:bg-error hover:text-light-red bg-light-red text-error font-bold py-2 px-4 rounded"
 										type="submit"

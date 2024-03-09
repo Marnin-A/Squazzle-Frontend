@@ -14,7 +14,7 @@ import ManageSearchParams from "@/hooks/updateSearchParams";
 export type DescriptionFormType = {
 	description: string;
 	whyListing: string;
-	accomodationRules: Array<string>;
+	accomodationRules?: Array<string>;
 };
 
 export default function DescriptionForm() {

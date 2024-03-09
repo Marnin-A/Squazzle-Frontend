@@ -520,6 +520,7 @@ export default function OverviewForm() {
 								<Calendar
 									mode="single"
 									selected={hostingPeriodTo}
+									defaultMonth={hostingPeriodFrom}
 									onSelect={setEndDate}
 									disabled={(date) =>
 										date < new Date() ||

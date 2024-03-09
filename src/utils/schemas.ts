@@ -75,7 +75,5 @@ export const descriptionFormSchema = yup.object().shape({
 	accomodationRules: yup
 		.array()
 		.of(yup.string().required("*Rule is required"))
-
-		.max(10, "*You can't have more than 10 rules")
-		.required("*Accommodation rules are required"),
+		.max(10, "*You can't have more than 10 rules"),
 });
