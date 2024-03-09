@@ -14,7 +14,7 @@ type props = {
 };
 export default function SideBar(props: props) {
 	return (
-		<div className="w-[280px] mr-12">
+		<div className="w-[280px] mr-12 max-lg:mr-0 max-lg:w-full max-lg:mb-4">
 			<div className="flex justify-between bg-primary-dark-green mb-5">
 				<button className="border-none bg-transparent text-primary-lightgreen text-sm flex items-center py-5 px-6 gap-2">
 					<ArrowLeft color="#CCE6E7" /> Back
@@ -25,10 +25,10 @@ export default function SideBar(props: props) {
 				</button>
 			</div>
 
-			<div className="flex flex-col items-center gap-3 p-3 shadow-md">
+			<div className="flex flex-col items-center gap-3 p-3 shadow-md max-lg:flex-row max-lg:flex-wrap max-md:p-0">
 				<div
 					className={
-						"flex flex-col items-center gap-4 w-full py-3 px-3 group hover:bg-primary-lightgreen"
+						"flex flex-col items-center gap-4 w-full min-w-[200px] py-3 px-3 mx-auto group hover:bg-primary-lightgreen max-lg:w-[30%] max-lg:self-start"
 					}
 				>
 					<h3 className="font-semibold text-lg  w-full">Location</h3>
@@ -37,7 +37,7 @@ export default function SideBar(props: props) {
 				</div>
 				<div
 					className={
-						"flex flex-col items-center gap-4 w-full py-3 px-3 group hover:bg-primary-lightgreen"
+						"flex flex-col items-center gap-4 w-full min-w-[200px] py-3 px-3 mx-auto group hover:bg-primary-lightgreen max-lg:w-[30%] max-lg:self-start"
 					}
 				>
 					<h3 className="font-semibold text-lg w-full">
@@ -48,7 +48,7 @@ export default function SideBar(props: props) {
 				</div>
 				<div
 					className={
-						"flex flex-col items-center gap-4 w-full py-3 px-3 group hover:bg-primary-lightgreen"
+						"flex flex-col items-center gap-4 w-full min-w-[200px] py-3 px-3 mx-auto group hover:bg-primary-lightgreen max-lg:w-[30%] max-lg:self-start"
 					}
 				>
 					<h3 className="font-semibold text-lg w-full">Hosting Duration</h3>
@@ -62,7 +62,7 @@ export default function SideBar(props: props) {
 				</div>
 				<div
 					className={
-						"flex flex-col items-center gap-4 w-full py-3 px-3 group hover:bg-primary-lightgreen"
+						"flex flex-col items-center gap-4 w-full min-w-[200px] py-3 px-3 mx-auto group hover:bg-primary-lightgreen max-lg:w-[30%] max-lg:self-start"
 					}
 				>
 					<h3 className="font-semibold text-lg w-full">Accommodation Type</h3>

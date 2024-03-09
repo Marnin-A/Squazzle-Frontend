@@ -154,7 +154,7 @@ export const api = createApi({
 			{ userId: string; token: string }
 		>({
 			query: (data) => ({
-				url: `accommodations/${data.userId}`,
+				url: `users/profile/${data.userId}`,
 				method: "GET",
 				headers: { Authorization: `Bearer ${data.token}` },
 			}),

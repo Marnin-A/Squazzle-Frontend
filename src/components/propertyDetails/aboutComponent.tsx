@@ -11,10 +11,10 @@ export default function AboutComponent({ aboutText }: { aboutText: string }) {
 
 	return (
 		<div className="flex flex-col gap-4">
-			<h3 className="text-[28px]">About this apartment</h3>
+			<h3 className="text-[28px] max-md:text-lg">About this apartment</h3>
 			<p
 				className={cn(
-					"leading-6 text-ellipsis box-border",
+					"leading-6 text-ellipsis box-border max-md:text-sm",
 					showMore ? " h-max" : " line-clamp-5 max-h-[72px]"
 				)}
 			>

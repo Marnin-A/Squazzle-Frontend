@@ -20,8 +20,10 @@ type props = {
 };
 
 export default function PropertyDetailsBody(props: props) {
-	const authorDetails = useSelector((state: RootState) => state.AuthorDetails);
-	console.log(authorDetails);
+	const hostDetails = useSelector((state: RootState) => state.HostDetails);
+	React.useEffect(() => {
+		hostDetails;
+	}, [hostDetails]);
 
 	return (
 		<div className="flex flex-col items-center">
@@ -42,8 +44,8 @@ export default function PropertyDetailsBody(props: props) {
 					Accommodation rules
 				</Link>
 			</div>
-			<div className="flex gap-5 w-max relative mb-16">
-				<div className="flex items-center justify-center min-h-full w-[450px] overflow-hidden">
+			<div className="flex aspect-auto gap-5 w-max relative mb-16 max-md:w-full">
+				<div className="flex items-center justify-center min-h-full w-[450px] overflow-hidden max-md:w-7/12">
 					<Image
 						src={props.images[0].imageUrl}
 						alt="Mobile Squazzle Logo"
@@ -54,8 +56,8 @@ export default function PropertyDetailsBody(props: props) {
 						className="w-full h-auto"
 					/>
 				</div>
-				<div className="flex flex-col items-center justify-between">
-					<div className="flex items-center justify-center min-h-1/2 w-[250px] overflow-hidden">
+				<div className="flex flex-col items-center justify-between max-md:w-5/12">
+					<div className="flex items-center justify-center min-h-1/2 w-[250px] overflow-hidden max-md:w-4/5">
 						<Image
 							src={props.images[1].imageUrl}
 							alt="Mobile Squazzle Logo"
@@ -66,7 +68,7 @@ export default function PropertyDetailsBody(props: props) {
 							className="w-full h-auto m-auto"
 						/>
 					</div>
-					<div className="flex items-center justify-center min-h-1/2 w-[250px] overflow-hidden">
+					<div className="flex items-center justify-center min-h-1/2 w-[250px] overflow-hidden max-md:w-4/5">
 						<Image
 							src={props.images[2].imageUrl}
 							alt="Mobile Squazzle Logo"
@@ -86,12 +88,12 @@ export default function PropertyDetailsBody(props: props) {
 			</div>
 			<div className="max-w-[800px] ">
 				<div className="flex items-center gap-10 mb-10">
-					<h1 className="text-[54px] font-semibold">
+					<h1 className="text-[54px] font-semibold max-md:text-2xl">
 						{props.accommodationName}
 					</h1>
 					<Image
-						src={authorDetails.authorImg}
-						alt={authorDetails.authorName + "'s Profile picture"}
+						src={hostDetails.hostImg}
+						alt={"Profile picture of the host"}
 						width={56}
 						height={56}
 						placeholder="empty"
@@ -101,7 +103,7 @@ export default function PropertyDetailsBody(props: props) {
 				</div>
 				<AboutComponent aboutText={props.description} />
 				<hr className="border-primary-mid-grey my-10" />
-				<AccommodationRules />
+				<AccommodationRules rules={props.accommodationRules} />
 			</div>
 			<React.Suspense fallback={<LoadingSpinner className="m-auto" />}>
 				<AboutHost userId={props.userId} />

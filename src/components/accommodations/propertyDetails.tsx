@@ -21,8 +21,6 @@ export default function PropertyDetails() {
 			]
 		);
 		if (isError) {
-			console.log(error);
-
 			dispatch(
 				setDialogOpen({
 					alertId: alertId,
@@ -33,10 +31,9 @@ export default function PropertyDetails() {
 			);
 		}
 	}, [alertId, dispatch, error, isError]);
-	console.log(data);
 
 	return data && "status" in data && data.status === "success" ? (
-		<div className="flex">
+		<div className="flex max-lg:flex-col">
 			<SideBar
 				accommodationType={data.data.accomodation.accommodationType}
 				address={data.data.accomodation.address}
@@ -49,7 +46,7 @@ export default function PropertyDetails() {
 			/>
 			<PropertyDetailsBody
 				accommodationName={data.data.accomodation.accommodationName}
-				accommodationRules={data.data.accomodation.accomodationRules}
+				accommodationRules={data.data.accomodation.accommodationRules}
 				availability={data.data.accomodation.status}
 				description={data.data.accomodation.description}
 				images={data.data.accomodation.gallery}

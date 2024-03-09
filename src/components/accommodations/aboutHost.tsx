@@ -10,7 +10,7 @@ import { Call, Email } from "@mui/icons-material";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { useGetUserDetailsQuery } from "@/app/redux/services/apiServices";
 import { useDispatch } from "react-redux";
-import { setAuthorDetails } from "@/app/redux/slices/authorDetailsSlice";
+import { setHostDetails } from "@/app/redux/slices/hostDetailsSlice";
 
 export default function AboutHost({ userId }: { userId: string }) {
 	const dispatch = useDispatch();
@@ -25,9 +25,9 @@ export default function AboutHost({ userId }: { userId: string }) {
 		setToken(getLocalStorage("accessToken"));
 		if (data && "status" in data && data.status === "success") {
 			dispatch(
-				setAuthorDetails({
-					authorImg: data.data.profile.profileImage,
-					authorName: data.data.profile.firstName,
+				setHostDetails({
+					hostImg: data.data.profile.profilePicture,
+					hostName: data.data.profile.firstName,
 				})
 			);
 		}
@@ -39,7 +39,7 @@ export default function AboutHost({ userId }: { userId: string }) {
 				<div className="bg-off-white p-8">
 					<div className="flex gap-[22px] px-6 py-4 bg-white">
 						<Image
-							src={data.data.profile.profileImage}
+							src={data.data.profile.profilePicture}
 							alt={"Johnathan Doe's Profile picture"}
 							width={56}
 							height={56}
@@ -52,8 +52,8 @@ export default function AboutHost({ userId }: { userId: string }) {
 								{data.data.profile.firstName + " " + data.data.profile.lastName}
 							</div>
 							<div className="text-error">
-								Joined squazzle{" "}
-								{new Date(data.data.profile.createdAt).toLocaleDateString()}
+								Joined squazzle on{" "}
+								{new Date(data.data.profile.createdAt).toDateString()}
 							</div>
 							<div className="flex items-center gap-6 mb-10">
 								<span className="text-primary-mid-green">
@@ -99,7 +99,7 @@ export default function AboutHost({ userId }: { userId: string }) {
 				</div>
 			) : (
 				<div className="flex items-center justify-center h-full font-semibold text-lg">
-					Failed to fetch author&apos;s data
+					Failed to fetch host&apos;s data
 				</div>
 			)}
 		</div>

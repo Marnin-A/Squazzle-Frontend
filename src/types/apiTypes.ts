@@ -139,7 +139,7 @@ export type PropertyDetailsResponse = {
 			hostingPeriodTo: string;
 			address: string;
 			whyListing: string;
-			accomodationRules: Array<string>;
+			accommodationRules: Array<string>;
 			hostingPeriodFrom: string;
 			state: string;
 			city: string;
@@ -195,14 +195,10 @@ export type TUserDataResponseSuccess = {
 			email: string;
 			phoneNumber: string;
 			isEmailVerified: boolean;
-			otpExpiresAt: number;
-			profileImage: string;
+			profilePicture: string;
 			role: "user" | "admin";
 			passwordDigest: string;
-			OTP: number;
 			createdAt: Date;
-			updatedAt: Date;
-			__v: number;
 		};
 	};
 };
