@@ -29,7 +29,7 @@ export default function PageCard({
 				<p className="text-lg font-normal">{title}</p>
 			</div>
 
-			<ChevronRight className="sm:hidden" color="inherit" />
+			<ChevronRight className="xs:hidden" color="inherit" />
 		</button>
 	);
 }

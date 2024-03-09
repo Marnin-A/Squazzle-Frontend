@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Button } from "./ui/button";
 import useLocalStorage from "@/hooks/useLocalStorage";
@@ -17,7 +18,7 @@ export default function LogoutBtn() {
 	return (
 		<Button
 			className={
-				"text-left font-light justify-start rounded-none " +
+				"text-left text-base font-light justify-start rounded-none " +
 				(isLoggedIn
 					? "text-secondary-red hover:text-secondary-red"
 					: "text-primary-mid-green hover:text-primary-lightgreen")

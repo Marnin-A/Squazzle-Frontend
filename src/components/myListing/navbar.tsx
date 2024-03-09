@@ -51,7 +51,7 @@ export default function NavBar() {
 					List your property
 				</Link>
 				<Link href="/about-us">About us</Link>
-				<Link href="/faq">FAQ</Link>
+				<Link href="/#FAQ">FAQ</Link>
 			</div>
 			<div className="self-end">
 				{

@@ -1,9 +1,7 @@
-"use client";
-
 import { useRouter } from "next13-progressbar";
-import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import LogoutBtn from "./logoutBtn";
+import Link from "next/link";
 
 export function MobileSideMenu() {
 	const router = useRouter();
@@ -25,49 +23,48 @@ export function MobileSideMenu() {
 				</SheetTrigger>
 				<SheetContent className="w-screen" side="right">
 					<div className="flex flex-col gap-2 py-4">
-						<Button
-							className="text-left font-light justify-start hover:text-primary-green rounded-none"
-							variant={"ghost"}
-							onClick={() => router.push("/manageAccount")}
+						<Link
+							className="p-2 text-left font-light text-base justify-start hover:bg-off-white hover:text-primary-green rounded-sm"
+							href={"/manageAccount"}
 						>
 							Manage account
-						</Button>
-						<Button
-							className="text-left font-light justify-start hover:text-primary-green rounded-none"
-							variant={"ghost"}
+						</Link>
+						<Link
+							className="p-2 text-left font-light text-base justify-start hover:bg-off-white hover:text-primary-green rounded-sm"
+							href={"/accommodations"}
 						>
 							Accommodations
-						</Button>
-						<Button
-							className="text-left font-light justify-start hover:text-primary-green rounded-none"
-							variant={"ghost"}
+						</Link>
+						<Link
+							className="p-2 text-left font-light text-base justify-start hover:bg-off-white hover:text-primary-green rounded-sm"
+							href={"manageAccount/myListing/editProperty?view=overview"}
 						>
 							List your property
-						</Button>
-						<Button
-							className="text-left font-light justify-start hover:text-primary-green rounded-none"
-							variant={"ghost"}
+						</Link>
+						<Link
+							className="p-2 text-left font-light text-base justify-start hover:bg-off-white hover:text-primary-green rounded-sm"
+							href={"/about-us"}
 						>
 							About us
-						</Button>
-						<Button
-							className="text-left font-light justify-start hover:text-primary-green rounded-none"
-							variant={"ghost"}
+						</Link>
+						<Link
+							className="p-2 text-left font-light text-base justify-start hover:bg-off-white hover:text-primary-green rounded-sm"
+							href={"/#FAQ"}
 						>
 							FAQ
-						</Button>
-						<Button
-							className="text-left font-light justify-start hover:text-primary-green rounded-none"
-							variant={"ghost"}
+						</Link>
+						<Link
+							className="p-2 text-left font-light text-base justify-start hover:bg-off-white hover:text-primary-green rounded-sm"
+							href={"/manageAccount"}
 						>
 							Settings
-						</Button>
-						<Button
-							className="text-left font-light justify-start hover:text-primary-green rounded-none"
-							variant={"ghost"}
+						</Link>
+						<Link
+							className="p-2 text-left font-light text-base justify-start hover:bg-off-white hover:text-primary-green rounded-sm"
+							href={"wishlist"}
 						>
 							Wishlist
-						</Button>
+						</Link>
 
 						<hr className="border-slate-300" />
 						<LogoutBtn />
