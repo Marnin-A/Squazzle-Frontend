@@ -2,20 +2,24 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import React from "react";
-import { Pencil } from "lucide-react";
+import { ChevronLeft, Pencil } from "lucide-react";
 import Link from "next/link";
 import ProfilePicture from "../profilePicture";
+import { useRouter } from "next13-progressbar";
 
 export default function EditProfileCard() {
+	const router = useRouter();
 	const { getLocalStorage } = useLocalStorage();
 	const [username, setUsername] = React.useState("User");
 	const [email, setEmail] = React.useState("user@gmail.com");
+	const [isEditPage, setIsEditPage] = React.useState(false);
 
 	React.useEffect(() => {
 		if (window !== undefined && window.localStorage) {
 			setUsername(getLocalStorage("username") ?? "User");
 			setEmail(getLocalStorage("email") ?? "user@gmail.com");
 		}
+		setIsEditPage(window.location.pathname.indexOf("/editProfile") > 0);
 	}, [getLocalStorage]);
 
 	return (
@@ -29,9 +33,19 @@ export default function EditProfileCard() {
 			<p className="text-xl font-normal mb-10">{email}</p>
 			<ProfilePicture height={104} width={104} />
 
-			<Link href="./editProfile" className="flex justify-center m-auto">
-				Edit Profile <Pencil fill="#000" stroke="#fff" />
-			</Link>
+			{isEditPage ? (
+				<button
+					onClick={() => router.back()}
+					className="flex justify-center mt-5 m-auto"
+				>
+					<ChevronLeft color="#016D71" />
+					Go Back
+				</button>
+			) : (
+				<Link href="./editProfile" className="flex justify-center m-auto">
+					Edit Profile <Pencil fill="#000" stroke="#fff" />
+				</Link>
+			)}
 		</div>
 	);
 }
