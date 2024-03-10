@@ -40,7 +40,7 @@ export default function NavBar() {
 				/>
 			</Link>
 			<div className="mlg:flex hidden gap-6">
-				<Link href="/accommodations">Accommodations</Link>
+				<Link href="/onboarding">Accommodations</Link>
 				<Link href="/manageAccount/myListing/editProperty?view=overview">
 					List your property
 				</Link>

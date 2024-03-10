@@ -80,7 +80,7 @@ export default function SignInRight() {
 						message: data?.message as string,
 					})
 				);
-				router.push("/manageAccount");
+				router.push("/");
 			}
 			if (isError) {
 				const e = { ...error } as unknown as {

@@ -31,7 +31,7 @@ export function MobileSideMenu() {
 						</Link>
 						<Link
 							className="p-2 text-left font-light text-base justify-start hover:bg-off-white hover:text-primary-green rounded-sm"
-							href={"/accommodations"}
+							href={"/onboarding"}
 						>
 							Accommodations
 						</Link>
