@@ -10,8 +10,6 @@ import Checkbox from "@mui/material/Checkbox";
 import Link from "next/link";
 import { resetProfileData } from "@/app/redux/slices/signUpSlice";
 import { Passwords } from "@/types/types";
-// import { simulateApiResponse } from "@/tests/signupTest";
-
 import { useSignUpMutation } from "@/app/redux/services/apiServices";
 import { passwordSchema } from "@/utils/schemas";
 import ShowPassword from "../sigin/showPassword";
@@ -52,12 +50,8 @@ export default function UserCreatePasswordForm() {
 			...user,
 			password: passwords.password,
 		})) as unknown as any;
-		console.log("Response:", res);
-		console.log("Data:", res);
 
 		if (res.error?.status === "FETCH_ERROR") {
-			console.log("Error");
-
 			// Display error popup
 			dispatch(
 				setAlertOpen({
@@ -89,8 +83,6 @@ export default function UserCreatePasswordForm() {
 			return;
 		}
 		if (res.data.status === "success") {
-			console.log("Success");
-
 			// Display popup
 			dispatch(
 				setAlertOpen({
@@ -105,7 +97,6 @@ export default function UserCreatePasswordForm() {
 			router.push("/emailVerification");
 		}
 	};
-
 	// Cancel sign up
 	const handleCancel = () => {
 		dispatch(resetProfileData());
@@ -250,7 +241,7 @@ export default function UserCreatePasswordForm() {
 						type="button"
 						onClick={handleCancel}
 					>
-						Cancel
+						Back
 					</button>
 				</div>
 				<div className="flex justify-center items-center">
