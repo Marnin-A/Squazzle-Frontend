@@ -202,6 +202,65 @@ export type TUserDataResponseSuccess = {
 		};
 	};
 };
+export type TUpdateProfileResponse =
+	| {
+			data: {
+				user: {
+					OTP: number;
+					address: string;
+					createdAt: string;
+					email: string;
+					firstName: string;
+					gender: "Male" | "Female";
+					isEmailVerified: boolean;
+					isProfileComplete: boolean;
+					lastName: string;
+					occupation: string;
+					otpExpiresAt: number;
+					passwordDigest: string;
+					phoneNumber: string;
+					profileImage: string;
+					profileImageId: string;
+					role: "user" | "admin";
+					updatedAt: string;
+					__v: number;
+					_id: string;
+				};
+			};
+			message: "User updated successfully";
+			status: "success";
+	  }
+	| {
+			error: {
+				data: { message: string; success: false; error: string };
+				status: number;
+			};
+	  };
+export type TRefetchUserDetails =
+	| {
+			data: {
+				data: {
+					profile: {
+						address: string;
+						createdAt: string;
+						email: string;
+						firstName: string;
+						gender: "Male" | "Female";
+						id: string;
+						isEmailVerified: boolean;
+						lastName: string;
+						occupation: string;
+						phoneNumber: string;
+						profilePicture: string;
+						profilePictureId: string;
+						role: string;
+					};
+				};
+				message: "Profile fetch successfully";
+				status: "success";
+			};
+	  }
+	| { error: any };
 // {
 //   "status": "success",
 //   "message": "Account successfully created, Check your mail for activation code",

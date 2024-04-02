@@ -97,7 +97,8 @@ export default function GalleryForm() {
 						open: true,
 						severity: "error",
 						title: "Error",
-						message: "Your session has expired, sending you to login page.",
+						message:
+							"Your session has expired, please wait as it is refreshed.",
 					})
 				);
 				setTimeout(() => {

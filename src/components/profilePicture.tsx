@@ -8,14 +8,16 @@ export default function ProfilePicture({
 	className,
 	height,
 	width,
+	newUrl,
 }: {
 	className?: string | undefined;
 	height: number;
 	width: number;
+	newUrl?: string;
 }) {
 	const { getLocalStorage } = useLocalStorage();
 	const [pictureURL, setPictureURL] = React.useState("");
-	const [imageLoaded, setImageLoaded] = React.useState(false);
+	const [imageLoaded, setImageLoaded] = React.useState(true);
 	const [hasProfilePicture, setHasProfilePicture] = React.useState(false);
 
 	React.useEffect(() => {
@@ -27,7 +29,7 @@ export default function ProfilePicture({
 	return (
 		<>
 			{hasProfilePicture ? (
-				imageLoaded ? (
+				!imageLoaded ? (
 					<AccountCircleIcon
 						htmlColor="#016D71"
 						color="inherit"
@@ -35,14 +37,14 @@ export default function ProfilePicture({
 					/>
 				) : (
 					<Image
-						src={pictureURL}
+						src={newUrl ? newUrl : pictureURL}
 						alt={"User Profile Picture"}
 						width={width}
 						height={height}
 						placeholder="empty"
 						priority={false}
 						className={cn("w-min h-auto rounded-full m-auto", className)}
-						onError={() => setImageLoaded(true)}
+						onError={() => setImageLoaded(false)}
 					/>
 				)
 			) : (

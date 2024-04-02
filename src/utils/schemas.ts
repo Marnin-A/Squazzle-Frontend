@@ -35,7 +35,7 @@ export const userProfileSchema = yup.object().shape({
 	gender: yup.string().oneOf(["Male", "Female"]).required("Gender is required"),
 	state: yup.string().required("*State is required"),
 	city: yup.string().required("*City is required"),
-	NIN: yup.number().required("*NIN is required"),
+	address: yup.string().required("*Address is required"),
 	phoneNumber: yup.number().required("*Phone Number is required"),
 	about: yup
 		.string()

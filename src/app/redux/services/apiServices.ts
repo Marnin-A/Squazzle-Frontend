@@ -100,17 +100,18 @@ export const api = createApi({
 				signal: Newsletter_Signup_Abort_Controller.signal,
 			}),
 		}),
-		updateProfile: builder.mutation<Types.ValidateOtpResponse, UserProfileData>(
-			{
-				query: (data) => ({
-					// Endpoint not yet resolved
-					url: "auth/updateProfile",
-					method: "POST",
-					body: data,
-					signal: Update_Profile_Abort_Controller.signal,
-				}),
-			}
-		),
+		updateProfile: builder.mutation<
+			Types.TUpdateProfileResponse,
+			{ userId: string; userInfo: FormData; token: string }
+		>({
+			query: (data) => ({
+				headers: { Authorization: `Bearer ${data.token}` },
+				url: `users/${data.userId}`,
+				method: "PATCH",
+				body: data.userInfo,
+				signal: Update_Profile_Abort_Controller.signal,
+			}),
+		}),
 		listAccommodation: builder.mutation<
 			any,
 			{ formData: FormData; token: string }

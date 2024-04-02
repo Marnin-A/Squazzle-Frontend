@@ -19,13 +19,13 @@ export default function Page() {
 			<div className="flex items-center justify-center gap-16 w-full">
 				<Link
 					href={"/manageAccount/myListing/editProperty?view=overview"}
-					className="w-max py-5 px-24 bg-primary-lightgreen text-primary-dark-green text-xl font-bold rounded-2xl"
+					className="w-max py-5 px-24 bg-primary-lightgreen text-center text-primary-dark-green text-xl font-bold rounded-2xl"
 				>
 					List accommodation
 				</Link>
 				<Link
 					href="/accommodations"
-					className="w-max py-5 px-24 bg-primary-lightgreen text-primary-dark-green text-xl font-bold rounded-2xl"
+					className="w-max py-5 px-24 bg-primary-lightgreen text-center text-primary-dark-green text-xl font-bold rounded-2xl"
 				>
 					Browse accommodation
 				</Link>

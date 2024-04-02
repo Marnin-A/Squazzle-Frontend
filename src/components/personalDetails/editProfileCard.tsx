@@ -6,13 +6,17 @@ import { ChevronLeft, Pencil } from "lucide-react";
 import Link from "next/link";
 import ProfilePicture from "../profilePicture";
 import { useRouter } from "next13-progressbar";
+import { useDispatch } from "react-redux";
+import { setProfilePicture } from "@/app/redux/slices/profilePicture";
 
 export default function EditProfileCard() {
 	const router = useRouter();
+	const dispatch = useDispatch();
 	const { getLocalStorage } = useLocalStorage();
 	const [username, setUsername] = React.useState("User");
 	const [email, setEmail] = React.useState("user@gmail.com");
 	const [isEditPage, setIsEditPage] = React.useState(false);
+	const [newPicture, setNewPicture] = React.useState("");
 
 	React.useEffect(() => {
 		if (window !== undefined && window.localStorage) {
@@ -20,7 +24,10 @@ export default function EditProfileCard() {
 			setEmail(getLocalStorage("email") ?? "user@gmail.com");
 		}
 		setIsEditPage(window.location.pathname.indexOf("/editProfile") > 0);
-	}, [getLocalStorage]);
+		if (newPicture) {
+			dispatch(setProfilePicture(newPicture));
+		}
+	}, [dispatch, getLocalStorage, newPicture]);
 
 	return (
 		<div className="max-w-[305px] h-min font-semibold py-6 px-12 bg-white text-center shadow-md max-md:mb-10 max-sm:text-left max-sm:p-0 max-sm:pr-12 max-sm:m-0 max-sm:shadow-none">
@@ -31,7 +38,27 @@ export default function EditProfileCard() {
 			/>
 			<h1 className="text-[28px]">Welcome back {username}</h1>
 			<p className="text-xl font-normal mb-10">{email}</p>
-			<ProfilePicture height={104} width={104} />
+			<div className="relative">
+				<ProfilePicture height={104} width={104} newUrl={newPicture} />
+				<input
+					type="file"
+					title="Change Profile Picture"
+					name="Profile-Picture"
+					id="Profile-Picture"
+					className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+					onChange={(e) => {
+						const file: File | undefined = e.target.files?.[0];
+						if (file) {
+							const reader = new FileReader();
+							reader.onloadend = () => {
+								const url = reader.result as string;
+								setNewPicture(url);
+							};
+							reader.readAsDataURL(file);
+						}
+					}}
+				/>
+			</div>
 
 			{isEditPage ? (
 				<button
