@@ -43,7 +43,7 @@ export default function ProfilePicture({
 						height={height}
 						placeholder="empty"
 						priority={false}
-						className={cn("w-min h-auto rounded-full m-auto", className)}
+						className={cn(`w-[${width}] h-auto rounded-full m-auto`, className)}
 						onError={() => setImageLoaded(false)}
 					/>
 				)
