@@ -5,8 +5,13 @@ import DescriptionForm from "./descriptionForm";
 import GalleryForm from "./galleryForm";
 import OverviewForm from "./overviewForm";
 import LoadingSpinner from "../loadingSpinner";
+import { PropertyDetailsResponse } from "@/types/apiTypes";
 
-export default function EditPropertyForms() {
+export default function EditPropertyForms({
+	propertyDetails,
+}: {
+	propertyDetails?: PropertyDetailsResponse["data"]["accomodation"];
+}) {
 	const [searchParam, setSearchParam] = React.useState<string | null>("");
 	const { getURLParam } = ManageSearchParams();
 	React.useEffect(() => {

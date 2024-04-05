@@ -2,7 +2,6 @@ import EmailVerificationReducer from "./slices/emailVerificationSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import NotificationReducer from "./slices/notificationSlice";
 import CreateProfileReducer from "./slices/signUpSlice";
-import HostDetailsReducer from "./slices/hostDetailsSlice";
 import ProfilePictureReducer from "./slices/profilePicture";
 import DialogReducer from "./slices/dialogSlice";
 import { api } from "./services/apiServices";
@@ -11,7 +10,6 @@ const reducers = combineReducers({
 	CreateProfile: CreateProfileReducer,
 	EmailVerification: EmailVerificationReducer,
 	Notification: NotificationReducer,
-	HostDetails: HostDetailsReducer,
 	ProfilePicture: ProfilePictureReducer,
 	Dialog: DialogReducer,
 	[api.reducerPath]: api.reducer,

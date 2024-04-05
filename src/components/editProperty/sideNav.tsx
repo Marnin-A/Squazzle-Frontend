@@ -11,11 +11,12 @@ import DescriptionSharpIcon from "@mui/icons-material/DescriptionSharp";
 export default function SideNav() {
 	const router = useRouter();
 	const { getURLParam } = ManageSearchParams();
+
 	return (
 		<div className="w-[305px] mr-16 max-md:m-0 max-md:w-full">
 			<div className="bg-primary-dark-green mb-5 block max-md:hidden">
 				<button
-					onClick={() => router.push("../myListing")}
+					onClick={() => router.push("/manageAccount/myListing/")}
 					className="border-none bg-transparent text-primary-lightgreen text-sm flex items-center py-5 px-6 gap-2"
 				>
 					<ArrowLeft color="#CCE6E7" /> Back to my listing

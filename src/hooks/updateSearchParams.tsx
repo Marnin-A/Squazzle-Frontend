@@ -24,7 +24,17 @@ export default function ManageSearchParams() {
 		router.push(pathname + "?" + createQueryString(name, value));
 	};
 
-	const getURLParam = (name: string) => searchParams.get(name);
+	const getURLParam = (name: string) => {
+		const stringWithSlash = searchParams.get(name);
+		if (!stringWithSlash) return null;
+		const slashIndex = stringWithSlash.indexOf("/");
+
+		if (slashIndex !== -1) {
+			return stringWithSlash.slice(0, slashIndex);
+		} else {
+			return stringWithSlash;
+		}
+	};
 
 	const updateURLParam = (name: string, value: string) => {
 		// Remove the url param if it already exists

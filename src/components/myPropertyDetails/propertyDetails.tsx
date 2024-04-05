@@ -7,19 +7,17 @@ import LoadingSpinner from "../loadingSpinner";
 import { useDispatch } from "react-redux";
 import { setDialogOpen } from "@/app/redux/slices/dialogSlice";
 
-export default function PropertyDetails() {
+export default function PropertyDetails({
+	propertyId,
+}: {
+	propertyId: string;
+}) {
 	const alertId = React.useId();
 	const dispatch = useDispatch();
-	const [propertyId, setPropertyId] = React.useState("");
 	const { data, isError, error } = useGetPropertyDetailsQuery({
 		propertyId: propertyId,
 	});
 	React.useEffect(() => {
-		setPropertyId(
-			window.location.pathname.split("/")[
-				window.location.pathname.split("/").length - 1
-			]
-		);
 		if (isError) {
 			dispatch(
 				setDialogOpen({
@@ -51,8 +49,8 @@ export default function PropertyDetails() {
 				description={data.data.accomodation.description}
 				images={data.data.accomodation.gallery}
 				price={data.data.accomodation.price}
-				userId={data.data.accomodation.createdBy}
 				key={data.data.accomodation.accommodationName}
+				createdBy={data.data.accomodation.createdBy}
 			/>
 		</div>
 	) : (

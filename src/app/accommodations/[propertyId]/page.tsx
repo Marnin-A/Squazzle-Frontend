@@ -4,7 +4,7 @@ import { CaretRightIcon } from "@radix-ui/react-icons";
 import PropertyDetails from "@/components/accommodations/propertyDetails";
 import LoadingSpinner from "@/components/loadingSpinner";
 
-export default function Page() {
+export default function Page({ params }: { params: { propertyId: string } }) {
 	return (
 		<div className="px-20 py-8 min-h-screen">
 			<div className="text-primary-mid-green flex items-center gap-3 mb-8">
@@ -16,7 +16,7 @@ export default function Page() {
 			</div>
 			<div className="flex flex-wrap justify-center">
 				<React.Suspense fallback={<LoadingSpinner className="m-auto" />}>
-					<PropertyDetails />
+					<PropertyDetails propertyId={params.propertyId} />
 				</React.Suspense>
 			</div>
 		</div>

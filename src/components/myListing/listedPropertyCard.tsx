@@ -24,7 +24,7 @@ export default function ListedPropertyCard() {
 				data?.data.map((property) => (
 					<Link
 						key={property.propertyId}
-						href={`myListing/editProperty/[${property.propertyId}]`}
+						href={`myListing/editProperty/${property.propertyId}?view=overview`}
 						className="max-w-[305px] max-h-[264px] w-[305px] h-[264px] bg-off-white relative flex flex-col items-center justify-between overflow-hidden"
 					>
 						<Image
@@ -41,7 +41,7 @@ export default function ListedPropertyCard() {
 				))}
 
 			<Link
-				href={"./myListing/editProperty?view=overview"}
+				href={"./myListing/listProperty?view=overview"}
 				className="max-w-[305px] max-h-[264px] w-[305px] h-[264px] bg-off-white flex flex-col items-center justify-between"
 			>
 				<Image

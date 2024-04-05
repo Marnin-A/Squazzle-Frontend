@@ -3,11 +3,7 @@ import Image from "next/image";
 import React from "react";
 import AboutComponent from "../propertyDetails/aboutComponent";
 import AccommodationRules from "../propertyDetails/accommodationRules";
-import { useSelector } from "react-redux";
-import { RootState } from "@/app/redux/store";
-
 import Link from "next/link";
-import LoadingSpinner from "../loadingSpinner";
 type props = {
 	accommodationName: string;
 	description: string;
@@ -15,15 +11,20 @@ type props = {
 	price: string;
 	images: Array<{ imageId: string; imageUrl: string }>;
 	accommodationRules: Array<string>;
-	userId: string;
+	createdBy: {
+		isProfileComplete: boolean;
+		id: string;
+		firstName: string;
+		lastName: string;
+		email: string;
+		phoneNumber: string;
+		profileImage: string;
+		createdAt: string;
+		isEmailVerified: boolean;
+	};
 };
 
 export default function PropertyDetailsBody(props: props) {
-	const hostDetails = useSelector((state: RootState) => state.HostDetails);
-	React.useEffect(() => {
-		hostDetails;
-	}, [hostDetails]);
-
 	return (
 		<div className="flex flex-col items-center">
 			<div className="flex items-center gap-5 mb-5 flex-wrap">
@@ -55,30 +56,32 @@ export default function PropertyDetailsBody(props: props) {
 						className="w-full h-auto"
 					/>
 				</div>
-				<div className="flex flex-col items-center justify-between max-md:w-5/12">
-					<div className="flex items-center justify-center min-h-1/2 w-[250px] overflow-hidden max-md:w-4/5">
-						<Image
-							src={props.images[1].imageUrl}
-							alt="Mobile Squazzle Logo"
-							width={350}
-							height={255}
-							placeholder="empty"
-							priority={false}
-							className="w-full h-auto m-auto"
-						/>
+				{props.images[1] && (
+					<div className="flex flex-col items-center justify-between max-md:w-5/12">
+						<div className="flex items-center justify-center min-h-1/2 w-[250px] overflow-hidden max-md:w-4/5">
+							<Image
+								src={props.images[1].imageUrl}
+								alt="Mobile Squazzle Logo"
+								width={350}
+								height={255}
+								placeholder="empty"
+								priority={false}
+								className="w-full h-auto m-auto"
+							/>
+						</div>
+						<div className="flex items-center justify-center min-h-1/2 w-[250px] overflow-hidden max-md:w-4/5">
+							<Image
+								src={props.images[2].imageUrl}
+								alt="Mobile Squazzle Logo"
+								width={530}
+								height={582}
+								placeholder="empty"
+								priority={false}
+								className="w-full h-auto m-auto"
+							/>
+						</div>
 					</div>
-					<div className="flex items-center justify-center min-h-1/2 w-[250px] overflow-hidden max-md:w-4/5">
-						<Image
-							src={props.images[2].imageUrl}
-							alt="Mobile Squazzle Logo"
-							width={530}
-							height={582}
-							placeholder="empty"
-							priority={false}
-							className="w-full h-auto m-auto"
-						/>
-					</div>
-				</div>
+				)}
 				<div className="absolute px-2 py-[4px] bg-white opacity-95 bottom-4 right-4">
 					{props.images.length > 3
 						? `+${props.images.length - 3} Photos`
@@ -91,7 +94,7 @@ export default function PropertyDetailsBody(props: props) {
 						{props.accommodationName}
 					</h1>
 					<Image
-						src={hostDetails.hostImg}
+						src={props.createdBy.profileImage}
 						alt={"Profile picture of the host"}
 						width={56}
 						height={56}

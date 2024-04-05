@@ -145,7 +145,17 @@ export type PropertyDetailsResponse = {
 			city: string;
 			gallery: Array<{ imageId: string; imageUrl: string }>;
 			createdAt: Date;
-			createdBy: string;
+			createdBy: {
+				isProfileComplete: boolean;
+				id: string;
+				firstName: string;
+				lastName: string;
+				email: string;
+				phoneNumber: string;
+				profileImage: string;
+				createdAt: string;
+				isEmailVerified: boolean;
+			};
 			updatedAt: Date;
 		};
 	};
