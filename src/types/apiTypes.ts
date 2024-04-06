@@ -142,7 +142,7 @@ export type PropertyDetailsResponse = {
 				| "Flat"
 				| "Studio"
 				| "Mansion";
-			status?: "available" | "not available";
+			status: "available" | "not available";
 			hostingPeriodTo: string;
 			address: string;
 			whyListing: string;

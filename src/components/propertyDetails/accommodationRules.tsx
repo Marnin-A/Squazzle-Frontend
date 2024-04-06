@@ -6,8 +6,8 @@ type props = { rules: Array<string> };
 export default function AccommodationRules(props: props) {
 	return (
 		<div className="mb-28" id="accommodationRules">
-			<h3 className="text-[28px] max-md:text-lg mb-4">Accommodation rules</h3>
-			<div className="flex flex-wrap gap-6 bg-off-white p-8">
+			<h3 className="text-[28px] max-md:text-xl mb-4">Accommodation rules</h3>
+			<div className="flex flex-wrap gap-6 bg-off-white md:p-8 p-6">
 				{props.rules.map((rule) => (
 					<div
 						key={rule}

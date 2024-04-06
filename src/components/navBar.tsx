@@ -14,10 +14,13 @@ import {
 import { DropdownMenuTrigger } from "./ui/dropdown-menu";
 import LogoutBtn from "./logoutBtn";
 import ProfilePicture from "./profilePicture";
+import updateSearchParams from "@/hooks/updateSearchParams";
+import { CaretLeftIcon } from "@radix-ui/react-icons";
 
 export default function NavBar() {
 	const router = useRouter();
 	const { getLocalStorage } = useLocalStorage();
+	const { getURLParam } = updateSearchParams();
 	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
 	React.useEffect(() => {
@@ -27,7 +30,7 @@ export default function NavBar() {
 	}, [getLocalStorage]);
 
 	return (
-		<nav className="self-start flex justify-between items-center w-full py-5 shadow mlg:px-20 max-md:border-b-2 max-md:border-b-slate-300 px-8">
+		<nav className="self-start flex justify-between items-center w-full py-4 pl-5  pr-8 shadow mlg:py-5 mlg:px-20 max-md:border-b-2 max-md:border-b-slate-300">
 			<Link href={"/"} className="hover:cursor-pointer">
 				<Image
 					src={"/Mobile-logo.svg"}
@@ -39,6 +42,7 @@ export default function NavBar() {
 					className="w-min h-auto"
 				/>
 			</Link>
+
 			<div className="mlg:flex hidden gap-6">
 				<Link href="/onboarding">Accommodations</Link>
 				<Link href="/manageAccount/myListing/editProperty?view=overview">
@@ -47,7 +51,7 @@ export default function NavBar() {
 				<Link href="/onboarding">About us</Link>
 				<Link href="/faq">FAQ</Link>
 			</div>
-			<div className="self-end">
+			<div className="self-end my-auto">
 				{
 					<div className="hidden items-center gap-4 text-primary-green mlg:flex">
 						<NotificationsNoneIcon color="inherit" />

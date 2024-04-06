@@ -16,34 +16,34 @@ export default function AboutHost({
 }) {
 	return (
 		<div className="w-full flex flex-col gap-2 mb-28">
-			<h2 className="text-[28px]">About host</h2>
+			<h2 className="md:text-[28xl] text-xl">About host</h2>
 
-			<div className="bg-off-white p-8">
-				<div className="flex gap-[22px] px-6 py-4 bg-white">
+			<div className="bg-off-white md:p-8 p-6">
+				<div className="flex gap-3 px-6 py-4 bg-white">
 					<Image
 						src={createdBy.profileImage}
-						alt={"Johnathan Doe's Profile picture"}
-						width={56}
-						height={56}
+						alt={"User's Profile picture"}
+						width={40}
+						height={40}
 						placeholder="empty"
 						priority={false}
-						className="w-14 aspect-square h-14 rounded-full"
+						className="w-10 aspect-square h-10 rounded-full"
 					/>
-					<div className="flex flex-col gap-2 px-3">
+					<div className="flex flex-col gap-2 md:px-3 max-md:text-sm">
 						<div className="font-semibold">
 							{createdBy.firstName + " " + createdBy.lastName}
 						</div>
 						<div className="text-error">
 							Joined squazzle on {new Date(createdBy.createdAt).toDateString()}
 						</div>
-						<div className="flex items-center gap-6 mb-10">
-							<span className="text-primary-mid-green">
+						<div className="flex items-center flex-wrap md:gap-6 md:mb-10 gap-4 mb-2">
+							<span className="text-primary-mid-green whitespace-nowrap">
 								<Email className="mr-1" />
 								{createdBy.isEmailVerified
 									? "Email Verified"
 									: "Email Not Verified"}
 							</span>
-							<span>
+							<span className="whitespace-nowrap">
 								<Call className="mr-1" />
 								{"+234" + createdBy.phoneNumber}
 							</span>

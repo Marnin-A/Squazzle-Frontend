@@ -44,14 +44,8 @@ export default function PropertyDetails({
 				key={propertyId + "-side-bar"}
 			/>
 			<PropertyDetailsBody
-				accommodationName={data.data.accomodation.accommodationName}
-				accommodationRules={data.data.accomodation.accommodationRules}
-				availability={data.data.accomodation.status}
-				description={data.data.accomodation.description}
-				images={data.data.accomodation.gallery}
-				price={data.data.accomodation.price}
 				key={data.data.accomodation.accommodationName}
-				createdBy={data.data.accomodation.createdBy}
+				data={data.data.accomodation}
 			/>
 		</div>
 	) : (

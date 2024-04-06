@@ -7,7 +7,7 @@ import LoadingSpinner from "@/components/loadingSpinner";
 export default function Page({ params }: { params: { propertyId: string } }) {
 	return (
 		<div className="px-20 py-8 min-h-screen">
-			<div className="text-primary-mid-green flex items-center gap-3 mb-8">
+			<div className="text-primary-mid-green md:flex items-center gap-3 mb-8 hidden">
 				<Link href="/manageAccount" className="hover:text-primary-dark-green">
 					Manage Account
 				</Link>

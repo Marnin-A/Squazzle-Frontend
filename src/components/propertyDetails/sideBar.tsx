@@ -14,7 +14,7 @@ type props = {
 };
 export default function SideBar(props: props) {
 	return (
-		<div className="w-[280px] mr-12 max-lg:mr-0 max-lg:w-full max-lg:mb-4">
+		<div className="w-[280px] mr-12 max-lg:mr-0 max-lg:w-full max-lg:mb-4 max-md:hidden">
 			<div className="flex justify-between bg-primary-dark-green mb-5">
 				<button className="border-none bg-transparent text-primary-lightgreen text-sm flex items-center py-5 px-6 gap-2">
 					<ArrowLeft color="#CCE6E7" /> Back
