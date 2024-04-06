@@ -16,8 +16,13 @@ export type DescriptionFormType = {
 	whyListing: string;
 	accomodationRules?: Array<string>;
 };
+type DescriptionFormProps = {
+	description: string | undefined;
+	whyListing: string | undefined;
+	accomodationRules?: Array<string>;
+};
 
-export default function DescriptionForm() {
+export default function DescriptionForm(props: DescriptionFormProps) {
 	const router = useRouter();
 	const [rules, setRules] = React.useState<
 		Array<{ ruleName: string; ruleId: string }>
@@ -83,6 +88,17 @@ export default function DescriptionForm() {
 		router.back();
 	}
 
+	React.useEffect(() => {
+		if (props.accomodationRules) {
+			const rulesWithIds = props.accomodationRules.map((rule) => ({
+				ruleName: rule,
+				ruleId: "rule" + props.accomodationRules?.indexOf(rule),
+			}));
+
+			setRules(rulesWithIds);
+		}
+	}, [props.accomodationRules]);
+
 	return (
 		<>
 			<form
@@ -106,7 +122,10 @@ export default function DescriptionForm() {
 								: " focus:outline-success focus:shadow-outline")
 						}
 						id="description"
-						placeholder="A brief description of the accommodation"
+						defaultValue={props.description}
+						placeholder={
+							props.description ?? "A brief description of the accommodation"
+						}
 						autoComplete="on"
 						{...register("description")}
 					/>
@@ -137,7 +156,10 @@ export default function DescriptionForm() {
 								: " focus:outline-success focus:shadow-outline")
 						}
 						id="whyListing"
-						placeholder="Why are you listing this accommodation?"
+						defaultValue={props.whyListing}
+						placeholder={
+							props.whyListing ?? "Why are you listing this accommodation?"
+						}
 						autoComplete="on"
 						{...register("whyListing")}
 					/>

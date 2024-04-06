@@ -8,9 +8,11 @@ import { Button } from "../ui/button";
 import ImageCard from "./imageCard";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { useListAccommodationMutation } from "@/app/redux/services/apiServices";
-import { DescriptionFormType } from "./descriptionForm";
 import LoadingSpinner from "../loadingSpinner";
 
+type GalleryFormProps = {
+	gallery: Array<{ imageId: string; imageUrl: string }> | undefined;
+};
 type GalleryFormType = Array<string | undefined>;
 type CreateAccommodationResponse =
 	| { data: { data: object; message: string; status: string } }
@@ -30,7 +32,7 @@ type descriptionType = {
 		  }>
 		| string;
 };
-export default function GalleryForm() {
+export default function GalleryForm(props: GalleryFormProps) {
 	const router = useRouter();
 	const alertId = React.useId();
 	const dispatch = useDispatch();
@@ -182,13 +184,18 @@ export default function GalleryForm() {
 	}
 
 	React.useEffect(() => {
-		if (getLocalStorage("galleryForm")) {
+		if (props.gallery) {
+			const existingImgs = props.gallery.map((img) => ({
+				name: img?.imageId,
+				url: img?.imageUrl,
+			}));
+			setImgArray(existingImgs);
+		} else if (getLocalStorage("galleryForm")) {
 			setImgArray(getLocalStorage("galleryForm"));
 		} else {
 			setImgArray([{ name: "", url: "" }]);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [props.gallery]);
 
 	return (
 		<>

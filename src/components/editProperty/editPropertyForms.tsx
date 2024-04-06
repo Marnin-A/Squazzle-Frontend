@@ -21,11 +21,29 @@ export default function EditPropertyForms({
 	return (
 		<>
 			{searchParam === "description" ? (
-				<DescriptionForm />
+				<DescriptionForm
+					description={propertyDetails?.description}
+					whyListing={propertyDetails?.whyListing}
+					accomodationRules={propertyDetails?.accommodationRules}
+					key={propertyDetails?.propertyId + "descriptionForm"}
+				/>
 			) : searchParam === "gallery" ? (
-				<GalleryForm />
+				<GalleryForm
+					gallery={propertyDetails?.gallery}
+					key={propertyDetails?.propertyId + "galleryForm"}
+				/>
 			) : searchParam === "overview" ? (
-				<OverviewForm />
+				<OverviewForm
+					key={propertyDetails?.propertyId + "overviewForm"}
+					accommodationName={propertyDetails?.accommodationName}
+					accommodationType={propertyDetails?.accommodationType}
+					address={propertyDetails?.address}
+					city={propertyDetails?.city}
+					hostingPeriodFrom={propertyDetails?.hostingPeriodFrom}
+					hostingPeriodTo={propertyDetails?.hostingPeriodTo}
+					price={propertyDetails?.price}
+					state={propertyDetails?.state}
+				/>
 			) : (
 				<LoadingSpinner className="mx-auto" />
 			)}

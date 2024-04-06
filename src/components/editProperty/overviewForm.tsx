@@ -38,8 +38,28 @@ export type OverviewForm = {
 	hostingPeriodFrom: string;
 	hostingPeriodTo: string;
 };
+type OverviewFormProps = {
+	accommodationName: string | undefined;
+	address: string | undefined;
+	state: string | undefined;
+	city: string | undefined;
+	accommodationType:
+		| "Duplex"
+		| "Apartment"
+		| "Single room"
+		| "Bungalow"
+		| "Flat"
+		| "Studio"
+		| "Mansion"
+		| undefined;
 
-export default function OverviewForm() {
+	// availability: "Available" | "Not available";
+	price: string | undefined;
+	hostingPeriodFrom: string | undefined;
+	hostingPeriodTo: string | undefined;
+};
+
+export default function OverviewForm(props: OverviewFormProps) {
 	const dispatch = useDispatch();
 	const alertId = React.useId();
 	// Form validation from React Hook Form
@@ -116,7 +136,8 @@ export default function OverviewForm() {
 						}
 						id="accommodationName"
 						type="text"
-						placeholder="Primrose View"
+						defaultValue={props.accommodationName}
+						placeholder={props.accommodationName ?? "Primrose View"}
 						autoComplete="on"
 						{...register("accommodationName")}
 					/>
@@ -141,7 +162,7 @@ export default function OverviewForm() {
 					<p className="text-primary-mid-green">Choose accommodation type</p>
 					<RadioGroup
 						aria-labelledby="demo-radio-buttons-group-label"
-						defaultValue="Duplex"
+						defaultValue={props.accommodationType ?? "Duplex"}
 						className={
 							"min-h-[100px] grid grid-cols-3 max-mlg:flex max-mlg:flex-wrap whitespace-nowrap text-xl appearance-none border-none rounded-lg w-full py-6 px-3 text-gray-700 leading-tight placeholder:pl-4 " +
 							(errors.accommodationType?.type === "required"
@@ -256,7 +277,8 @@ export default function OverviewForm() {
 								: " focus:outline-success focus:shadow-outline")
 						}
 						id="address"
-						placeholder="Location Address"
+						defaultValue={props.address}
+						placeholder={props.address ?? "Location Address"}
 						autoComplete="on"
 						{...register("address")}
 					/>
@@ -289,7 +311,8 @@ export default function OverviewForm() {
 							}
 							id="state"
 							type="text"
-							placeholder="State"
+							placeholder={"State"}
+							defaultValue={props.state}
 							autoComplete="on"
 							{...register("state")}
 						/>
@@ -320,6 +343,7 @@ export default function OverviewForm() {
 							}
 							id="city"
 							type="text"
+							defaultValue={props.city}
 							placeholder="City"
 							autoComplete="on"
 							{...register("city")}
@@ -410,7 +434,7 @@ export default function OverviewForm() {
 					>
 						<CurrencyInput
 							placeholder="0.00"
-							defaultValue={"0.00"}
+							defaultValue={props.price}
 							decimalsLimit={4}
 							intlConfig={{ locale: "en-US", currency: "NGN" }}
 							className={
@@ -472,6 +496,11 @@ export default function OverviewForm() {
 									mode="single"
 									selected={hostingPeriodFrom}
 									onSelect={setStartDate}
+									defaultMonth={
+										new Date(
+											props.hostingPeriodFrom ? props.hostingPeriodFrom : ""
+										)
+									}
 									disabled={
 										(date) => date < new Date()
 										// || date < new Date("1900-01-01")
@@ -520,7 +549,9 @@ export default function OverviewForm() {
 								<Calendar
 									mode="single"
 									selected={hostingPeriodTo}
-									defaultMonth={hostingPeriodFrom}
+									defaultMonth={
+										new Date(props.hostingPeriodTo ? props.hostingPeriodTo : "")
+									}
 									onSelect={setEndDate}
 									disabled={(date) =>
 										date < new Date() ||
