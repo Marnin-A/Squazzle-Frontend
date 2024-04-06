@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function ListPropertyCard() {
@@ -10,9 +11,12 @@ export default function ListPropertyCard() {
 					<p className="text-off-white">
 						Space sharing earns you extra income and opens up new opportunities
 					</p>
-					<button className="bg-primary-green py-4 px-6 mt-6 rounded-lg w-max">
+					<Link
+						href="/manageAccount/myListing/editProperty?view=overview"
+						className="bg-primary-green py-4 px-6 mt-6 rounded-lg w-max"
+					>
 						Learn more
-					</button>
+					</Link>
 				</div>
 			</div>
 		</section>

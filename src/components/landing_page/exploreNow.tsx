@@ -2,6 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import Link from "next/link";
 
 export default function ExploreNow() {
 	const matches = useMediaQuery("(min-width:768px)");
@@ -22,9 +23,12 @@ export default function ExploreNow() {
 					dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et
 					velit interdum, ac aliquet odio mattis.
 				</p>
-				<button className="w-max p-4 rounded-xl bg-primary-green text-off-white font-semibold hidden md:block">
+				<Link
+					href={"/accomodations"}
+					className="w-max p-4 rounded-xl bg-primary-green text-off-white font-semibold hidden md:block"
+				>
 					Explore Now
-				</button>
+				</Link>
 			</div>
 			<Image
 				src={
