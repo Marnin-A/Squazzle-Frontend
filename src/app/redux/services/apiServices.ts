@@ -125,12 +125,12 @@ export const api = createApi({
 		}),
 		getMyListings: builder.query<
 			Types.myListings | { error: string; message: string; success: false },
-			{ userId: string }
+			{ token: string }
 		>({
 			query: (data) => ({
-				// Endpoint not yet resolved
-				url: "auth/myListings" + data.userId,
+				url: "users/accommodations/",
 				method: "GET",
+				headers: { Authorization: `Bearer ${data.token}` },
 			}),
 		}),
 		getPropertyDetails: builder.query<

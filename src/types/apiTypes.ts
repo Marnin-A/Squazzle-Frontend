@@ -86,8 +86,15 @@ export type SignInSuccessful = {
 };
 export type SignInFailed = { success: false };
 export type myListings = {
-	data: Array<{ name: string; url: string; propertyId: string }>;
-	success: true;
+	data: {
+		accommodations: Array<{
+			accommodationName: string;
+			gallery: Array<{ imageId: string; imageUrl: string }>;
+			_id: string;
+		}>;
+	};
+	status: "success";
+	message: "Accommodations Fetch Successfully.";
 };
 export type PropertyDetails = {
 	data: {
