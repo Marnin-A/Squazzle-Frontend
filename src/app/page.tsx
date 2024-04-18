@@ -29,11 +29,12 @@ const FAQdata = [
 	{
 		title: "Where is the cheapest place to rent a house?",
 		content:
-			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni soluta at cumque delectus nobis dolores sit natus autem, quisquam enim nostrum dolorum, ab ullam quo distinctio quas? Odio, quia excepturi",
+			"The cheapest accommodations are not constant but you can always find the cheapest at the moment by adjusting the filter on the accommodations page.",
 	},
 	{
-		title: "How can i list my property?",
-		content: "Yes. It adheres to the WAI-ARIA design pattern.",
+		title: "How can I list my property?",
+		content:
+			"You can list you properties by going to the list property page from the navigation bar and filling in the required details.",
 	},
 	{
 		title: "How can I find landlords who accept housing benefit?",

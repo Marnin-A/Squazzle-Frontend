@@ -143,12 +143,14 @@ export const api = createApi({
 				method: "GET",
 			}),
 		}),
-		// getProperties: builder.query<Types.TAccommodations, any>({
-		// 	query: () => ({
-		// 		url: `accommodations`,
-		// 		method: "GET",
-		// 	}),
-		// }),
+		getAccommodations: builder.query<Types.TAccommodationsResponseSuccess, any>(
+			{
+				query: () => ({
+					url: `accommodations`,
+					method: "GET",
+				}),
+			}
+		),
 		getUserDetails: builder.query<
 			| Types.TUserDataResponseSuccess
 			| { error: string; message: string; success: false },
@@ -185,6 +187,7 @@ export const {
 	useNewsletterSignupMutation,
 	useUpdateProfileMutation,
 	useGetMyListingsQuery,
+	useGetAccommodationsQuery,
 	useGetPropertyDetailsQuery,
 	useListAccommodationMutation,
 	useDeleteAccountMutation,

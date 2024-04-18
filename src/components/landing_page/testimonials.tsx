@@ -32,7 +32,7 @@ const testimonialData: Array<TestimonialProps> = [
 		profileImg: "/Julia-pfp.png",
 		platform: "twitter",
 		quote:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
+			"Squazzle has been my go-to for finding unique accommodations wherever I travel. I love the variety of options available and the ease of booking. The platform is user-friendly, and their customer service is responsive. Overall, Squazzle offers a fantastic way to discover new places to stay!",
 		rating: 4,
 	},
 	{
@@ -40,7 +40,7 @@ const testimonialData: Array<TestimonialProps> = [
 		profileImg: "/Max-pfp.png",
 		platform: "twitter",
 		quote:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
+			"Squazzle has been a game-changer for me! The platform is user-friendly, and I've always found fantastic accommodations at great prices. The customer service is top-notch too—responsive and helpful. Five stars all the way!",
 		rating: 5,
 	},
 	{
@@ -48,7 +48,7 @@ const testimonialData: Array<TestimonialProps> = [
 		profileImg: "/Mike-pfp.png",
 		platform: "twitter",
 		quote:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu .",
+			"Squazzle has been a convenient platform for finding accommodation during my travels. While the experience has generally been positive with easy booking and good communication, there have been a few instances where clarity on property details could have been better. Overall, a reliable option for affordable stays.",
 		rating: 3.5,
 	},
 ];
